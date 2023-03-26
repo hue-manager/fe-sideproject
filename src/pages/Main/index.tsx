@@ -1,3 +1,5 @@
+import { Button } from '../../stories/Button'
+// 절대경로 설정이 왜 안 먹히는지 모르겠음
 import React from 'react'
 import styled from 'styled-components'
 
@@ -8,11 +10,15 @@ const Main = (props: Props) => {
     <Container>
       <Background />
       <Wrap>
-        <Design>
-          <img src="/bg.jpg" alt="background" />
-        </Design>
-
-        <Login></Login>
+        <img src="/bg.jpg" alt="background" />
+        <Login>
+          <Button
+            primary={false}
+            backgroundColor={'var(--color-primary)'}
+            size={'small'}
+            label={'press me'}
+          />
+        </Login>
       </Wrap>
     </Container>
   )
@@ -42,21 +48,17 @@ const Wrap = styled.section`
   background-color: var(--color-white);
   position: absolute;
   border-radius: 40px;
-`
-const Design = styled.div`
-  height: 100%;
+  display: flex;
   img {
     height: 100%;
     border-radius: 40px 0 0 40px;
   }
-  .svg {
-    position: absolute;
-    width: 150px;
-  }
 `
+
 const Login = styled.div`
   width: 100%;
   height: 100%;
-  background-color: var(--color-blak50);
+  background-color: var(--color-black10);
+  border-radius: 40px;
 `
 export default Main

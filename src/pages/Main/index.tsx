@@ -1,6 +1,4 @@
-import { Button } from '../../stories/Button'
-// 절대경로 설정이 왜 안 먹히는지 모르겠음
-import React from 'react'
+import { Button } from '@components/Button/Button'
 import styled from 'styled-components'
 
 interface Props {}
@@ -12,15 +10,10 @@ const Main = (props: Props) => {
       <Wrap>
         <img src="/bg.jpg" alt="background" />
         <Login>
+          <Button primary={true} size={'large'} label={'large'} />
           <Button
             primary={false}
-            backgroundColor={'var(--color-primary)'}
-            size={'large'}
-            label={'large'}
-          />
-          <Button
-            primary={false}
-            backgroundColor={'var(--color-primary)'}
+            backgroundColor={'var(--color-black30)'}
             size={'medium'}
             label={'medium'}
           />

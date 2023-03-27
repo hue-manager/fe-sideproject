@@ -1,4 +1,4 @@
-import React from 'react'
+import { Button } from '@components/Button/Button'
 import styled from 'styled-components'
 
 interface Props {}
@@ -8,11 +8,22 @@ const Main = (props: Props) => {
     <Container>
       <Background />
       <Wrap>
-        <Design>
-          <img src="/bg.jpg" alt="background" />
-        </Design>
-
-        <Login></Login>
+        <img src="/bg.jpg" alt="background" />
+        <Login>
+          <Button primary={true} size={'large'} label={'large'} />
+          <Button
+            primary={false}
+            backgroundColor={'var(--color-black30)'}
+            size={'medium'}
+            label={'medium'}
+          />
+          <Button
+            primary={false}
+            backgroundColor={'var(--color-primary)'}
+            size={'small'}
+            label={'small'}
+          />
+        </Login>
       </Wrap>
     </Container>
   )
@@ -42,21 +53,17 @@ const Wrap = styled.section`
   background-color: var(--color-white);
   position: absolute;
   border-radius: 40px;
-`
-const Design = styled.div`
-  height: 100%;
+  display: flex;
   img {
     height: 100%;
     border-radius: 40px 0 0 40px;
   }
-  .svg {
-    position: absolute;
-    width: 150px;
-  }
 `
+
 const Login = styled.div`
   width: 100%;
   height: 100%;
-  background-color: var(--color-blak50);
+  background-color: var(--color-black10);
+  border-radius: 40px;
 `
 export default Main

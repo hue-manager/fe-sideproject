@@ -15,8 +15,20 @@ const Main = (props: Props) => {
           <Button
             primary={false}
             backgroundColor={'var(--color-primary)'}
+            size={'large'}
+            label={'large'}
+          />
+          <Button
+            primary={false}
+            backgroundColor={'var(--color-primary)'}
+            size={'medium'}
+            label={'medium'}
+          />
+          <Button
+            primary={false}
+            backgroundColor={'var(--color-primary)'}
             size={'small'}
-            label={'press me'}
+            label={'small'}
           />
         </Login>
       </Wrap>

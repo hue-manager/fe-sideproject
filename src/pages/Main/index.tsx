@@ -19,7 +19,11 @@ const Main = (props: Props) => {
   const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event?.currentTarget)
-    await login(formData.get('email') as string, formData.get('password') as string)
+    const res = await login(formData.get('email') as string, formData.get('password') as string)
+    if (res) {
+      navigate('/main')
+      console.log('야호')
+    }
   }
 
   return (
@@ -35,13 +39,6 @@ const Main = (props: Props) => {
               <img src="/logo_original.png" alt="logo" />
             </Logo>
             <Selected>
-              <button
-                onClick={async () => {
-                  // console.log(await login())
-                }}
-              >
-                임시버튼
-              </button>
               <p
                 onClick={() => {
                   setRole(true)

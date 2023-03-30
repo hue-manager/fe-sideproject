@@ -48,4 +48,8 @@ export const GlobalStyle = createGlobalStyle`
   button {
     cursor:pointer;
   }
+
+  body {
+    background: var(--color-lightpurple)
+  }
 `

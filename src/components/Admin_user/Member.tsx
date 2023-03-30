@@ -2,6 +2,7 @@ import Content from '../Content'
 import React from 'react'
 import Button_white from '../Button/Button_white'
 import styled from 'styled-components'
+import Avatar, { genConfig } from 'react-nice-avatar'
 
 interface Props {}
 
@@ -35,6 +36,7 @@ const Member = (props: Props) => {
         <Table>
           <thead>
             <tr>
+              <th></th>
               {theads.map((thead, index) => (
                 <th key={index}>{thead}</th>
               ))}
@@ -43,6 +45,17 @@ const Member = (props: Props) => {
           <tbody>
             {mockData.map((data, index) => (
               <tr key={index}>
+                <td>
+                  <Avatar
+                    style={{
+                      width: '70px',
+                      height: '70px',
+                      border: '3px solid var(--color-primary)',
+                      margin: '20px auto',
+                    }}
+                    {...genConfig(data.name)}
+                  />
+                </td>
                 <td>{data.name}</td>
                 <td>{data.level}</td>
                 <td>{data.date}</td>
@@ -68,17 +81,19 @@ const Wrapper = styled.div`
 const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
-  width: 900px;
+  width: 100%;
   tr {
     height: 70px;
     box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
     border-radius: 40px;
-    text-align: center;
+    vertical-align: middle;
     margin: 40px;
   }
   td {
-    vertical-align: middle;
     background-color: var(--color-white);
+  }
+  td:not(:first-child) {
+    vertical-align: middle;
     text-align: center;
   }
   th {

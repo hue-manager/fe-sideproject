@@ -16,7 +16,7 @@ const index = (props: Props) => {
           }}
           className={member ? 'active' : 'inactive'}
         >
-          일반
+          회원 관리
         </p>
         <p
           onClick={() => {
@@ -24,7 +24,7 @@ const index = (props: Props) => {
           }}
           className={!member ? 'active' : 'inactive'}
         >
-          관리자
+          비회원 관리
         </p>
       </Selected>
       {member ? <Member /> : <Non_Member />}

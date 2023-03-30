@@ -88,6 +88,7 @@ const Table = styled.table`
   }
   td {
     vertical-align: middle;
+    background-color: var(--color-white);
   }
   th {
     vertical-align: middle;

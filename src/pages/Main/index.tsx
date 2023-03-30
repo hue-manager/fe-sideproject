@@ -40,7 +40,7 @@ const Main = (props: Props) => {
                   // console.log(await login())
                 }}
               >
-                버튼
+                임시버튼
               </button>
               <p
                 onClick={() => {

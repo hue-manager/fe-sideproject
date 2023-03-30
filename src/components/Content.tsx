@@ -22,7 +22,8 @@ const Content = (props: Props) => {
 }
 
 const Wrapper = styled.div`
-  display: flex;
+  width: 100%;
+  padding: 0 40px;
   justify-content: center;
   align-items: center;
   position: relative;

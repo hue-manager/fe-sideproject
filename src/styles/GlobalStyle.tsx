@@ -52,4 +52,9 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: var(--color-lightpurple)
   }
+
+  ::selection {
+    color: var(--color-white);
+    background: var(--color-primary);
+  }
 `

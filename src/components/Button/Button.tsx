@@ -13,7 +13,7 @@ interface ButtonProps {
   /**
    * How large should the button be?
    */
-  size?: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large' | 'width'
   /**
    * Button contents
    */
@@ -22,8 +22,11 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void
-}
 
+  type: 'button' | 'submit' | 'reset'
+
+  show?: boolean
+}
 /**
  * Primary UI component for user interaction
  */
@@ -32,13 +35,19 @@ export const Button = ({
   size = 'medium',
   backgroundColor,
   label,
+  type,
+  onClick,
+  show = true,
   ...props
 }: ButtonProps) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary'
+  const display = show ? 'display' : 'storybook-button--hidden'
+
   return (
     <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      onClick={onClick}
+      type={type}
+      className={['storybook-button', `storybook-button--${size}`, mode, display].join(' ')}
       style={{ backgroundColor }}
       {...props}
     >

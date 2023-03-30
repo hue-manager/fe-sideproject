@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   top: 100px;
   .head {
     display: flex;
-    gap: 30px;
+    gap: 10px;
     margin: 0 50px;
     padding-bottom: 20px;
 

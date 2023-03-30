@@ -82,6 +82,7 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;
+  table-layout: fixed;
   tr {
     height: 70px;
     box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
@@ -89,9 +90,15 @@ const Table = styled.table`
     vertical-align: middle;
     margin: 40px;
   }
+
   td {
     background-color: var(--color-white);
   }
+
+  td:first-child {
+    width: 200px;
+  }
+
   td:not(:first-child) {
     vertical-align: middle;
     text-align: center;
@@ -115,11 +122,13 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
+    padding-left: 30px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
+    padding-right: 30px;
   }
 `
 

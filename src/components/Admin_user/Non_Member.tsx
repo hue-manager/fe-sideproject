@@ -82,6 +82,8 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;
+  table-layout: fixed;
+
   tr {
     height: 70px;
     box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
@@ -93,10 +95,16 @@ const Table = styled.table`
   td {
     background-color: var(--color-white);
   }
+
+  td:first-child {
+    width: 200px;
+  }
+
   td:not(:first-child) {
     vertical-align: middle;
     text-align: center;
   }
+
   th {
     vertical-align: middle;
   }

@@ -53,13 +53,13 @@ const Admin = (props: Props) => {
           <tbody>
             {mockData.map((data, index) => (
               <tr key={index}>
-                <td>{data.species}</td>
+                <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
                 <td>{data.person}</td>
                 <td>{data.level}</td>
                 <td>{data.reason}</td>
                 <td>{data.date}</td>
                 <td>{data.state}</td>
-                <td>{data.state === '처리대기' ? '승인/거절' : data.state}</td>
+                <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
               </tr>
             ))}
           </tbody>
@@ -90,6 +90,13 @@ const Table = styled.table`
   td {
     vertical-align: middle;
     background-color: var(--color-white);
+    font-weight: 600;
+    &.purple {
+      color: var(--color-primary);
+    }
+    &.pink {
+      color: var(--color-pink);
+    }
   }
   th {
     vertical-align: middle;

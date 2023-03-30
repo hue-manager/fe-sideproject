@@ -6,16 +6,16 @@ const instance = axios.create({
   timeout: 10000,
 })
 
-// instance.interceptors.request.use(
-//   function (config) {
-//     const token = getCookie();
-//     if (token) config.headers['Authorization'] = `Bearer ${token}`
-//     return config
-//   },
-//   function (error) {
-//     return Promise.reject(error)
-//   }
-// )
+instance.interceptors.request.use(
+  function (config) {
+    const token = JSON.stringify(localStorage.getItem('token'))
+    if (token) config.headers['Authorization'] = `Bearer ${token}`
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  }
+)
 
 instance.interceptors.response.use(
   function (response) {

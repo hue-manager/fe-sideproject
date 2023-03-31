@@ -1,7 +1,8 @@
 import { Button } from '@components/Button/Button'
-import React, { useState } from 'react'
+import { RxDoubleArrowLeft } from 'react-icons/rx'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { login } from '../../api/auth'
+
 interface Props {}
 
 type Signup = {
@@ -9,11 +10,21 @@ type Signup = {
   password: string
 }
 const SignUp = (props: Props) => {
+  const navigate = useNavigate()
   return (
     <Container>
       <Background />
       <Inner>
-        <Visual>{/* <button>뒤로가기</button> */}</Visual>
+        <Visual>
+          <div
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            <RxDoubleArrowLeft className="icon" />
+            <p>로그인 화면으로 돌아가기</p>
+          </div>
+        </Visual>
         <Form>
           <Title>
             <p>계정 만들기</p>
@@ -106,8 +117,36 @@ const Inner = styled.section`
 const Visual = styled.div`
   width: 435px;
   height: 100%;
-  /* background-color: lightgray; */
-  display: flex;
+  div {
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-black50);
+    background: linear-gradient(
+      to right,
+      var(--color-primary),
+      midnightblue 50%,
+      var(--color-black50) 50%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: background-position 275ms ease;
+    :hover {
+      background-position: 0 100%;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+    .icon {
+      margin: 0 20px 0 0;
+    }
+  }
 `
 
 const Form = styled.div`

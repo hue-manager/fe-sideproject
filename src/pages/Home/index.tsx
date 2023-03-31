@@ -204,5 +204,8 @@ const InputWrap = styled.form`
       border: 1px solid var(--color-primary);
     }
   }
+  button:hover {
+    opacity: 0.7;
+  }
 `
 export default Home

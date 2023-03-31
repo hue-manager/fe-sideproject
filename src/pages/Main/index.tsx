@@ -1,6 +1,7 @@
 import { logout } from '../../api/auth'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { removeCookie } from '../../utils/cookies'
 
 interface Props {}
 
@@ -9,6 +10,7 @@ const Main = (props: Props) => {
 
   const logoutSubmitHandler = async (event: React.MouseEvent) => {
     event.preventDefault()
+    removeCookie()
     const res = await logout()
     if (res) {
       navigate('/')

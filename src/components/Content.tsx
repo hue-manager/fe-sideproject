@@ -27,25 +27,26 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 150px;
+  top: 100px;
   .head {
     display: flex;
-    gap: 40px;
+    gap: 10px;
     margin: 0 50px;
     padding-bottom: 20px;
 
     h2 {
       color: var(--color-black70);
-      font-size: 18px;
+      font-size: 25px;
       font-weight: 700;
     }
     span {
       color: var(--color-black70);
-      font-size: 16px;
+      font-size: 15px;
+      align-self: end;
     }
   }
   .output {
-    margin: 50px;
+    margin: 30px;
   }
 `
 

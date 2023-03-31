@@ -1,17 +1,16 @@
 import React from 'react'
 import Sidebar from '@components/Sidebar'
 import styled from 'styled-components'
+import { SidebarContent } from '../router'
 
 interface GeneralLayoutProps {
   children: React.ReactNode
 }
 
 const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
-  console.log(children)
-
   return (
     <GeneralLayoutStyle>
-      <Sidebar />
+      <Sidebar sidebarContent={SidebarContent} />
       <GeneralLayoutBodyStyle>{children}</GeneralLayoutBodyStyle>
     </GeneralLayoutStyle>
   )

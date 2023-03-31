@@ -10,7 +10,7 @@ const MyPage = (props: Props) => {
   const config = genConfig('qwer1234@qwer1234.com')
   return (
     <Page>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Container>
         <Content title={'내 정보'} intro={'내 정보를 확인하고 수정할 수 있습니다.'}>
           <Profile>

@@ -25,18 +25,19 @@ const Wrap = styled.div`
 
 const Left = styled.div`
   width: 517px;
-  height: 888px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #745cf2;
+  border: 1px solid var(--color-primary);
   border-radius: 15px;
+  background-color: var(--color-lightpurple);
 `
 
 const Head = styled.div`
   width: 80%;
-  border: 1px solid #745cf2;
+  border: 1px solid var(--color-primary);
   border-radius: 40px;
   display: flex;
   button {

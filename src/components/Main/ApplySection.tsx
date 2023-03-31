@@ -4,10 +4,13 @@ import Inner from '@components/Inner'
 import Button from '@components/UI/Button'
 import ApplicationCard from './ApplicationCard'
 import Pagination from '../UI/Pagination'
-
-const ApplySection = () => {
+import { MutableRefObject } from 'react'
+interface ApplySectionProps {
+  applyRef: MutableRefObject<HTMLDivElement | null>
+}
+const ApplySection = ({ applyRef }: ApplySectionProps) => {
   return (
-    <ContainerStyle>
+    <ContainerStyle ref={applyRef}>
       <Inner height="100%" width="90%">
         <SectionStyle>
           <FirstBoxStyle>

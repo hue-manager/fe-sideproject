@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { MutableRefObject } from 'react'
 import styled from 'styled-components'
 import Inner from '@components/Inner'
+interface UserInfoSectionProps {
+  applySectionRef: MutableRefObject<HTMLDivElement | null>
+  calendarSectionRef: MutableRefObject<HTMLDivElement | null>
+}
 
-const UserInfoSection = () => {
+const UserInfoSection = ({ applySectionRef, calendarSectionRef }: UserInfoSectionProps) => {
   const name = '노홍철' // 유저 네임 패칭
   const annualLeave = 4 // 연차 패칭
   const onDuty = 3 // 당직 패칭
@@ -11,6 +15,17 @@ const UserInfoSection = () => {
   const approved = 12 // 승인 완료
   const pending = 3 // 승인 대기
   const rejection = 0 // 승인 거절
+
+  const handleApplyClick = () => {
+    applySectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+    console.log(applySectionRef.current)
+  }
+
+  const handleCalendarClick = () => {
+    calendarSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+    console.log(calendarSectionRef.current)
+  }
+
   return (
     <ContainerStyle>
       <Inner height="100%" width="90%">
@@ -63,10 +78,10 @@ const UserInfoSection = () => {
             </div>
           </ThirdBoxStyle>
           <FourthBoxStyle>
-            <div>
+            <div onClick={handleApplyClick}>
               <p>나의 신청 내역 보러가기</p>
             </div>
-            <div>
+            <div onClick={handleCalendarClick}>
               <p>캘린더 보러가기</p>
             </div>
           </FourthBoxStyle>

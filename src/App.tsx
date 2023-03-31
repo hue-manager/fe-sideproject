@@ -7,9 +7,6 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <GeneralLayout>
-        <Outlet />
-      </GeneralLayout>
       <RouterProvider router={routers} />
     </>
   )

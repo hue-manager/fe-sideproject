@@ -2,15 +2,55 @@ import { Button } from '@components/Button/Button'
 import { RxDoubleArrowLeft } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 
-interface Props {}
+interface SelectBox {
+  show: boolean | undefined
+  value: string | undefined
+}
 
-type Signup = {
+type FormValue = {
   email: string
   password: string
+  passwordConfirm: string
+  name: string
+  number: number
+  department: string
+  position: string
 }
-const SignUp = (props: Props) => {
+
+const departmentList = [
+  { id: 0, value: '개발' },
+  { id: 1, value: '인사' },
+  { id: 2, value: '디자인' },
+  { id: 3, value: '기획' },
+  { id: 4, value: '회계' },
+  { id: 5, value: '법무' },
+]
+
+const positionList = [
+  { id: 0, value: '사원' },
+  { id: 1, value: '대리' },
+  { id: 2, value: '과장' },
+  { id: 3, value: '차장' },
+  { id: 4, value: '부장' },
+  { id: 5, value: '이사' },
+]
+
+const SignUp = () => {
   const navigate = useNavigate()
+
+  const { register, watch } = useForm<FormValue>()
+  const [department, setDepartment] = useState<SelectBox | null>({
+    show: false,
+    value: '소속을 선택해 주세요.',
+  })
+  const [position, setPosition] = useState<SelectBox | null>({
+    show: true,
+    value: '직급을 선택해 주세요.',
+  })
+  console.log(watch('email'))
   return (
     <Container>
       <Background />
@@ -32,34 +72,69 @@ const SignUp = (props: Props) => {
           <InputWrap>
             <label>
               이메일
-              <input type="text" id="email" />
+              <input type="text" {...register('email')} placeholder="이메일을 입력해주세요." />
             </label>
             <div className="flex">
               <label>
                 비밀번호
-                <input type="password" id="pwd" />
+                <input
+                  type="password"
+                  {...register('password')}
+                  placeholder="비밀번호를 입력해주세요."
+                />
               </label>
               <label>
                 비밀번호 확인
-                <input type="password" id="pwdCheck" />
+                <input
+                  type="password"
+                  {...register('passwordConfirm')}
+                  placeholder="한 번 더 비밀번호를 입력해주세요."
+                />
               </label>
             </div>
             <label>
               이름
-              <input type="text" id="name" />
+              <input type="text" {...register('name')} placeholder="이름을 입력해주세요." />
             </label>
             <label>
               휴대폰 번호
-              <input type="text" id="number" />
+              <input
+                type="text"
+                {...register('number')}
+                placeholder="휴대폰 번호를 입력해주세요."
+              />
             </label>
             <div className="flex">
               <label>
                 소속
-                <input type="text" id="division" />
+                <input
+                  {...register('department')}
+                  className="selectBox"
+                  value={department?.value}
+                  readOnly
+                />
+                <SelectBox id="department" style={{ display: `${department?.show}` }}>
+                  {departmentList.map((item) => (
+                    <li key={item.id}>{item.value}</li>
+                  ))}
+                </SelectBox>
               </label>
               <label>
                 직급
-                <input type="text" id="position" />
+                <input
+                  type="text"
+                  {...register('position')}
+                  value={position?.value}
+                  readOnly
+                  onClick={(prevState) => {
+                    // setDepartment()
+                  }}
+                />
+                <SelectBox id="position">
+                  {positionList.map((item) => (
+                    <li key={item.id}>{item.value}</li>
+                  ))}
+                </SelectBox>
               </label>
             </div>
           </InputWrap>
@@ -183,9 +258,13 @@ const InputWrap = styled.div`
     color: var(--color-black60);
     display: block;
     padding: 10px 0;
+    position: relative;
     input {
+      display: flex;
+      align-content: center;
       width: 100%;
       height: 40px;
+      font-size: 14px;
       margin-top: 10px;
       margin-bottom: 5px;
       padding: 15px 20px;
@@ -207,6 +286,28 @@ const InputWrap = styled.div`
         height: 40px;
       }
     }
+  }
+`
+
+const SelectBox = styled.ul`
+  width: 100%;
+  height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  border-radius: 10px;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-white);
+  li {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    :hover {
+      background-color: var(--color-black10);
+    }
+  }
+  ::-ms-value {
+    color: var(--color-primary);
   }
 `
 

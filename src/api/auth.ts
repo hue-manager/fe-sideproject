@@ -1,3 +1,4 @@
+import { removeCookie, setCookie } from '../utils/cookies'
 import API_URLS from '../constants/apiConst'
 import instance from './apiController'
 
@@ -8,7 +9,7 @@ export const login = async (email: string, password: string) => {
       password: password,
     })
     console.log('로그인 성공')
-    localStorage.setItem('token', JSON.stringify(response.data))
+    setCookie(response.data)
     console.log({ token: response.data })
     return response
   } catch (error) {
@@ -24,7 +25,7 @@ export const logout = async () => {
   try {
     const response = await instance.post(API_URLS.LOGOUT)
     console.log('로그아웃 성공')
-    localStorage.removeItem('token')
+    removeCookie()
     console.log('삭제 완료')
     return response
   } catch (error) {

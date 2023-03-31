@@ -19,10 +19,10 @@ interface RouterElement {
 
 const routerData: RouterElement[] = [
   {
-    path: PATH.MAIN,
-    label: 'Main(Login)',
-    element: <Main />,
-    withAuth: false,
+    path: PATH.HOME,
+    label: 'Home',
+    element: <Home />,
+    withAuth: true,
   },
   {
     path: PATH.SIGNUP,
@@ -31,10 +31,10 @@ const routerData: RouterElement[] = [
     withAuth: false,
   },
   {
-    path: PATH.HOME,
-    label: 'Home',
-    element: <Home />,
-    withAuth: true,
+    path: PATH.MAIN,
+    label: 'Main(Login)',
+    element: <Main />,
+    withAuth: false,
   },
   {
     path: PATH.MYPAGE,

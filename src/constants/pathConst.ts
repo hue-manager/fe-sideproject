@@ -1,6 +1,6 @@
 const PATH = {
-  MAIN: '/',
-  HOME: '/home',
+  HOME: '/',
+  MAIN: '/main',
   SIGNUP: '/signup',
   MYPAGE: '/mypage',
   ADMIN: '/admin',

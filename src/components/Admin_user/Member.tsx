@@ -1,50 +1,42 @@
-import Content from '../../../src/components/Content'
+import Content from '../Content'
 import React from 'react'
+import Button_white from '../Button/Button_white'
 import styled from 'styled-components'
-import Button_primary from '../../components/Button/Button_primary'
+import Avatar, { genConfig } from 'react-nice-avatar'
 
 interface Props {}
 
-const Admin = (props: Props) => {
-  const theads = ['요청종류', '요청자', '소속/직급', '요청 사유', '요청 날짜', '상태', '관리']
+const Member = (props: Props) => {
+  const theads = ['이름', '소속/직급', '가입 날짜', '권한', '계정삭제']
 
   const mockData = [
     {
-      species: '연차',
-      person: '공혜지',
+      name: '공혜지',
       level: '인사팀/사원',
-      reason: '병원 방문',
       date: '2023.01.25',
-      state: '처리대기',
+      auth: '관리자',
     },
     {
-      species: '당직',
-      person: '공혜지',
-      level: '개발팀/사원',
-      reason: '각종 경조사',
+      name: '나다',
+      level: '재무팀/과장',
       date: '2023.01.25',
-      state: '승인',
+      auth: '일반',
     },
     {
-      species: '연차',
-      person: '규규규',
-      level: '개발팀/사원',
-      reason: '개인 업무',
+      name: '가다',
+      level: '기획팀/과장',
       date: '2023.01.25',
-      state: '거절',
+      auth: '일반',
     },
   ]
 
   return (
-    <Content
-      title={'승인요청'}
-      intro={'연차, 당직 신청 내역을 확인하고 승인이나 거절할 수 있습니다.'}
-    >
+    <Content title={'회원관리'} intro={'관리자 권한을 부여할 수 있습니다.'}>
       <Wrapper>
-        <Button_primary text={'엑셀로 내보내기'} />
         <Table>
           <thead>
             <tr>
+              <th></th>
               {theads.map((thead, index) => (
                 <th key={index}>{thead}</th>
               ))}
@@ -53,13 +45,24 @@ const Admin = (props: Props) => {
           <tbody>
             {mockData.map((data, index) => (
               <tr key={index}>
-                <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
-                <td>{data.person}</td>
+                <td>
+                  <Avatar
+                    style={{
+                      width: '70px',
+                      height: '70px',
+                      border: '3px solid var(--color-primary)',
+                      margin: '20px auto',
+                    }}
+                    {...genConfig(data.name)}
+                  />
+                </td>
+                <td>{data.name}</td>
                 <td>{data.level}</td>
-                <td>{data.reason}</td>
                 <td>{data.date}</td>
-                <td>{data.state}</td>
-                <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
+                <td>{data.auth}</td>
+                <td>
+                  <Button_white text={'계정삭제'} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -79,24 +82,26 @@ const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;
-  margin: 0 auto;
+  table-layout: fixed;
   tr {
     height: 70px;
     box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
     border-radius: 40px;
-    text-align: center;
+    vertical-align: middle;
     margin: 40px;
   }
+
   td {
-    vertical-align: middle;
     background-color: var(--color-white);
-    font-weight: 600;
-    &.purple {
-      color: var(--color-primary);
-    }
-    &.pink {
-      color: var(--color-pink);
-    }
+  }
+
+  td:first-child {
+    width: 200px;
+  }
+
+  td:not(:first-child) {
+    vertical-align: middle;
+    text-align: center;
   }
   th {
     vertical-align: middle;
@@ -117,12 +122,14 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
+    padding-left: 30px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
+    padding-right: 30px;
   }
 `
 
-export default Admin
+export default Member

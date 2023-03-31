@@ -18,6 +18,10 @@ export default defineConfig({
         find: '@pages',
         replacement: '/src/pages',
       },
+      {
+        find: '@constants',
+        replacement: '/src/constants',
+      },
     ],
   },
 })

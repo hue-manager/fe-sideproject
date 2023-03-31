@@ -3,13 +3,28 @@ import { Router as RemixRouter } from '@remix-run/router/dist/router'
 import App from './App'
 import PATH from './constants/pathConst'
 import Admin from './pages/Admin'
-import Home from './pages/Home'
+import Home from '@pages/Home'
 import Main from './pages/Main'
 import MyPage from './pages/MyPage'
 import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
 import User from './pages/User'
+import GeneralLayout from './components/GeneralLayout'
 
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <App />,
+//     errorElement: <NotFound />,
+//     children: [
+//       { index: true, path: PATH.HOME, element: <Home /> },
+//       { path: PATH.SIGNUP, element: <SignUp /> },
+//       { path: PATH.MAIN, element: <Main /> },
+//       { path: PATH.MYPAGE, element: <MyPage /> },
+//       { path: PATH.ADMIN, element: <Admin />, children: [{ path: PATH.USER, element: <User /> }] },
+//     ],
+//   },
+// ])
 interface RouterElement {
   path: string
   label: string

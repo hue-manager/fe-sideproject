@@ -3,6 +3,10 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { removeCookie } from '../../utils/cookies'
 import TotalCalendar from './../../components/calendar/TotalCalendar'
+import UserInfoSection from '@components/Main/UserInfoSection'
+import CalendarSection from '@components/Main/CalendarSection'
+import ApplySection from '@components/Main/ApplySection'
+import styled from 'styled-components'
 
 interface Props {}
 
@@ -27,3 +31,7 @@ const Main = (props: Props) => {
 }
 
 export default Main
+
+const ContainerStyle = styled.div`
+  background-color: var(--color-lightpurple);
+`

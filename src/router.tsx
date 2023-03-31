@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { Router as RemixRouter } from '@remix-run/router/dist/router'
 import App from './App'
 import PATH from './constants/pathConst'
 import Admin from './pages/Admin'
@@ -9,20 +10,66 @@ import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
 import User from './pages/User'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <NotFound />,
-    children: [
-      { index: true, path: PATH.MAIN, element: <Home /> },
-      { path: PATH.SIGNUP, element: <SignUp /> },
-      { path: PATH.HOME, element: <Main /> },
-      { path: PATH.MYPAGE, element: <MyPage /> },
-      { path: PATH.ADMIN, element: <Admin /> },
-      { path: PATH.USER, element: <User /> },
-    ],
-  },
-])
+interface RouterElement {
+  path: string
+  label: string
+  element: React.ReactNode
+  withAuth?: boolean
+}
 
-export default router
+const routerData: RouterElement[] = [
+  {
+    path: PATH.HOME,
+    label: 'Home',
+    element: <Home />,
+    withAuth: true,
+  },
+  {
+    path: PATH.SIGNUP,
+    label: 'SignUp',
+    element: <SignUp />,
+    withAuth: false,
+  },
+  {
+    path: PATH.MAIN,
+    label: 'Main(Login)',
+    element: <Main />,
+    withAuth: false,
+  },
+  {
+    path: PATH.MYPAGE,
+    label: 'MyPage',
+    element: <MyPage />,
+    withAuth: true,
+  },
+  {
+    path: PATH.ADMIN,
+    label: 'Admin',
+    element: <Admin />,
+    withAuth: true,
+  },
+  {
+    path: PATH.USER,
+    label: 'User',
+    element: <User />,
+    withAuth: true,
+  },
+]
+
+export const routers: RemixRouter = createBrowserRouter(
+  routerData.map((router) => {
+    if (router.withAuth) {
+      return {
+        path: router.path,
+        element: router.element,
+        errorElement: <NotFound />,
+      }
+    } else {
+      return {
+        path: router.path,
+        element: <>{router.element}</>,
+        errorElement: <NotFound />,
+      }
+    }
+  })
+)

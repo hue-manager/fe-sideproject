@@ -42,9 +42,19 @@ export const GlobalStyle = createGlobalStyle`
     border:none;
     background:transparent;
     outline:none;
+    cursor:pointer;
   }
 
   button {
     cursor:pointer;
+  }
+
+  body {
+    background: var(--color-lightpurple)
+  }
+
+  ::selection {
+    color: var(--color-white);
+    background: var(--color-primary);
   }
 `

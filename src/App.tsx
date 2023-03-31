@@ -1,11 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, RouterProvider } from 'react-router-dom'
+import { routers } from './router'
 import { GlobalStyle } from './styles/GlobalStyle'
 
-function App() {
+const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Outlet />
+      <RouterProvider router={routers} />
     </>
   )
 }

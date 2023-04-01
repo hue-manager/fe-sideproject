@@ -1,18 +1,16 @@
-import React, { useCallback, useState } from 'react'
-import styled from 'styled-components'
-import DetailItem from './DetailItem'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+import React, { useEffect, useState } from 'react'
+import { Calendar, momentLocalizer, SlotInfo } from 'react-big-calendar'
 import moment from 'moment'
-import './DetailCalendar.css'
-import { calendarSlice, selectCalendar } from './../../store/slice/calendarSlice'
-import { useSelector } from 'react-redux'
-import Lottie from 'lottie-react'
-import calendar from '../../assets/lottie/calendar.json'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import './MonthCalendar.css'
+import { useDispatch } from 'react-redux'
+import { setTitle, setData } from '../../store/slice/calendarSlice'
 
-const DetailCalendar = () => {
+const MonthCalendar = () => {
   const localizer = momentLocalizer(moment)
-  const calendarDate = useSelector(selectCalendar)
+  const dispatch = useDispatch()
 
+  // data 가져올 때 allDay : true 기본
   const events = [
     {
       title: 'My Event',
@@ -502,83 +500,55 @@ const DetailCalendar = () => {
   ]
 
   const components = {
-    day: {
-      event: ({ event }: { event: any }) => {
-        return <DetailItem />
+    month: {
+      event: () => {
+        return null
       },
     },
   }
+  const months: { [key: string]: string } = {
+    Jan: '01',
+    Feb: '02',
+    Mar: '03',
+    Apr: '04',
+    May: '05',
+    Jum: '06',
+    Jul: '07',
+    Aug: '08',
+    Sep: '09',
+    Oct: '10',
+    Nov: '11',
+    Dec: '12',
+  }
+
+  const onNavigate = (newDate: any, newView: any) => {
+    const date = newDate.toString()
+    const [, month, day, year] = date.split(' ')
+    const resTitle = `${year}.${Number(months[`${month}`])}.${Number(day)}`
+    const resData = `${year}-${months[`${month}`]}-${day}`
+    dispatch(setTitle(resTitle))
+    dispatch(setData(resData))
+  }
+
   return (
-    <Wrap className="detail_calender">
-      {calendarDate.title ? (
-        <>
-          <Head>{calendarDate.title}</Head>
-          <Calendar
-            dayLayoutAlgorithm={'no-overlap'}
-            components={components}
-            date={
-              new Date(calendarDate.data) ? new Date(calendarDate.data) : new Date('2023-04-04')
-            }
-            onNavigate={() => new Date()}
-            events={events}
-            localizer={localizer}
-            defaultView={'day'}
-            selectable={true}
-            showAllEvents={true}
-            views={['day']}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: '92%', width: '85%' }}
-          />
-        </>
-      ) : (
-        <>
-          <p>
-            각 일자의 연차/당직 상세를 보고 싶다면
-            <br />
-            옆의 달력에서 일자를 먼저 선택해주세요
-          </p>
-          <Lottie animationData={calendar} className="lottie" />
-        </>
-      )}
-    </Wrap>
+    <Calendar
+      onNavigate={onNavigate}
+      components={components}
+      events={events}
+      localizer={localizer}
+      defaultView={'month'}
+      selectable={true}
+      showAllEvents={true}
+      views={['month']}
+      formats={{
+        monthHeaderFormat: (date: Date) => moment(date).format('M'),
+        dateFormat: (date: Date) => moment(date).format('D'),
+      }}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ height: '80%', width: '80%' }}
+    />
   )
 }
 
-const Wrap = styled.div`
-  margin-left: 30px;
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #745cf2;
-  border-radius: 15px;
-  background-color: var(--color-lightpurple);
-  p {
-    margin-bottom: 40px;
-    font-size: 20px;
-    line-height: 30px;
-    font-weight: bold;
-    color: var(--color-primary);
-  }
-  .lottie {
-    width: 60%;
-  }
-`
-const Head = styled.div`
-  margin-top: 50px;
-  margin-bottom: 120px;
-  width: 80%;
-  padding: 10px;
-  text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: #745cf2;
-  background-color: #fff;
-  border-radius: 50px;
-  box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.12);
-`
-
-export default DetailCalendar
+export default MonthCalendar

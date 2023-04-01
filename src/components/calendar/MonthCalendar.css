@@ -1,0 +1,108 @@
+/* 달 적혀있는 곳 */
+.main_calendar .rbc-toolbar {
+  position: relative;
+  margin: 40px 0;
+}
+.main_calendar .rbc-toolbar .rbc-btn-group {
+  position: absolute;
+  top: 20%;
+  right: 50%;
+  transform: translateX(50%);
+}
+.main_calendar .rbc-toolbar .rbc-toolbar-label {
+  font-size: 38px;
+  font-weight: bold;
+  color: #745cf2;
+}
+.main_calendar .rbc-btn-group button {
+  border: none;
+  padding: 0;
+}
+.main_calendar .rbc-btn-group button:first-child {
+  display: none;
+}
+.main_calendar .rbc-btn-group button:nth-child(2) {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 70px;
+  background: url('/public/calendar_arrow_left.svg') no-repeat center;
+  font-size: 0;
+}
+.main_calendar .rbc-btn-group button:nth-child(3) {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 70px;
+  background: url('/public/calendar_arrow_right.svg') no-repeat center;
+  font-size: 0;
+}
+
+/* 달력 전체 */
+.main_calendar .rbc-month-view {
+  padding: 50px;
+  border: 1px solid #745cf2;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+/* 전체 선택자 작동 안됨 */
+.main_calendar .rbc-month-view * {
+  border: none;
+}
+.main_calendar .rbc-header + .rbc-header {
+  border: none;
+}
+.main_calendar .rbc-month-row + .rbc-month-row {
+  border: none;
+}
+.main_calendar .rbc-day-bg + .rbc-day-bg {
+  border: none;
+}
+
+/* 요일 */
+.main_calendar .rbc-header {
+  padding: 10px 0;
+  font-size: 0;
+}
+.main_calendar .rbc-header::first-letter {
+  font-size: 18px;
+  color: #745cf2;
+}
+.main_calendar .rbc-month-header .rbc-header:first-child:first-letter {
+  color: #ff99e5;
+}
+
+/* 각 일자 */
+.main_calendar .rbc-month-row {
+  justify-content: center;
+}
+.main_calendar .rbc-row > div {
+  text-align: center;
+}
+.main_calendar .rbc-off-range-bg {
+  background-color: #ffffff;
+}
+.main_calendar .rbc-day-bg + .rbc-today {
+  background-color: #ffffff;
+}
+.main_calendar .rbc-today {
+  background-color: var(--color-lightpurple);
+}
+
+/* 이벤트 */
+.main_calendar .rbc-event {
+  position: relative;
+}
+.main_calendar .rbc-event,
+.main_calendar .rbc-day-slot,
+.main_calendar .rbc-background-event,
+.main_calendar .rbc-event.rbc-selected,
+.main_calendar .rbc-day-slot .rbc-selected.rbc-background-event {
+  background-color: #745cf2;
+}
+.main_calendar .rbc-row-content-scrollable .rbc-row-content-scroll-container {
+  overflow: hidden;
+}
+.main_calendar .rbc-event.rbc-selected:focus {
+  outline: none;
+}

@@ -26,7 +26,7 @@
   height: 18px;
   position: absolute;
   right: 70px;
-  background: url('/public/calendar_arrow_left.svg') no-repeat center;
+  background: url('/calendar_arrow_left.svg') no-repeat center;
   font-size: 0;
 }
 .rbc-btn-group button:nth-child(3) {
@@ -34,7 +34,7 @@
   height: 18px;
   position: absolute;
   left: 70px;
-  background: url('/public/calendar_arrow_right.svg') no-repeat center;
+  background: url('/calendar_arrow_right.svg') no-repeat center;
   font-size: 0;
 }
 

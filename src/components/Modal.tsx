@@ -1,9 +1,9 @@
 import styled, { css, keyframes } from 'styled-components'
 import { TfiClose } from 'react-icons/tfi'
-import Select from './UI/Select'
 import Button from './UI/Button'
 
 export interface IModal {
+  type: string
   /** 모달에 들어갈 컴포넌트 */
   children?: any //ReactNode
   /** 모달 창 생성 여부를 컨트롤할 변수 */
@@ -12,7 +12,7 @@ export interface IModal {
   onClose: () => void
 }
 
-const Modal = ({ children, visible, onClose }: IModal) => {
+const Modal = ({ type, children, visible, onClose }: IModal) => {
   if (!visible) {
     return null
   }
@@ -27,31 +27,9 @@ const Modal = ({ children, visible, onClose }: IModal) => {
           <CloseButton type="button" onClick={onClose}>
             <TfiClose />
           </CloseButton>
-          <div>연차 신청</div>
+          <div>{type}</div>
         </HeaderStyle>
-        <InputStyle>
-          <span>신청 사유</span>
-          <Select
-            options={selectOptions}
-            initial={'병원 방문'}
-            width="100%"
-            height="3rem"
-            borderRadius=".5rem"
-            fontSize="16px"
-          />
-        </InputStyle>
         <ContentStyle>{children}</ContentStyle>
-        <ApplyBtnStyle>
-          <Button
-            width="100%"
-            height="3rem"
-            borderRadius="9999px"
-            bgColor="var(--color-primary)"
-            color="var(--color-white)"
-          >
-            신청하기
-          </Button>
-        </ApplyBtnStyle>
       </ModalSectionStyle>
     </>
   )
@@ -100,24 +78,10 @@ const HeaderStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1.5rem;
   div {
     font-size: 1.75rem;
     font-weight: 700;
-  }
-`
-
-const InputStyle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  span {
-    font-size: 1rem;
-    font-weight: 600;
-    width: 15%;
-  }
-  & > div {
-    width: 85%;
   }
 `
 
@@ -135,8 +99,6 @@ const ContentStyle = styled.div`
   display: flex;
   flex-direction: column;
 `
-
-const ApplyBtnStyle = styled.div``
 
 const ModalSectionStyle = styled.div<{ visible: boolean }>`
   display: flex;
@@ -156,13 +118,7 @@ const ModalSectionStyle = styled.div<{ visible: boolean }>`
   ${HeaderStyle} {
     height: 10%;
   }
-  ${InputStyle} {
-    height: 10%;
-  }
   ${ContentStyle} {
-    height: 70%;
-  }
-  ${ApplyBtnStyle} {
-    height: 10%;
+    height: 90%;
   }
 `

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
+import Select from '@components/UI/Select'
 
 interface SelectBox {
   show: boolean | undefined
@@ -37,7 +38,7 @@ const positionList = [
   { id: 4, value: '부장' },
   { id: 5, value: '이사' },
 ]
-
+const selectOptions = ['정규 스케쥴', '업무 지시', '비상 근무', '기타']
 const SignUp = () => {
   const navigate = useNavigate()
 
@@ -129,6 +130,14 @@ const SignUp = () => {
                   onClick={(prevState) => {
                     // setDepartment()
                   }}
+                />
+                <Select
+                  options={selectOptions}
+                  initial={'정규 스케쥴'}
+                  width="100%"
+                  height="3rem"
+                  borderRadius=".5rem"
+                  fontSize="16px"
                 />
                 <SelectBox id="position">
                   {positionList.map((item) => (

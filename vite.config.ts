@@ -14,6 +14,7 @@ export default defineConfig({
       { find: '@api', replacement: resolve(__dirname, 'src/api') },
       { find: '@assets', replacement: resolve(__dirname, 'src/assets') },
       { find: '@utils', replacement: resolve(__dirname, 'src/utils') },
+      { find: '@components/UI', replacement: resolve(__dirname, 'src/components/UI') },
     ],
   },
 })

@@ -13,6 +13,7 @@ export default defineConfig({
       { find: '@constants', replacement: resolve(__dirname, 'src/constants') },
       { find: '@api', replacement: resolve(__dirname, 'src/api') },
       { find: '@assets', replacement: resolve(__dirname, 'src/assets') },
+      { find: '@utils', replacement: resolve(__dirname, 'src/utils') },
     ],
   },
 })

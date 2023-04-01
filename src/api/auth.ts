@@ -8,13 +8,12 @@ export const login = async (email: string, password: string) => {
       email: email,
       password: password,
     })
-    if (response.data.message === 'Bad Request') {
+    if (response.data.message === '존재하지 않는 이메일 입니다.') {
       console.log('fail')
       return 'fail'
     } else {
       console.log({ token: response.data })
       setCookie(response.data)
-
       return response
     }
   } catch (error) {

@@ -14,6 +14,7 @@ export const login = async (email: string, password: string) => {
     } else {
       console.log({ token: response.data })
       setCookie(response.data)
+
       return response
     }
   } catch (error) {

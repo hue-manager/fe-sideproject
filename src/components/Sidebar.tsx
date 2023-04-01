@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
           })}
         </ListStyle>
       )}
-      <TimerStyle />
+      {/* <TimerStyle /> */}
       <LogoutStyle
         onClick={() => {
           removeToken()

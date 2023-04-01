@@ -64,12 +64,12 @@
   padding: 10px 0;
   font-size: 0;
 }
-.rbc-row .rbc-month-header .rbc-header:first-child {
-  color: #ff99e5;
-}
 .rbc-header::first-letter {
   font-size: 18px;
   color: #745cf2;
+}
+.rbc-month-header .rbc-header:first-child:first-letter {
+  color: #ff99e5;
 }
 
 /* 각 일자 */
@@ -119,8 +119,8 @@
 }
 /* .rbc-row-content-scrollable .rbc-row-content-scroll-container {
   overflow-y: visible;
-} */
-/* .rbc-row-content-scroll-container div:first-child .rbc-event::after {
+}
+.rbc-row-content-scroll-container div:first-child .rbc-event::after {
   content: '';
   width: 25px;
   height: 25px;
@@ -131,3 +131,6 @@
   border-radius: 8px;
   background-color: #745cf2;
 } */
+.rbc-row-content-scrollable .rbc-row-content-scroll-container {
+  overflow: hidden;
+}

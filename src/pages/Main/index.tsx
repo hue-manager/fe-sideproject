@@ -1,26 +1,19 @@
-import { logout } from '../../api/auth'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { removeCookie } from '../../utils/cookies'
+import UserInfoSection from '@components/Main/UserInfoSection'
+import CalendarSection from '@components/Main/CalendarSection'
+import ApplySection from '@components/Main/ApplySection'
+import { useEffect, useRef, useState } from 'react'
 
 interface Props {}
 
 const Main = (props: Props) => {
-  const navigate = useNavigate()
-
-  const logoutSubmitHandler = async (event: React.MouseEvent) => {
-    event.preventDefault()
-    removeCookie()
-    const res = await logout()
-    if (res) {
-      navigate('/')
-    }
-  }
+  const applySectionRef = useRef(null)
+  const calendarSectionRef = useRef(null)
   return (
-    <div>
-      Home
-      <button onClick={logoutSubmitHandler}>임시 로그아웃 버튼</button>
-    </div>
+    <>
+      <UserInfoSection applySectionRef={applySectionRef} calendarSectionRef={calendarSectionRef} />
+      <CalendarSection calendarRef={calendarSectionRef} />
+      <ApplySection applyRef={applySectionRef} />
+    </>
   )
 }
 

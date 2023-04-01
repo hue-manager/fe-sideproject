@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Calendar, momentLocalizer, DateLocalizer, Views } from 'react-big-calendar'
+import { Calendar, momentLocalizer, SlotInfo } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { Header } from '../../stories/Header'
-import './MyCalendar.css'
-import styled from 'styled-components'
-import { within } from '@storybook/testing-library'
+import './MonthCalendar.css'
+import { useDispatch } from 'react-redux'
+import { setTitle, setData } from '../../store/slice/calendarSlice'
 
-const MyDateHeader = ({ label, date }: { label: string; date: string }) => {
-  return (
-    <div>
-      <button className="rbc-button-link" role="cell">
-        {label}
-      </button>
-    </div>
-  )
-}
-
-const MyCalendar = () => {
+const MonthCalendar = () => {
   const localizer = momentLocalizer(moment)
+  const dispatch = useDispatch()
 
+  // data 가져올 때 allDay : true 기본
   const events = [
     {
       title: 'My Event',
@@ -508,64 +499,56 @@ const MyCalendar = () => {
     },
   ]
 
-  const test = (info: any): any => {
-    console.log(info)
-  }
-
-  const component = {
-    // event: (props: any) => {
-    //   // console.log(props)
-    //   return null
-    // },
+  const components = {
     month: {
-      event: (props: any) => {
-        // console.log('month: ', props)
+      event: () => {
         return null
       },
     },
-    // day: {
-    //   event: (props: any) => {
-    //     console.log(props)
-    //     return null
-    //   },
-    // },
+  }
+  const months: { [key: string]: string } = {
+    Jan: '01',
+    Feb: '02',
+    Mar: '03',
+    Apr: '04',
+    May: '05',
+    Jum: '06',
+    Jul: '07',
+    Aug: '08',
+    Sep: '09',
+    Oct: '10',
+    Nov: '11',
+    Dec: '12',
+  }
+
+  const onNavigate = (newDate: any, newView: any) => {
+    const date = newDate.toString()
+    const [, month, day, year] = date.split(' ')
+    const resTitle = `${year}.${Number(months[`${month}`])}.${Number(day)}`
+    const resData = `${year}-${months[`${month}`]}-${day}`
+    dispatch(setTitle(resTitle))
+    dispatch(setData(resData))
   }
 
   return (
     <Calendar
-      components={component}
-      tooltipAccessor={(): any => null}
-      // eventPropGetter={test}
+      onNavigate={onNavigate}
+      components={components}
       events={events}
       localizer={localizer}
       defaultView={'month'}
       selectable={true}
       showAllEvents={true}
-      drilldownView="agenda"
-      messages={{
-        previous: '<',
-        next: '>',
-        today: 'today',
-      }}
-      views={['month', 'day']} // 뭘 보여줄지 month, day 등
-      // date={moment('2023-01-15').toDate()} // 해당 날짜로 이동
+      views={['month']}
       formats={{
         monthHeaderFormat: (date: Date) => moment(date).format('M'),
         dateFormat: (date: Date) => moment(date).format('D'),
       }}
-      // onSelectEvent={test} // 해당 이벤트를 클릭했을 때 옆에 목록 보여주면 될 듯
-      // selectable={true} // onSelectSlot 할 때 꼭 넣어줘야 함
-      onSelectSlot={test} // 해당 일 슬롯을 클릭했을 때 그 슬롯의 정보를 참조
-      onShowMore={(events, date) => console.log(events, date)} // 더보기 눌렀을 때 정보 더 나오는 것
-      // toolbar={false}
-      popup={true} // 이벤트 더보기 눌렀을 때 밑에 팝업 안 뜨게
       startAccessor="start"
       endAccessor="end"
-      // getNow={() => new Date('2023-04-13')} // 오늘을 가져오는 듯?
-      titleAccessor="title"
-      style={{ height: 688, width: 441 }}
+      style={{ height: '80%', width: '80%' }}
     />
   )
 }
 
-export default MyCalendar
+export default MonthCalendar

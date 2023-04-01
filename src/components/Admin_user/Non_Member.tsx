@@ -32,8 +32,8 @@ const Non_Member = (props: Props) => {
 
   return (
     <Content title={'비회원관리'} intro={'가입 신청을 승인할 수 있습니다.'}>
-      <Wrapper>
-        <Table>
+      <WrapperStyle>
+        <TableStyle>
           <thead>
             <tr>
               <th></th>
@@ -65,19 +65,19 @@ const Non_Member = (props: Props) => {
               </tr>
             ))}
           </tbody>
-        </Table>
-      </Wrapper>
+        </TableStyle>
+      </WrapperStyle>
     </Content>
   )
 }
 
-const Wrapper = styled.div`
+const WrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `
 
-const Table = styled.table`
+const TableStyle = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;

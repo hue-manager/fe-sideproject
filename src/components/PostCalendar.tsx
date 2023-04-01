@@ -1,32 +1,38 @@
 import React, { useState } from 'react'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+import { Calendar, momentLocalizer, SlotInfo } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import styled from 'styled-components'
+import formatDateString from '../utils/formatDateString'
 
 const localizer = momentLocalizer(moment)
 
 const MyCalendar = () => {
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState<any>(null)
 
-  const handleSelectEvent = (event: any) => {
-    setSelectedDate(event.start)
+  const handleSelectSlot = (event: any) => {
+    setSelectedDate(formatDateString(event.start))
   }
+
+  const handleNavigate = (date: Date, view: string, action: string) => {
+    setSelectedDate(formatDateString(date.toString()))
+  }
+
+  console.log('selectedDate', selectedDate)
 
   return (
     <ContainerStyle>
       <CalendarStyle
         localizer={localizer}
-        events={[]}
         views={['month']} // 뭘 보여줄지 month, day 등
         formats={{ monthHeaderFormat: 'M' }}
         selectable
-        onSelectEvent={handleSelectEvent}
+        onSelectSlot={handleSelectSlot}
+        onNavigate={handleNavigate}
         messages={{
           agenda: '',
         }}
       />
-      {selectedDate && <p>{moment(selectedDate).format('YYYY-MM-DD')}</p>}
     </ContainerStyle>
   )
 }
@@ -51,5 +57,12 @@ const CalendarStyle = styled(Calendar)`
     }
   }
   .rbc-month-view {
+    padding: 1.5rem;
+    .rbc-month-row {
+      .rbc-day-bg.rbc-today {
+        border-radius: 50%;
+        background-color: var(--color-lightpurple);
+      }
+    }
   }
 `

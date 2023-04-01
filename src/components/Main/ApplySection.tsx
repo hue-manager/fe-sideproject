@@ -69,21 +69,11 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                 <ChildrenStyle>
                   <InputStyle>
                     <span>신청 날짜</span>
-                    <Select
-                      options={selectOptions}
-                      initial={'정규 스케쥴'}
-                      width="100%"
-                      height="3rem"
-                      borderRadius=".5rem"
-                      fontSize="16px"
-                    />
+                    <input type="text" readOnly />
                   </InputStyle>
                   <PostCalendar />
                 </ChildrenStyle>
               </Modal>
-
-              {/* <Button primary={true} size={'large'} label={'연차신청'} /> */}
-              {/* <Button primary={true} size={'large'} label={'당직신청'} /> */}
             </ButtonGroupStyle>
           </FirstBoxStyle>
           <SecondBoxStyle>
@@ -211,14 +201,21 @@ const SectionStyle = styled.section`
   }
 `
 
-// modal
+// 당직 신청 modal창 자식요소들
 
 const ChildrenStyle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
+
+  & > div:first-child {
+    height: 5%;
+    margin-bottom: 1rem;
+  }
   & > div:last-child {
     align-self: center;
+    height: 95%;
   }
 `
 
@@ -232,8 +229,16 @@ const InputStyle = styled.div`
     font-weight: 600;
     width: 15%;
   }
-  & > div {
+  & > input {
     width: 85%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-primary);
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-primary);
   }
 `
 

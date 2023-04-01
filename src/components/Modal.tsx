@@ -29,7 +29,7 @@ const Modal = ({ children, visible, onClose }: IModal) => {
           </CloseButton>
           <div>연차 신청</div>
         </HeaderStyle>
-        <InputStyle>
+        <SelectBoxStyle>
           <span>신청 사유</span>
           <Select
             options={selectOptions}
@@ -39,7 +39,7 @@ const Modal = ({ children, visible, onClose }: IModal) => {
             borderRadius=".5rem"
             fontSize="16px"
           />
-        </InputStyle>
+        </SelectBoxStyle>
         <ContentStyle>{children}</ContentStyle>
         <ApplyBtnStyle>
           <Button
@@ -106,11 +106,10 @@ const HeaderStyle = styled.div`
   }
 `
 
-const InputStyle = styled.div`
+const SelectBoxStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
   span {
     font-size: 1rem;
     font-weight: 600;
@@ -136,7 +135,10 @@ const ContentStyle = styled.div`
   flex-direction: column;
 `
 
-const ApplyBtnStyle = styled.div``
+const ApplyBtnStyle = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 const ModalSectionStyle = styled.div<{ visible: boolean }>`
   display: flex;
@@ -156,13 +158,14 @@ const ModalSectionStyle = styled.div<{ visible: boolean }>`
   ${HeaderStyle} {
     height: 10%;
   }
-  ${InputStyle} {
+  ${SelectBoxStyle} {
     height: 10%;
   }
   ${ContentStyle} {
-    height: 70%;
+    height: 72%;
   }
   ${ApplyBtnStyle} {
-    height: 10%;
+    height: 8%;
+    margin-top: 1.25rem;
   }
 `

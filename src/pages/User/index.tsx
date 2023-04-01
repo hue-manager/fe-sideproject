@@ -1,6 +1,6 @@
-import Member from '../../components/Admin_user/Member'
+import Member from '@components/Admin_user/Member'
 import React, { useState } from 'react'
-import Non_Member from '../../components/Admin_user/Non_Member'
+import Non_Member from '@components/Admin_user/Non_Member'
 import styled from 'styled-components'
 
 type Props = {}

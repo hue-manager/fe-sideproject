@@ -5,7 +5,7 @@ const cookies = new Cookies()
 export const setCookie = (token: string) => {
   return cookies.set('token', token, {
     path: '/',
-    maxAge: 180,
+    maxAge: 60,
   })
 }
 
@@ -20,3 +20,5 @@ export const removeCookie = () => {
     maxAge: -1,
   })
 }
+
+export const expirationToken = () => {}

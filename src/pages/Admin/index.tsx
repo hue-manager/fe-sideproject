@@ -1,7 +1,7 @@
-import Content from '../../../src/components/Content'
+import Content from '@components/Content'
 import React from 'react'
 import styled from 'styled-components'
-import Button_primary from '../../components/Button/Button_primary'
+import Button_primary from '@components/Button/Button_primary'
 
 interface Props {}
 

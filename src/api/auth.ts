@@ -1,4 +1,4 @@
-import { removeCookie, setCookie } from '../utils/cookies'
+import { removeToken, setExpiration, setToken } from '../utils/cookies'
 import API_URLS from '../constants/apiConst'
 import instance from './apiController'
 
@@ -11,9 +11,11 @@ export const login = async (email: string, password: string) => {
     if (response.data.message === '존재하지 않는 이메일 입니다.') {
       console.log('fail')
       return 'fail'
-    } else {
+    }
+    if (response.data.message === '로그인 성공') {
       console.log({ token: response.data })
-      setCookie(response.data)
+      setToken(response.data)
+      setExpiration()
       return response
     }
   } catch (error) {
@@ -29,7 +31,7 @@ export const logout = async () => {
   try {
     const response = await instance.post(API_URLS.LOGOUT)
     console.log('로그아웃 성공')
-    removeCookie()
+    removeToken()
     console.log('삭제 완료')
     return response
   } catch (error) {

@@ -17,6 +17,8 @@ interface ISelect {
   isClickDefault?: boolean
   isDisabled?: boolean
   type?: string
+  bgColor?: string
+  color?: string
   onChange?: React.ChangeEventHandler<HTMLLIElement>
   onClick?: React.MouseEventHandler<HTMLLIElement>
 }
@@ -36,6 +38,8 @@ const Select = ({
   topPosition = '48%',
   arrowImg = '/images/selectBtn2.png',
   type = '',
+  bgColor = 'var(--color-white)',
+  color = 'var(--color-primary)',
   onChange,
   onClick,
 }: ISelect) => {
@@ -58,12 +62,14 @@ const Select = ({
       show={showOptions}
       arrowImg={arrowImg}
       topPosition={topPosition}
+      bgColor={bgColor}
+      color={color}
       type={type}
       isClickDefault={isClickDefault}
       isDisabled={isDisabled}
       onClick={() => !isDisabled && setShowOptions((prev) => !prev)}
     >
-      <LabelStyle fontSize={fontSize} isDisabled={isDisabled}>
+      <LabelStyle fontSize={fontSize} isDisabled={isDisabled} bgColor={bgColor} color={color}>
         {currentValue} {!currentValue.toString().includes(unit) && unit}
       </LabelStyle>
       <SelectOptionsStyle
@@ -71,9 +77,15 @@ const Select = ({
         ref={ref}
         borderRadius={borderRadius}
         borderColor={borderColor}
+        bgColor={bgColor}
+        color={color}
+        type={type}
       >
         {options?.map((option) => (
           <OptionStyle
+            type={type}
+            bgColor={bgColor}
+            color={color}
             width={width}
             height={height}
             fontSize={fontSize}
@@ -103,6 +115,8 @@ const SelectBoxStyle = styled.div<{
   arrowImg: string
   topPosition: string
   type: string
+  bgColor: string
+  color: string
 }>`
   display: flex;
   align-items: center;
@@ -113,12 +127,13 @@ const SelectBoxStyle = styled.div<{
   height: ${({ height }) => height};
   padding: 12px 16px;
   border-radius: ${({ borderRadius }) => borderRadius};
-  background-color: ${({ isDisabled }) =>
-    isDisabled ? 'var(--color-primary)' : 'var(--color-white)'};
+  /* background-color: ${({ isDisabled }) =>
+    isDisabled ? 'var(--color-primary)' : 'var(--color-white)'}; */
+  background-color: ${({ bgColor }) => bgColor};
+  color: ${({ color }) => color};
   cursor: ${({ isDisabled }) => !isDisabled && 'pointer'};
   border: 1px solid ${({ borderColor }) => borderColor};
   border-color: ${({ show, borderColor }) => (show ? 'transparent' : borderColor)};
-  border-right: 1px solid ${({ type }) => type === 'searchFilterInput' && 'transparent'};
   &::before {
     content: '';
     background-image: ${({ arrowImg }) => `url(${arrowImg})`};
@@ -137,9 +152,13 @@ const SelectBoxStyle = styled.div<{
 const LabelStyle = styled.label<{
   fontSize: string
   isDisabled: boolean
+  bgColor: string
+  color: string
 }>`
   font-size: ${({ fontSize }) => fontSize};
-  color: ${({ isDisabled }) => isDisabled && 'var(--color-primary)'};
+  /* color: ${({ isDisabled }) => isDisabled && 'var(--color-primary)'}; */
+  background-color: ${({ bgColor }) => bgColor};
+  color: ${({ color }) => color};
   cursor: ${({ isDisabled }) => !isDisabled && 'pointer'};
 `
 
@@ -147,10 +166,13 @@ const SelectOptionsStyle = styled.ul<{
   show: boolean
   borderColor: string
   borderRadius: string
+  bgColor: string
+  color: string
+  type: string
 }>`
   position: absolute;
   list-style: none;
-  top: -1px;
+  top: ${({ type }) => (type === 'bgPrimary' ? '1px' : '-1px')};
   left: -1px;
   width: 100%;
   overflow-y: auto;
@@ -159,7 +181,7 @@ const SelectOptionsStyle = styled.ul<{
   border: ${({ show }) => (show ? `1px solid var(--color-primary)` : 'none')};
   border-color: ${({ borderColor }) => borderColor};
   border-radius: ${({ borderRadius }) => borderRadius};
-  background-color: var(--color-white);
+  background-color: ${({ bgColor }) => bgColor};
   z-index: 10;
   box-sizing: content-box;
 `
@@ -168,6 +190,9 @@ const OptionStyle = styled.li<{
   width: string
   height: string
   fontSize: string
+  bgColor: string
+  color: string
+  type: string
 }>`
   font-size: ${({ fontSize }) => fontSize};
   width: ${({ width }) => width};
@@ -177,7 +202,8 @@ const OptionStyle = styled.li<{
   align-items: center;
   transition: background-color 0.2s ease-in;
   &:hover {
-    color: var(--color-white);
-    background-color: var(--color-primary);
+    background-color: ${({ color, type }) =>
+      type === 'bgPrimary' ? 'var(--color-primary)' : color};
+    color: ${({ bgColor, type }) => (type === 'bgPrimary' ? 'var(--color-white)' : bgColor)};
   }
 `

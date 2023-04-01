@@ -9,6 +9,7 @@ import DutyDateModal from './DutyDateModal'
 import { setSelectedDutyDate } from '../../store/slice/selectedDutyDateSlice'
 import { setEndDate, setStartDate } from '../../store/slice/selectedAnnualDateSlice'
 import AnnualLeaveModal from './AnnualLeaveModal'
+import Select from '../UI/Select'
 
 interface ApplySectionProps {
   applyRef: MutableRefObject<HTMLDivElement | null>
@@ -29,6 +30,8 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
     setIsDutyModalOpen(true)
     dispatch(setSelectedDutyDate(''))
   }
+
+  const selectOptions = ['전체', '연차', '당직']
 
   return (
     <ContainerStyle ref={applyRef}>
@@ -79,7 +82,21 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
             </HeaderStyle>
             <InfoStyle>
               <header>
-                <div>전체</div>
+                <div>
+                  <Select
+                    options={selectOptions}
+                    initial={'전체'}
+                    width="100%"
+                    height="3rem"
+                    borderRadius=".5rem"
+                    fontSize="14px"
+                    arrowImg="/images/selectBtn3.png"
+                    borderColor="inherit"
+                    bgColor="var(--color-primary)"
+                    color="var(--color-white)"
+                    type="bgPrimary"
+                  />
+                </div>
                 <div>신청자</div>
                 <div>소속/직급</div>
                 <div>신청 사유</div>
@@ -147,7 +164,19 @@ const InfoStyle = styled.div`
     border-radius: 9999px;
     padding: 0 3rem;
     background-color: var(--color-primary);
-    div {
+    & > div:first-child {
+      width: 16.6%;
+      height: 100%;
+      gap: 1.5rem;
+      font-weight: 600;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      div:first-child {
+        width: 50%;
+      }
+    }
+    div:not(:first-child) {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -158,7 +187,7 @@ const InfoStyle = styled.div`
       font-weight: 600;
     }
   }
-  ul {
+  & > ul {
     padding-top: 1.75rem;
     padding-bottom: 2.5rem;
     display: flex;

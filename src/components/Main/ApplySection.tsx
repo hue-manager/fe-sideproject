@@ -4,18 +4,42 @@ import Inner from '@components/Inner'
 import Button from '@components/UI/Button'
 import ApplicationCard from './ApplicationCard'
 import Pagination from '../UI/Pagination'
-import { MutableRefObject } from 'react'
+import { MutableRefObject, useCallback, useState } from 'react'
+import Modal from '../Modal'
+import Select from '../UI/Select'
+import PostCalendar from '../../components/PostCalendar'
 interface ApplySectionProps {
   applyRef: MutableRefObject<HTMLDivElement | null>
 }
 const ApplySection = ({ applyRef }: ApplySectionProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen2, setIsOpen2] = useState(false)
+
+  const handleModalOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleModal2Open = () => {
+    setIsOpen2(true)
+  }
+
+  const handleModal2Close = () => {
+    setIsOpen2(false)
+  }
+
+  const selectOptions = ['정규 스케쥴', '업무 지시', '비상 근무', '기타']
+
   return (
     <ContainerStyle ref={applyRef}>
       <Inner height="100%" width="90%">
         <SectionStyle>
           <FirstBoxStyle>
             <h2>연차 • 당직 신청하기</h2>
-            <div>
+            <ButtonGroupStyle>
               <Button
                 width="50%"
                 height="4rem"
@@ -23,6 +47,7 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                 bgColor="var(--color-white)"
                 color="var(--color-primary)"
                 padding="1rem 0"
+                onClick={handleModalOpen}
               >
                 연차신청
               </Button>
@@ -33,12 +58,33 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                 bgColor="var(--color-white)"
                 color="var(--color-primary)"
                 padding="1rem 0"
+                onClick={handleModal2Open}
               >
                 당직신청
               </Button>
+              <Modal visible={isOpen} onClose={handleModalClose}>
+                <FirstCalendarBoxStyle></FirstCalendarBoxStyle>
+              </Modal>
+              <Modal visible={isOpen2} onClose={handleModal2Close}>
+                <ChildrenStyle>
+                  <InputStyle>
+                    <span>신청 날짜</span>
+                    <Select
+                      options={selectOptions}
+                      initial={'정규 스케쥴'}
+                      width="100%"
+                      height="3rem"
+                      borderRadius=".5rem"
+                      fontSize="16px"
+                    />
+                  </InputStyle>
+                  <PostCalendar />
+                </ChildrenStyle>
+              </Modal>
+
               {/* <Button primary={true} size={'large'} label={'연차신청'} /> */}
               {/* <Button primary={true} size={'large'} label={'당직신청'} /> */}
-            </div>
+            </ButtonGroupStyle>
           </FirstBoxStyle>
           <SecondBoxStyle>
             <HeaderStyle>
@@ -87,13 +133,14 @@ const FirstBoxStyle = styled.div`
   h2 {
     padding-bottom: 2rem;
   }
-  div {
-    display: flex;
-    gap: 2rem;
-    button {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
+`
+
+const ButtonGroupStyle = styled.div`
+  display: flex;
+  gap: 2rem;
+  button {
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 `
 
@@ -163,3 +210,31 @@ const SectionStyle = styled.section`
     height: 72%;
   }
 `
+
+// modal
+
+const ChildrenStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & > div:last-child {
+    align-self: center;
+  }
+`
+
+const InputStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  span {
+    font-size: 1rem;
+    font-weight: 600;
+    width: 15%;
+  }
+  & > div {
+    width: 85%;
+  }
+`
+
+const FirstCalendarBoxStyle = styled.div``

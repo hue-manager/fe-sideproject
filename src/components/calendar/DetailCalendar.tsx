@@ -13,13 +13,14 @@ const DetailCalendar = () => {
 const Wrap = styled.div`
   margin-left: 30px;
   width: 517px;
-  height: 888px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid #745cf2;
   border-radius: 15px;
+  background-color: var(--color-lightpurple);
 `
 const Head = styled.div`
   margin-bottom: 120px;

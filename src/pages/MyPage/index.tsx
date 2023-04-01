@@ -14,7 +14,7 @@ const MyPage = (props: Props) => {
   console.log(getCurrent())
   return (
     <Page>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <TimeStamp></TimeStamp>
       <Container>
         <Content title={'내 정보'} intro={'내 정보를 확인하고 수정할 수 있습니다.'}>

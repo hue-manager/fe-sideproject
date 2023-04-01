@@ -8,10 +8,15 @@ export const login = async (email: string, password: string) => {
       email: email,
       password: password,
     })
-    console.log('로그인 성공')
-    setCookie(response.data)
-    console.log({ token: response.data })
-    return response
+    if (response.data.message === 'Bad Request') {
+      console.log('fail')
+      return 'fail'
+    } else {
+      console.log({ token: response.data })
+      setCookie(response.data)
+
+      return response
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message)

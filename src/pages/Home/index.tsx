@@ -21,6 +21,7 @@ const Home = (props: Props) => {
     event.preventDefault()
     const formData = new FormData(event?.currentTarget)
     const res = await login(formData.get('email') as string, formData.get('password') as string)
+    if (res === 'fail') return
     if (res) {
       navigate('/main')
       console.log('야호')

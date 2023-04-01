@@ -1,9 +1,11 @@
+import TotalCalendar from './../../components/calendar/TotalCalendar'
 import { Button } from '@components/Button/Button'
 import { Action } from '@remix-run/router'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { login } from '../../api/auth'
+import { setExpiration } from '../../utils/cookies'
 
 interface Props {}
 
@@ -20,6 +22,7 @@ const Home = (props: Props) => {
     event.preventDefault()
     const formData = new FormData(event?.currentTarget)
     const res = await login(formData.get('email') as string, formData.get('password') as string)
+    if (res === 'fail') return
     if (res) {
       navigate('/main')
       console.log('야호')
@@ -66,6 +69,9 @@ const Home = (props: Props) => {
                 <input type="password" name="password" />
               </label>
               <Button
+                onClick={() => {
+                  setExpiration()
+                }}
                 backgroundColor={'var(--color-primary)'}
                 size={'width'}
                 label={'로그인'}

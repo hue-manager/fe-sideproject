@@ -5,6 +5,8 @@ import Logo from '@components/UI/Logo'
 import { SidebarElement } from '../env'
 import { useRouter } from '../hooks/useRouter'
 import { HiOutlineLogout } from 'react-icons/hi'
+import { removeExpiration, removeToken } from '../utils/cookies'
+import Timer from './Timer'
 
 interface SidebarProps {
   sidebarContent: SidebarElement[]
@@ -113,7 +115,14 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
           </li>
         </ListStyle>
       )}
-      <LogoutStyle>
+      <TimerStyle />
+      <LogoutStyle
+        onClick={() => {
+          removeToken()
+          removeExpiration()
+          sidebarMenuClickHandler('/')
+        }}
+      >
         <HiOutlineLogout />
         <span>로그아웃</span>
       </LogoutStyle>
@@ -190,6 +199,8 @@ const LogoutStyle = styled.div`
   }
 `
 
+const TimerStyle = styled(Timer)``
+
 const SidebarStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -201,11 +212,15 @@ const SidebarStyle = styled.div`
   background-color: var(--color-primary);
   color: var(--color-white);
   box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
+
   ${ProfilStyle} {
     height: 20%;
   }
   ${ListStyle} {
-    height: 90%;
+    height: 80%;
+  }
+  ${TimerStyle} {
+    height: 15%;
   }
   ${LogoutStyle} {
     height: 5%;

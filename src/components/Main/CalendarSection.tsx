@@ -2,7 +2,7 @@ import React, { MutableRefObject } from 'react'
 import styled from 'styled-components'
 import { logout } from '../../api/auth'
 import { useNavigate } from 'react-router-dom'
-import { removeCookie } from '../../utils/cookies'
+import { removeToken } from '../../utils/cookies'
 import TotalCalendar from './../../components/calendar/TotalCalendar'
 import UserInfoSection from '@components/Main/UserInfoSection'
 import ApplySection from '@components/Main/ApplySection'
@@ -15,7 +15,7 @@ const CalendarSection = ({ calendarRef }: CalendarSectionProps) => {
 
   const logoutSubmitHandler = async (event: React.MouseEvent) => {
     event.preventDefault()
-    removeCookie()
+    removeToken()
     const res = await logout()
     if (res) {
       navigate('/')

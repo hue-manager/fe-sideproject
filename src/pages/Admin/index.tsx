@@ -81,16 +81,14 @@ const Table = styled.table`
   width: 100%;
   margin: 0 auto;
   tr {
-    height: 70px;
-    box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
+    height: 3rem;
+    box-shadow: rgba(116, 92, 242, 0.12) 5px 6px 10px;
     border-radius: 40px;
     text-align: center;
-    margin: 40px;
   }
   td {
     vertical-align: middle;
     background-color: var(--color-white);
-    font-weight: 600;
     &.purple {
       color: var(--color-primary);
     }
@@ -100,6 +98,7 @@ const Table = styled.table`
   }
   th {
     vertical-align: middle;
+    font-weight: 600;
   }
 
   thead > tr {
@@ -117,11 +116,13 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
+    padding-left: 40px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
+    padding-right: 40px;
   }
 `
 

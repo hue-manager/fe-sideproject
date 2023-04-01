@@ -48,10 +48,9 @@ const Non_Member = (props: Props) => {
                 <td>
                   <Avatar
                     style={{
-                      width: '70px',
-                      height: '70px',
-                      border: '3px solid var(--color-primary)',
-                      margin: '20px auto',
+                      width: '55px',
+                      height: '55px',
+                      margin: '10px auto',
                     }}
                     {...genConfig(data.name)}
                   />
@@ -85,8 +84,8 @@ const Table = styled.table`
   table-layout: fixed;
 
   tr {
-    height: 70px;
-    box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
+    height: 3rem;
+    box-shadow: rgba(116, 92, 242, 0.12) 5px 6px 10px;
     border-radius: 40px;
     vertical-align: middle;
     margin: 40px;
@@ -107,6 +106,7 @@ const Table = styled.table`
 
   th {
     vertical-align: middle;
+    font-weight: 600;
   }
 
   thead > tr {
@@ -124,13 +124,13 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
-    padding-left: 30px;
+    padding-left: 40px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
-    padding-right: 30px;
+    padding-right: 40px;
   }
 `
 

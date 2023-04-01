@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { login } from '../../api/auth'
+import { setExpiration } from '../../utils/cookies'
 
 interface Props {}
 
@@ -68,6 +69,9 @@ const Home = (props: Props) => {
                 <input type="password" name="password" />
               </label>
               <Button
+                onClick={() => {
+                  setExpiration()
+                }}
                 backgroundColor={'var(--color-primary)'}
                 size={'width'}
                 label={'로그인'}

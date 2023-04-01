@@ -232,7 +232,6 @@ const Form = styled.div`
   justify-content: flex-end;
   flex-wrap: wrap;
   align-content: flex-start;
-  /* background-color: yellowgreen; */
   div {
     width: 100%;
   }
@@ -291,7 +290,8 @@ const InputWrap = styled.div`
 
 const SelectBox = styled.ul`
   width: 100%;
-  height: 150px;
+  height: 130px;
+  display: none;
   overflow-y: auto;
   position: absolute;
   border-radius: 10px;

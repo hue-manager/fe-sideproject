@@ -4,17 +4,15 @@ import Avatar, { genConfig } from 'react-nice-avatar'
 import Content from '@components/Content'
 import { Button } from '@components/Button/Button'
 import TimeStamp from '@components/timeStamp/TimeStamp'
-import { getCurrent } from '../../../src/utils/timer'
 
 interface Props {}
 
 const MyPage = (props: Props) => {
   const config = genConfig('qwer1234@qwer1234.com')
 
-  console.log(getCurrent())
+  console.log()
   return (
     <Page>
-      {/* <Sidebar /> */}
       <TimeStamp></TimeStamp>
       <Container>
         <Content title={'내 정보'} intro={'내 정보를 확인하고 수정할 수 있습니다.'}>

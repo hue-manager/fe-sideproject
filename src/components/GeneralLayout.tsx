@@ -24,7 +24,7 @@ const GeneralLayoutStyle = styled.div`
 `
 
 const GeneralLayoutBodyStyle = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
   margin: 0 auto;
   padding-left: 18rem;

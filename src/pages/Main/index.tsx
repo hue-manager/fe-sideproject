@@ -29,13 +29,26 @@ interface ISearchResult {
   first: boolean
   empty: boolean
 }
+
+type T = {
+  content: {
+    id: number
+    email: string
+    userName: string
+    phoneNumber: string
+    role: string
+    vacationCount: number
+    position: string
+    department: string
+  }[]
+  totalElments: number
+  totalPages: number
+}
+
 const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
   const accessToken = getToken()
-
-  // const [scheduleList, setScheduleList] = useState<Item[]>([])
-
   const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
     ax.getUserInfo(accessToken)
   )
@@ -53,39 +66,7 @@ const Main = () => {
   //   },
   // })
 
-  const fetchApply = async (pageParam: number = 0): Promise<ISearchResult> => {
-    try {
-      const userId = getUserId()
-      const response = await fetch(
-        `http://13.124.96.231:8080/schedules/userinfo/${userId}?page=${pageParam}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error('getUserSchedules error:', error)
-      throw error
-    }
-  }
-  const {
-    data: scheduleList,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-  } = useInfiniteQuery(['applyInfo'], ({ pageParam }) => fetchApply(pageParam), {
-    getNextPageParam: (lastPage, allPages) => {
-      console.log('lastPage', lastPage)
-      const nextPage = lastPage.totalPages > lastPage.number ? lastPage.number + 1 : null
-      return nextPage
-    },
-  })
-
-  if (fetchingUser || isFetching) return <p>Lodaing...</p>
+  if (fetchingUser) return <p>Lodaing...</p>
 
   console.log('scheduleList')
   return (
@@ -96,13 +77,7 @@ const Main = () => {
         calendarSectionRef={calendarSectionRef}
       />
       <CalendarSection calendarRef={calendarSectionRef} />
-      <ApplySection
-        scheduleList={scheduleList}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-        userInfo={userInfo}
-        applyRef={applySectionRef}
-      />
+      <ApplySection userInfo={userInfo} applyRef={applySectionRef} />
     </>
   )
 }

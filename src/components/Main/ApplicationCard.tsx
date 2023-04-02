@@ -16,26 +16,26 @@ interface Item {
 interface IApplicationCard {
   item: Item
 }
-const ApplicationCard = ({ item }: IApplicationCard) => {
-  const {
-    id,
-    category,
-    memo,
-    user: { createdAt, credentialsNonExpired, enabled, userName, position, department },
-    startDate,
-    endDate,
-    status,
-  } = item
-
+const ApplicationCard = () => {
+  // const {
+  //   id,
+  //   category,
+  //   memo,
+  //   user: { createdAt, credentialsNonExpired, enabled, userName, position, department },
+  //   startDate,
+  //   endDate,
+  //   status,
+  // } = item
+  const category = 'VACATION'
   return (
     <ApplicationCardStyle category={category}>
-      <div>{category === 'WORK' ? '당직' : '연차'}</div>
-      <div>{userName}</div>
-      <div>{`${department}/${position}`}</div>
-      <div>{memo}</div>
-      <div>{startDate}</div>
-      <div>{endDate}</div>
-      <div>{status}</div>
+      <div>연차</div>
+      <div>공혜지</div>
+      <div>인사팀/사원</div>
+      <div>병원 방문</div>
+      <div>2023-01-25</div>
+      <div>2023-01-31</div>
+      <div>처리대기</div>
     </ApplicationCardStyle>
   )
 }

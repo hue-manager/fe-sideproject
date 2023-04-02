@@ -71,11 +71,34 @@ export const removeUserId = () => {
   })
 }
 
+// 유저롤 저장
+export const setUserRole = (userRole: string) => {
+  return cookies.set('userRole', userRole, {
+    path: '/',
+    maxAge: 900,
+  })
+}
+
+// 유저롤 가져오기
+export const getUserRole = () => {
+  const userId = cookies.get('userRole')
+  return userId
+}
+
+// 유저롤 지우기
+export const removeUserRole = () => {
+  return cookies.set('userRole', '', {
+    path: '/',
+    maxAge: -1,
+  })
+}
+
 // 로그인 정보 한번에 저장
-export const setInfo = (token: string, userId: number) => {
+export const setInfo = (token: string, userId: number, userRole: string) => {
   setToken(token)
   setExpiration()
   setUserId(userId)
+  setUserRole(userRole)
 }
 
 // 로그인 정보 한번에 삭제
@@ -83,6 +106,7 @@ export const removeInfo = () => {
   removeToken()
   removeExpiration()
   removeUserId()
+  removeUserRole()
 }
 
 export const expirationToken = () => {}

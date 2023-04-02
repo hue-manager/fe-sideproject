@@ -29,6 +29,8 @@ const Home = (props: Props) => {
     if (role) {
       const formData = new FormData(event?.currentTarget)
       const res = await login(formData.get('email') as string, formData.get('password') as string)
+      console.log('login:', res)
+
       // 비밀번호 불일치
       if (res === 'wrong assword') {
         setMessage(1)

@@ -15,6 +15,7 @@ export default defineConfig({
       { find: '@assets', replacement: resolve(__dirname, 'src/assets') },
       { find: '@utils', replacement: resolve(__dirname, 'src/utils') },
       { find: '@components/UI', replacement: resolve(__dirname, 'src/components/UI') },
+      { find: '@hooks', replacement: resolve(__dirname, 'src/hooks') },
     ],
   },
 })

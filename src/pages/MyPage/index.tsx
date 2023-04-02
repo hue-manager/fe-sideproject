@@ -3,6 +3,8 @@ import Avatar, { genConfig } from 'react-nice-avatar'
 import Content from '@components/Content'
 import { Button } from '@components/Button/Button'
 import Timer from '@components/Timer'
+import Lottie from 'lottie-react'
+import mypage from '../../assets/lottie/mypage.json'
 
 interface Props {}
 
@@ -57,6 +59,7 @@ const MyPage = (props: Props) => {
           </Profile>
         </Content>
       </Container>
+      <Lottie animationData={mypage} className="lottie" />
     </Page>
   )
 }
@@ -64,6 +67,10 @@ const Page = styled.div`
   width: 100%;
   display: flex;
   align-content: flex-start;
+  .lottie {
+    width: 100%;
+    opacity: 0.6;
+  }
 `
 const Sidebar = styled.div`
   width: 270px;

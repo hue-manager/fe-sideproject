@@ -1,47 +1,106 @@
 import TotalCalendar from './../../components/calendar/TotalCalendar'
 import { Button } from '@components/Button/Button'
 import { Action } from '@remix-run/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { login } from '../../api/auth'
-import { setExpiration } from '../../utils/cookies'
+import { login, loginAdmin } from '../../api/auth'
+import { getToken, setExpiration } from '../../utils/cookies'
+// import { authCheck } from '../../utils/authCheck'
 
 interface Props {}
 
-type Data = {
-  email: string
-  password: string
-}
+const errorMessage = ['', '비밀번호를 확인해주세요.', '이메일 혹은 비밀번호가 일치하지 않습니다.']
+
 const Home = (props: Props) => {
-  const [userInfo, setUserInfo] = useState()
+  // 유저 선택 상태 (true일반유저/false관리자)
   const [role, setRole] = useState(true)
+
+  // 에러 메세지
+  const [message, setMessage] = useState(0)
+  const [error, setError] = useState(false)
+
   const navigate = useNavigate()
 
+  // 로그인 api 호출 함수
   const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event?.currentTarget)
-    const res = await login(formData.get('email') as string, formData.get('password') as string)
-    if (res === 'fail') return
-    if (res) {
-      navigate('/main')
-      console.log('야호')
+    // 일반 유저 로그인
+    if (role) {
+      const formData = new FormData(event?.currentTarget)
+      const res = await login(formData.get('email') as string, formData.get('password') as string)
+      // 비밀번호 불일치
+      if (res === 'wrong assword') {
+        setMessage(1)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      // 이메일, 비밀번호 불일치
+      if (res === 'fail') {
+        setMessage(2)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      //로그인 성공시에 메인페이지로 이동
+      if (res) {
+        navigate('/main')
+        console.log('야호')
+      }
+    } else {
+      // 관리자 로그인
+      const formData = new FormData(event?.currentTarget)
+      const res = await loginAdmin(
+        formData.get('email') as string,
+        formData.get('password') as string
+      )
+      // 비밀번호 불일치
+      if (res === 'wrong assword') {
+        setMessage(1)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      // 이메일, 비밀번호 불일치
+      if (res === 'fail') {
+        setMessage(2)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      //로그인 성공시에 메인페이지로 이동
+      if (res) {
+        navigate('/main')
+        console.log('야호')
+      }
     }
   }
 
   return (
-    <Container>
-      <Background />
-      <Inner>
-        <Visual>
+    <ContainerStyle>
+      <BackgroundStyle />
+      <InnerStyle>
+        {/* 왼쪽 영역 */}
+        <LeftStyle>
           <img src="/bg.jpg" alt="background" />
-        </Visual>
-        <Login>
+        </LeftStyle>
+        {/* 로그인 영역 */}
+        <RightStyle>
           <div>
-            <Logo>
+            <LogoStyle>
               <img src="/logo_original.png" alt="logo" />
-            </Logo>
-            <Selected>
+            </LogoStyle>
+            {/* 로그인 유저 선택 */}
+            <SelectedStyle>
               <p
                 onClick={() => {
                   setRole(true)
@@ -58,8 +117,9 @@ const Home = (props: Props) => {
               >
                 관리자
               </p>
-            </Selected>
-            <InputWrap onSubmit={loginSubmitHandler}>
+            </SelectedStyle>
+            {/* 입력 박스 */}
+            <InputWrapStyle onSubmit={loginSubmitHandler}>
               <label>
                 이메일
                 <input type="text" name="email" />
@@ -68,6 +128,9 @@ const Home = (props: Props) => {
                 비밀번호
                 <input type="password" name="password" />
               </label>
+              <MessageStyle className={error ? 'active' : 'basic'}>
+                <p>{errorMessage[message]}</p>
+              </MessageStyle>
               <Button
                 onClick={() => {
                   setExpiration()
@@ -87,15 +150,15 @@ const Home = (props: Props) => {
                   navigate('/signup')
                 }}
               />
-            </InputWrap>
+            </InputWrapStyle>
           </div>
-        </Login>
-      </Inner>
-    </Container>
+        </RightStyle>
+      </InnerStyle>
+    </ContainerStyle>
   )
 }
 
-const Container = styled.div`
+const ContainerStyle = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -104,7 +167,7 @@ const Container = styled.div`
   position: relative;
 `
 
-const Background = styled.div`
+const BackgroundStyle = styled.div`
   width: 100%;
   height: 100%;
   background-image: url('/bg.jpg');
@@ -113,7 +176,7 @@ const Background = styled.div`
   opacity: 0.4;
 `
 
-const Inner = styled.section`
+const InnerStyle = styled.section`
   min-width: 70vw;
   height: 80vh;
   background-color: var(--color-white);
@@ -134,7 +197,7 @@ const Inner = styled.section`
     opacity: 0.4;
   }
 `
-const Visual = styled.div`
+const LeftStyle = styled.div`
   width: 435px;
   height: 100%;
   img {
@@ -144,7 +207,7 @@ const Visual = styled.div`
   }
 `
 
-const Login = styled.div`
+const RightStyle = styled.div`
   width: 800px;
   height: 100%;
   border-radius: 40px;
@@ -156,7 +219,7 @@ const Login = styled.div`
   }
 `
 
-const Logo = styled.div`
+const LogoStyle = styled.div`
   width: 100%;
   margin-bottom: 30px;
   padding: 0 80px;
@@ -164,10 +227,10 @@ const Logo = styled.div`
     width: 270px;
   }
 `
-const Selected = styled.div`
+const SelectedStyle = styled.div`
   width: 100%;
   display: flex;
-  padding: 0 80px;
+  padding: 0 80px 20px 80px;
   p {
     cursor: pointer;
     width: 100%;
@@ -189,7 +252,7 @@ const Selected = styled.div`
   }
 `
 
-const InputWrap = styled.form`
+const InputWrapStyle = styled.form`
   width: 100%;
   padding: 30px 80px;
   label {
@@ -197,7 +260,7 @@ const InputWrap = styled.form`
     margin: 20px 0;
     display: block;
     :nth-child(2) {
-      margin-bottom: 40px;
+      margin-bottom: 10px;
     }
   }
   input {
@@ -212,6 +275,21 @@ const InputWrap = styled.form`
   }
   button:hover {
     opacity: 0.7;
+  }
+`
+
+const MessageStyle = styled.div`
+  height: 30px;
+  p {
+    color: var(--color-primary);
+  }
+  &.active {
+    opacity: 1;
+    transition: ease-in 0.1s;
+  }
+  &.basic {
+    opacity: 0;
+    transition: ease-in-out 0.2s;
   }
 `
 export default Home

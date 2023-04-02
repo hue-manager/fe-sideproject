@@ -2,14 +2,8 @@ import { Button } from '@components/Button/Button'
 import { RxDoubleArrowLeft } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import Select from '@components/UI/Select'
-
-interface SelectBox {
-  show: boolean | undefined
-  value: string | undefined
-}
 
 type FormValue = {
   email: string
@@ -28,7 +22,16 @@ const positionOptions = ['사원', '대리', '과장', '차장', '부장', '이�
 
 const SignUp = () => {
   const navigate = useNavigate()
-  const { register, watch } = useForm<FormValue>()
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormValue>()
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => console.log(data)
+
+  const password = watch('password')
 
   console.log(watch('email'))
   return (
@@ -37,6 +40,7 @@ const SignUp = () => {
       <InnerStyle>
         <LeftStyle>
           <div
+            className="back"
             onClick={() => {
               navigate('/')
             }}
@@ -44,77 +48,99 @@ const SignUp = () => {
             <RxDoubleArrowLeft className="icon" />
             <p>로그인 화면으로 돌아가기</p>
           </div>
-        </LeftStyle>
-        <RightStyle>
           <TitleStyle>
             <p>계정 만들기</p>
           </TitleStyle>
-          <InputWrapStyle>
+        </LeftStyle>
+        <RightStyle>
+          <InputWrapStyle onSubmit={handleSubmit(onSubmit)}>
             <label>
-              이메일
-              <input type="text" {...register('email')} placeholder="이메일을 입력해주세요." />
-            </label>
-            <div className="flex">
-              <label>
-                비밀번호
-                <input
-                  type="password"
-                  {...register('password')}
-                  placeholder="비밀번호를 입력해주세요."
-                />
-              </label>
-              <label>
-                비밀번호 확인
-                <input
-                  type="password"
-                  {...register('passwordConfirm')}
-                  placeholder="한 번 더 비밀번호를 입력해주세요."
-                />
-              </label>
-            </div>
-            <label>
-              이름
-              <input type="text" {...register('name')} placeholder="이름을 입력해주세요." />
-            </label>
-            <label>
-              휴대폰 번호
+              {/* 이메일 */}
               <input
                 type="text"
-                {...register('number')}
-                placeholder="휴대폰 번호를 입력해주세요."
+                {...register('email', {
+                  required: true,
+                  pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                })}
+                placeholder="이메일"
               />
+              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
             </label>
             <div className="flex">
               <label>
-                <p className="select">소속</p>
-                <Select
-                  options={departmentOptions}
-                  initial={'소속팀을 선택해 주세요.'}
-                  width="100%"
-                  height="40px;"
-                  borderRadius="10px"
-                  fontSize="14px"
+                {/* 비밀번호 */}
+                <input
+                  type="password"
+                  {...register('password', {
+                    required: true,
+                    pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/,
+                  })}
+                  placeholder="비밀번호"
                 />
+                <p className={errors.password ? 'active' : 'basic'}>
+                  {errors.password ? '비밀번호가 일치하지 않습니다.' : '일치하게 입력해주세요.'}
+                </p>
               </label>
               <label>
-                <p className="select">직급</p>
+                {/* 비밀번호 확인 */}
+                <input
+                  type="password"
+                  {...register('passwordConfirm', {
+                    required: true,
+                    validate: (value) => value === watch('password'),
+                  })}
+                  placeholder="비밀번호 확인"
+                />
+                <p className={errors.passwordConfirm ? 'active' : 'basic'}>
+                  {errors.passwordConfirm
+                    ? '비밀번호가 일치하지 않습니다.'
+                    : '일치하게 입력해주세요.'}
+                </p>
+              </label>
+            </div>
+            <label>
+              {/* 이름 */}
+              <input type="text" {...register('name')} placeholder="이름" />
+              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+            </label>
+            <label>
+              {/* 휴대폰 번호 */}
+              <input type="text" {...register('number')} placeholder="휴대폰 번호" />
+              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+            </label>
+            <div className="flex">
+              <label>
+                {/* <p className="select">소속</p> */}
                 <Select
-                  options={positionOptions}
-                  initial={'직급을 선택해 주세요.'}
+                  options={departmentOptions}
+                  initial={'소속'}
                   width="100%"
                   height="40px;"
                   borderRadius="10px"
                   fontSize="14px"
                 />
+                <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+              </label>
+              <label>
+                {/* <p className="select">직급</p> */}
+                <Select
+                  options={positionOptions}
+                  initial={'직급'}
+                  width="100%"
+                  height="40px;"
+                  borderRadius="10px"
+                  fontSize="14px"
+                />
+                <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
               </label>
             </div>
+            <Button
+              backgroundColor={'var(--color-primary)'}
+              size={'width'}
+              label={'회원가입'}
+              type={'submit'}
+            />
           </InputWrapStyle>
-          <Button
-            backgroundColor={'var(--color-primary)'}
-            size={'width'}
-            label={'회원가입'}
-            type={'submit'}
-          />
         </RightStyle>
       </InnerStyle>
     </ContainerStyle>
@@ -162,12 +188,12 @@ const InnerStyle = styled.section`
 const LeftStyle = styled.div`
   width: 435px;
   height: 100%;
-  div {
+  .back {
     display: flex;
     cursor: pointer;
     position: absolute;
-    top: 100px;
-    left: 50px;
+    top: -35px;
+    left: 15px;
     font-size: 18px;
     font-weight: 400;
     color: var(--color-black50);
@@ -183,6 +209,7 @@ const LeftStyle = styled.div`
     background-size: 200% 100%;
     background-position: 100%;
     transition: background-position 275ms ease;
+    user-select: none;
     :hover {
       background-position: 0 100%;
       color: var(--color-primary);
@@ -194,25 +221,9 @@ const LeftStyle = styled.div`
   }
 `
 
-const RightStyle = styled.div`
-  width: 800px;
-  height: 100%;
-  padding: 80px 0;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  div {
-    width: 100%;
-  }
-  button {
-    margin: 0 80px;
-  }
-`
-
 const TitleStyle = styled.div`
   width: 100%;
-  margin-top: 10px;
+  margin-top: 70px;
   padding: 0 80px;
   p {
     font-weight: 600;
@@ -220,9 +231,21 @@ const TitleStyle = styled.div`
   }
 `
 
-const InputWrapStyle = styled.div`
+const RightStyle = styled.div`
+  width: 800px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  div {
+    width: 100%;
+  }
+`
+
+const InputWrapStyle = styled.form`
   width: 100%;
-  padding: 30px 80px 20px 80px;
+  padding: 60px 80px 20px 80px;
   label {
     color: var(--color-black60);
     display: block;
@@ -258,6 +281,23 @@ const InputWrapStyle = styled.div`
       input {
         height: 40px;
       }
+    }
+  }
+  button {
+    margin-top: 25px;
+  }
+  p {
+    margin-top: 10px;
+    &.active {
+      color: var(--color-primary);
+      transition: 0.2s;
+    }
+    &.basic {
+      color: var(--color-primary);
+      transition: 0.2s;
+    }
+    &.select {
+      margin-top: 0;
     }
   }
 `

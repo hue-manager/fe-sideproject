@@ -1,4 +1,4 @@
-import { removeToken, setExpiration, setToken } from '../utils/cookies'
+import { removeInfo, removeToken, setExpiration, setInfo, setToken } from '../utils/cookies'
 import API_URLS from '../constants/apiConst'
 import instance from './apiController'
 
@@ -13,11 +13,9 @@ export const login = async (email: string, password: string) => {
       console.log(response.data.message)
       return 'wrong assword'
     }
-    // 로그인 성공시에 토큰과 토큰 삭제시간 쿠키 저장소에 저장
+    // 로그인 성공시에 유저 정보 저장
     if (response.data.message === '로그인 성공') {
-      console.log(response.data)
-      setToken(response.data.token)
-      setExpiration()
+      setInfo(response.data.token, response.data.userId)
       return response
     }
   } catch (error) {
@@ -54,4 +52,6 @@ export const loginAdmin = async (email: string, password: string) => {
   }
 }
 
-export const logout = () => {}
+export const logout = () => {
+  removeInfo()
+}

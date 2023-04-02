@@ -1,11 +1,12 @@
 import TotalCalendar from './../../components/calendar/TotalCalendar'
 import { Button } from '@components/Button/Button'
 import { Action } from '@remix-run/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { login } from '../../api/auth'
-import { setExpiration } from '../../utils/cookies'
+import { getToken, setExpiration } from '../../utils/cookies'
+// import { authCheck } from '../../utils/authCheck'
 
 interface Props {}
 

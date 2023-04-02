@@ -78,7 +78,7 @@ const SignUp = () => {
                   placeholder="비밀번호"
                 />
                 <p className={errors.password ? 'active' : 'basic'}>
-                  {errors.password ? '비밀번호가 일치하지 않습니다.' : '일치하게 입력해주세요.'}
+                  영문, 숫자, 특수문자 조합 8~15자로 입력해 주세요.
                 </p>
               </label>
               <label>
@@ -92,21 +92,35 @@ const SignUp = () => {
                   placeholder="비밀번호 확인"
                 />
                 <p className={errors.passwordConfirm ? 'active' : 'basic'}>
-                  {errors.passwordConfirm
-                    ? '비밀번호가 일치하지 않습니다.'
-                    : '일치하게 입력해주세요.'}
+                  비밀번호가 일치하지 않습니다.
                 </p>
               </label>
             </div>
             <label>
               {/* 이름 */}
-              <input type="text" {...register('name')} placeholder="이름" />
-              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+              <input
+                type="text"
+                {...register('name', {
+                  required: true,
+                  pattern: /^[가-힣]{2,6}$/,
+                })}
+                placeholder="이름"
+              />
+              <p className={errors.name ? 'active' : 'basic'}>한글 2~6자로 입력해 주세요.</p>
             </label>
             <label>
               {/* 휴대폰 번호 */}
-              <input type="text" {...register('number')} placeholder="휴대폰 번호" />
-              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+              <input
+                type="text"
+                {...register('number', {
+                  required: true,
+                  pattern: /^01(?:0|1|6)-(?:\d{3}|\d{4})-\d{4}$/,
+                })}
+                placeholder="휴대폰 번호"
+              />
+              <p className={errors.number ? 'active' : 'basic'}>
+                '010-0000-0000' 형태로 입력해 주세요.
+              </p>
             </label>
             <div className="flex">
               <label>
@@ -119,7 +133,7 @@ const SignUp = () => {
                   borderRadius="10px"
                   fontSize="14px"
                 />
-                <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+                <p className={errors.email ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
               </label>
               <label>
                 {/* <p className="select">직급</p> */}
@@ -131,7 +145,7 @@ const SignUp = () => {
                   borderRadius="10px"
                   fontSize="14px"
                 />
-                <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
+                <p className={errors.email ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
               </label>
             </div>
             <Button
@@ -284,7 +298,10 @@ const InputWrapStyle = styled.form`
     }
   }
   button {
-    margin-top: 25px;
+    margin-top: 100px;
+    :hover {
+      opacity: 0.8;
+    }
   }
   p {
     margin-top: 10px;
@@ -295,6 +312,7 @@ const InputWrapStyle = styled.form`
     &.basic {
       color: var(--color-primary);
       transition: 0.2s;
+      opacity: 0;
     }
     &.select {
       margin-top: 0;

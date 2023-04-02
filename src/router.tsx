@@ -108,7 +108,7 @@ export const routers: RemixRouter = createBrowserRouter(
     } else {
       return {
         path: router.path,
-        element: <>{router.element}</>,
+        element: <GeneralLayout>{router.element}</GeneralLayout>,
         errorElement: <NotFound />,
       }
     }

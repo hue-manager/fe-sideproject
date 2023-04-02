@@ -3,13 +3,35 @@ import Avatar, { genConfig } from 'react-nice-avatar'
 import Content from '@components/Content'
 import { Button } from '@components/Button/Button'
 import Timer from '@components/Timer'
+import Lottie from 'lottie-react'
+import mypage from '../../assets/lottie/mypage.json'
+import { getUserInfo } from '../../api/mypage'
+import { useEffect, useState } from 'react'
 
 interface Props {}
 
-const MyPage = (props: Props) => {
-  const config = genConfig('qwer1234@qwer1234.com')
+type UserInfo = {
+  department: string
+  email: string
+  id: number
+  phoneNumber: string
+  position: string
+  role: string
+  userName: string
+  vacationCount: number
+}
 
-  console.log()
+const MyPage = (props: Props) => {
+  const [userInfo, setuserInfo] = useState<UserInfo | null>()
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getUserInfo()
+      setuserInfo(response.user)
+    }
+    fetchData()
+  }, [])
+  const config = genConfig(userInfo?.email)
+
   return (
     <Page>
       <Container>
@@ -27,19 +49,19 @@ const MyPage = (props: Props) => {
             <Info>
               <div>
                 <p className="title">이름</p>
-                <p>우지수</p>
+                <p>{userInfo?.userName}</p>
               </div>
               <div>
                 <p className="title">이메일</p>
-                <p>qwer1234@qwer1234.com</p>
+                <p>{userInfo?.email}</p>
               </div>
               <div>
                 <p className="title">소속</p>
-                <p>개발팀</p>
+                <p>{userInfo?.department}팀</p>
               </div>
               <div>
                 <p className="title">직급</p>
-                <p>사원</p>
+                <p>{userInfo?.position}</p>
               </div>
               <Button
                 backgroundColor={'var(--color-primary)'}
@@ -57,6 +79,7 @@ const MyPage = (props: Props) => {
           </Profile>
         </Content>
       </Container>
+      <Lottie animationData={mypage} className="lottie" />
     </Page>
   )
 }
@@ -64,6 +87,10 @@ const Page = styled.div`
   width: 100%;
   display: flex;
   align-content: flex-start;
+  .lottie {
+    width: 100%;
+    opacity: 0.6;
+  }
 `
 const Sidebar = styled.div`
   width: 270px;

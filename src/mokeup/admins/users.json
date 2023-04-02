@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "id": 6,
+      "email": "manman@abc.com",
+      "userName": "만만이",
+      "phoneNumber": "010-3456-7857",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "사원",
+      "department": "재무팀"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageSize": 20,
+    "pageNumber": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 1,
+  "totalElements": 1,
+  "last": true,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "size": 20,
+  "numberOfElements": 1,
+  "first": true,
+  "empty": false
+}

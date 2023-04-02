@@ -1,5 +1,6 @@
+import { getToken } from '../utils/cookies'
 import axios from 'axios'
-const { VITE_URL } = import.meta.env
+const { VITE_URL, VITE_TOKEN } = import.meta.env
 
 const instance = axios.create({
   baseURL: VITE_URL,
@@ -8,8 +9,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    // const token = JSON.stringify(localStorage.getItem('token'))
-    // if (token) config.headers['Authorization'] = `Bearer ${token}`
+    // const token = JSON.parse(localStorage.getItem('token') || '')
+    const token = getToken()
+    config.headers['Authorization'] = `Bearer ${token}`
     return config
   },
   function (error) {

@@ -2,14 +2,9 @@ import { Button } from '@components/Button/Button'
 import { RxDoubleArrowLeft } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import Select from '@components/UI/Select'
-
-interface SelectBox {
-  show: boolean | undefined
-  value: string | undefined
-}
+import { useState } from 'react'
 
 type FormValue = {
   email: string
@@ -21,43 +16,35 @@ type FormValue = {
   position: string
 }
 
-const departmentList = [
-  { id: 0, value: '개발' },
-  { id: 1, value: '인사' },
-  { id: 2, value: '디자인' },
-  { id: 3, value: '기획' },
-  { id: 4, value: '회계' },
-  { id: 5, value: '법무' },
-]
+// 부서 셀렉 박스
+const departmentOptions = ['개발', '인사', '디자인', '기획', '회계', '법무']
+// 직급 셀렉 박스
+const positionOptions = ['사원', '대리', '과장', '차장', '부장', '이사']
 
-const positionList = [
-  { id: 0, value: '사원' },
-  { id: 1, value: '대리' },
-  { id: 2, value: '과장' },
-  { id: 3, value: '차장' },
-  { id: 4, value: '부장' },
-  { id: 5, value: '이사' },
-]
-const selectOptions = ['정규 스케쥴', '업무 지시', '비상 근무', '기타']
 const SignUp = () => {
   const navigate = useNavigate()
+  const [departmentValue, setDepartmentValue] = useState('개발')
+  const [positionValue, setPositionValue] = useState('사원')
 
-  const { register, watch } = useForm<FormValue>()
-  const [department, setDepartment] = useState<SelectBox | null>({
-    show: false,
-    value: '소속을 선택해 주세요.',
-  })
-  const [position, setPosition] = useState<SelectBox | null>({
-    show: true,
-    value: '직급을 선택해 주세요.',
-  })
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormValue>()
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => console.log(data)
+
+  const password = watch('password')
+
   console.log(watch('email'))
   return (
-    <Container>
-      <Background />
-      <Inner>
-        <Visual>
+    <ContainerStyle>
+      <BackgroundStyle />
+      <InnerStyle>
+        <LeftStyle>
           <div
+            className="back"
             onClick={() => {
               navigate('/')
             }}
@@ -65,101 +52,122 @@ const SignUp = () => {
             <RxDoubleArrowLeft className="icon" />
             <p>로그인 화면으로 돌아가기</p>
           </div>
-        </Visual>
-        <Form>
-          <Title>
+          <TitleStyle>
             <p>계정 만들기</p>
-          </Title>
-          <InputWrap>
+          </TitleStyle>
+        </LeftStyle>
+        <RightStyle>
+          <InputWrapStyle onSubmit={handleSubmit(onSubmit)}>
             <label>
-              이메일
-              <input type="text" {...register('email')} placeholder="이메일을 입력해주세요." />
-            </label>
-            <div className="flex">
-              <label>
-                비밀번호
-                <input
-                  type="password"
-                  {...register('password')}
-                  placeholder="비밀번호를 입력해주세요."
-                />
-              </label>
-              <label>
-                비밀번호 확인
-                <input
-                  type="password"
-                  {...register('passwordConfirm')}
-                  placeholder="한 번 더 비밀번호를 입력해주세요."
-                />
-              </label>
-            </div>
-            <label>
-              이름
-              <input type="text" {...register('name')} placeholder="이름을 입력해주세요." />
-            </label>
-            <label>
-              휴대폰 번호
+              {/* 이메일 */}
               <input
                 type="text"
-                {...register('number')}
-                placeholder="휴대폰 번호를 입력해주세요."
+                {...register('email', {
+                  required: true,
+                  pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                })}
+                placeholder="이메일"
               />
+              <p className={errors.email ? 'active' : 'basic'}>올바른 이메일을 입력해주세요.</p>
             </label>
             <div className="flex">
               <label>
-                소속
+                {/* 비밀번호 */}
                 <input
-                  {...register('department')}
-                  className="selectBox"
-                  value={department?.value}
-                  readOnly
+                  type="password"
+                  {...register('password', {
+                    required: true,
+                    pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/,
+                  })}
+                  placeholder="비밀번호"
                 />
-                <SelectBox id="department" style={{ display: `${department?.show}` }}>
-                  {departmentList.map((item) => (
-                    <li key={item.id}>{item.value}</li>
-                  ))}
-                </SelectBox>
+                <p className={errors.password ? 'active' : 'basic'}>
+                  영문, 숫자, 특수문자 조합 8~15자로 입력해 주세요.
+                </p>
               </label>
               <label>
-                직급
+                {/* 비밀번호 확인 */}
                 <input
-                  type="text"
-                  {...register('position')}
-                  value={position?.value}
-                  readOnly
-                  onClick={(prevState) => {
-                    // setDepartment()
-                  }}
+                  type="password"
+                  {...register('passwordConfirm', {
+                    required: true,
+                    validate: (value) => value === watch('password'),
+                  })}
+                  placeholder="비밀번호 확인"
                 />
-                <Select
-                  options={selectOptions}
-                  initial={'정규 스케쥴'}
-                  width="100%"
-                  height="3rem"
-                  borderRadius=".5rem"
-                  fontSize="16px"
-                />
-                <SelectBox id="position">
-                  {positionList.map((item) => (
-                    <li key={item.id}>{item.value}</li>
-                  ))}
-                </SelectBox>
+                <p className={errors.passwordConfirm ? 'active' : 'basic'}>
+                  비밀번호가 일치하지 않습니다.
+                </p>
               </label>
             </div>
-          </InputWrap>
-          <Button
-            backgroundColor={'var(--color-primary)'}
-            size={'width'}
-            label={'회원가입'}
-            type={'submit'}
-          />
-        </Form>
-      </Inner>
-    </Container>
+            <label>
+              {/* 이름 */}
+              <input
+                type="text"
+                {...register('name', {
+                  required: true,
+                  pattern: /^[가-힣]{2,6}$/,
+                })}
+                placeholder="이름"
+              />
+              <p className={errors.name ? 'active' : 'basic'}>한글 2~6자로 입력해 주세요.</p>
+            </label>
+            <label>
+              {/* 휴대폰 번호 */}
+              <input
+                type="text"
+                {...register('number', {
+                  required: true,
+                  pattern: /^01(?:0|1|6)-(?:\d{3}|\d{4})-\d{4}$/,
+                })}
+                placeholder="휴대폰 번호"
+              />
+              <p className={errors.number ? 'active' : 'basic'}>
+                '010-0000-0000' 형태로 입력해 주세요.
+              </p>
+            </label>
+            <div className="flex">
+              <label>
+                {/* <p className="select">소속</p> */}
+                <Select
+                  options={departmentOptions}
+                  currentValue={departmentValue}
+                  setCurrentValue={setDepartmentValue}
+                  width="100%"
+                  height="40px;"
+                  borderRadius="10px"
+                  fontSize="14px"
+                />
+                <p className={errors.email ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
+              </label>
+              <label>
+                {/* <p className="select">직급</p> */}
+                <Select
+                  options={positionOptions}
+                  currentValue={positionValue}
+                  setCurrentValue={setPositionValue}
+                  width="100%"
+                  height="40px;"
+                  borderRadius="10px"
+                  fontSize="14px"
+                />
+                <p className={errors.email ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
+              </label>
+            </div>
+            <Button
+              backgroundColor={'var(--color-primary)'}
+              size={'width'}
+              label={'회원가입'}
+              type={'submit'}
+            />
+          </InputWrapStyle>
+        </RightStyle>
+      </InnerStyle>
+    </ContainerStyle>
   )
 }
 
-const Container = styled.div`
+const ContainerStyle = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -168,7 +176,7 @@ const Container = styled.div`
   position: relative;
 `
 
-const Background = styled.div`
+const BackgroundStyle = styled.div`
   width: 100%;
   height: 100%;
   background-image: url('/bg.jpg');
@@ -177,14 +185,13 @@ const Background = styled.div`
   opacity: 0.4;
 `
 
-const Inner = styled.section`
+const InnerStyle = styled.section`
   min-width: 70vw;
   height: 80vh;
   background-color: var(--color-white);
   position: absolute;
   border-radius: 40px;
   display: flex;
-  overflow: hidden;
   &::before {
     content: '';
     width: 200px;
@@ -198,15 +205,15 @@ const Inner = styled.section`
     opacity: 0.4;
   }
 `
-const Visual = styled.div`
+const LeftStyle = styled.div`
   width: 435px;
   height: 100%;
-  div {
+  .back {
     display: flex;
     cursor: pointer;
     position: absolute;
-    top: 100px;
-    left: 50px;
+    top: -35px;
+    left: 15px;
     font-size: 18px;
     font-weight: 400;
     color: var(--color-black50);
@@ -222,6 +229,7 @@ const Visual = styled.div`
     background-size: 200% 100%;
     background-position: 100%;
     transition: background-position 275ms ease;
+    user-select: none;
     :hover {
       background-position: 0 100%;
       color: var(--color-primary);
@@ -233,25 +241,9 @@ const Visual = styled.div`
   }
 `
 
-const Form = styled.div`
-  width: 800px;
-  height: 100%;
-  padding: 80px 0;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  div {
-    width: 100%;
-  }
-  button {
-    margin: 0 80px;
-  }
-`
-
-const Title = styled.div`
+const TitleStyle = styled.div`
   width: 100%;
-  margin-top: 10px;
+  margin-top: 70px;
   padding: 0 80px;
   p {
     font-weight: 600;
@@ -259,19 +251,35 @@ const Title = styled.div`
   }
 `
 
-const InputWrap = styled.div`
+const RightStyle = styled.div`
+  width: 800px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  div {
+    width: 100%;
+  }
+`
+
+const InputWrapStyle = styled.form`
   width: 100%;
-  padding: 30px 80px 20px 80px;
+  padding: 60px 80px 20px 80px;
   label {
     color: var(--color-black60);
     display: block;
     padding: 10px 0;
     position: relative;
+    .select {
+      padding-bottom: 10px;
+    }
     input {
       display: flex;
       align-content: center;
       width: 100%;
       height: 40px;
+      font-weight: 600;
       font-size: 14px;
       margin-top: 10px;
       margin-bottom: 5px;
@@ -295,28 +303,26 @@ const InputWrap = styled.div`
       }
     }
   }
-`
-
-const SelectBox = styled.ul`
-  width: 100%;
-  height: 130px;
-  display: none;
-  overflow-y: auto;
-  position: absolute;
-  border-radius: 10px;
-  border: 1px solid var(--color-primary);
-  background-color: var(--color-white);
-  li {
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
+  button {
+    margin-top: 100px;
     :hover {
-      background-color: var(--color-black10);
+      opacity: 0.8;
     }
   }
-  ::-ms-value {
-    color: var(--color-primary);
+  p {
+    margin-top: 10px;
+    &.active {
+      color: var(--color-primary);
+      transition: 0.2s;
+    }
+    &.basic {
+      color: var(--color-primary);
+      transition: 0.2s;
+      opacity: 0;
+    }
+    &.select {
+      margin-top: 0;
+    }
   }
 `
 

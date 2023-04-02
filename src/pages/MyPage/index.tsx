@@ -8,6 +8,7 @@ import { getUserInfo } from '../../api/mypage'
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal'
 import EditInfoModal from '../../components/Mypage/EditInfoModal'
+import WithdrawalModal from '../../components/Mypage/EditInfoModal'
 
 interface Props {}
 
@@ -25,6 +26,7 @@ type UserInfo = {
 const MyPage = (props: Props) => {
   const [userInfo, setuserInfo] = useState<UserInfo | null>()
   const [editInfoModalOpen, setEditInfoModalOpen] = useState(false)
+  const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
   const [currentEmail, setCurrentEmail] = useState<string>('')
   const [currentName, setCurrentName] = useState<string>('')
   useEffect(() => {
@@ -37,8 +39,11 @@ const MyPage = (props: Props) => {
     fetchData()
   }, [])
   const config = genConfig(currentEmail)
-  const handleAnnualLeaveOpen = () => {
+  const handleEditInfoModalOpen = () => {
     setEditInfoModalOpen(true)
+  }
+  const handleWithdrawalModalOpen = () => {
+    setWithdrawalModalOpen(true)
   }
   return (
     <Page>
@@ -76,13 +81,14 @@ const MyPage = (props: Props) => {
                 size={'width'}
                 label={'개인정보 수정하기'}
                 type={'submit'}
-                onClick={handleAnnualLeaveOpen}
+                onClick={handleEditInfoModalOpen}
               />
               <Button
                 backgroundColor={'var(--color-black30)'}
                 size={'width'}
                 label={'회원탈퇴하기'}
                 type={'submit'}
+                onClick={handleWithdrawalModalOpen}
               />
             </Info>
           </Profile>
@@ -90,6 +96,13 @@ const MyPage = (props: Props) => {
         <EditInfoModal
           isOpen={editInfoModalOpen}
           setIsOpen={setEditInfoModalOpen}
+          email={userInfo?.email}
+          setCurrentEmail={setCurrentEmail}
+          setCurrentName={setCurrentName}
+        />
+        <WithdrawalModal
+          isOpen={withdrawalModalOpen}
+          setIsOpen={setWithdrawalModalOpen}
           email={userInfo?.email}
           setCurrentEmail={setCurrentEmail}
           setCurrentName={setCurrentName}

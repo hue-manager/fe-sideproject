@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Select from '@components/UI/Select'
+import { useState } from 'react'
 
 type FormValue = {
   email: string
@@ -22,6 +23,9 @@ const positionOptions = ['사원', '대리', '과장', '차장', '부장', '이�
 
 const SignUp = () => {
   const navigate = useNavigate()
+  const [departmentValue, setDepartmentValue] = useState('개발')
+  const [positionValue, setPositionValue] = useState('사원')
+
   const {
     register,
     watch,
@@ -128,7 +132,8 @@ const SignUp = () => {
                 {/* <p className="select">소속</p> */}
                 <Select
                   options={departmentOptions}
-                  initial={'소속'}
+                  currentValue={departmentValue}
+                  setCurrentValue={setDepartmentValue}
                   width="100%"
                   height="40px;"
                   borderRadius="10px"
@@ -144,7 +149,8 @@ const SignUp = () => {
                 {/* <p className="select">직급</p> */}
                 <Select
                   options={positionOptions}
-                  initial={'직급'}
+                  currentValue={positionValue}
+                  setCurrentValue={setPositionValue}
                   width="100%"
                   height="40px;"
                   borderRadius="10px"

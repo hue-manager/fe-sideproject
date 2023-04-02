@@ -1,20 +1,40 @@
+import formatDateString from '../../utils/formatDateString'
 import React from 'react'
 import styled from 'styled-components'
+import formatDate from '../../utils/formatDate'
 
-const ApplicationCard = () => {
-  const type = '연차'
-  const name = '공혜지'
-  const affiliation = '연차'
-  const date = '23.01.25'
-  const reason = '병원 방문'
-  const status = '처리대기'
+interface Item {
+  id: number
+  category: string
+  memo: string
+  user: any
+  startDate: string
+  endDate: string
+  status: string
+}
+
+interface IApplicationCard {
+  item: Item
+}
+const ApplicationCard = ({ item }: IApplicationCard) => {
+  const {
+    id,
+    category,
+    memo,
+    user: { createdAt, credentialsNonExpired, enabled, userName, position, department },
+    startDate,
+    endDate,
+    status,
+  } = item
+
   return (
-    <ApplicationCardStyle type={type}>
-      <div>{type}</div>
-      <div>{name}</div>
-      <div>{date}</div>
-      <div>{affiliation}</div>
-      <div>{reason}</div>
+    <ApplicationCardStyle category={category}>
+      <div>{category === 'WORK' ? '당직' : '연차'}</div>
+      <div>{userName}</div>
+      <div>{`${department}/${position}`}</div>
+      <div>{memo}</div>
+      <div>{startDate}</div>
+      <div>{endDate}</div>
       <div>{status}</div>
     </ApplicationCardStyle>
   )
@@ -22,7 +42,7 @@ const ApplicationCard = () => {
 
 export default ApplicationCard
 
-const ApplicationCardStyle = styled.li<{ type: string }>`
+const ApplicationCardStyle = styled.li<{ category: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,12 +57,13 @@ const ApplicationCardStyle = styled.li<{ type: string }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 16.6%;
+    width: 14.2%; //16.6%;;
     height: 100%;
     gap: 1.5rem;
     color: var(--color-black);
     :first-child {
-      color: ${({ type }) => (type === '연차' ? 'var(--color-primary)' : 'var(--color-pink)')};
+      color: ${({ category }) =>
+        category === 'VACATION' ? 'var(--color-primary)' : 'var(--color-pink)'};
       font-weight: 600;
     }
   }

@@ -8,7 +8,7 @@ date.setMinutes(date.getMinutes() + 15)
 export const setToken = (token: string) => {
   return cookies.set('token', token, {
     path: '/',
-    maxAge: 900,
+    maxAge: 9000,
   })
 }
 
@@ -30,7 +30,7 @@ export const removeToken = () => {
 export const setExpiration = () => {
   return cookies.set('expiration', date.toTimeString().split(' ')[0], {
     path: '/',
-    maxAge: 900,
+    maxAge: 9000,
   })
 }
 
@@ -52,7 +52,7 @@ export const removeExpiration = () => {
 export const setUserId = (userId: number) => {
   return cookies.set('userId', userId, {
     path: '/',
-    maxAge: 900,
+    maxAge: 9000,
   })
 }
 
@@ -74,7 +74,7 @@ export const removeUserId = () => {
 export const setUserRole = (userRole: string) => {
   return cookies.set('userRole', userRole, {
     path: '/',
-    maxAge: 900,
+    maxAge: 9000,
   })
 }
 

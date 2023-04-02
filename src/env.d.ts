@@ -4,3 +4,10 @@ export interface SidebarElement {
   path: string
   isAdmin?: boolean
 }
+
+interface IPostApply {
+  category: string
+  memo: string
+  startDate: string
+  endDate: string
+}

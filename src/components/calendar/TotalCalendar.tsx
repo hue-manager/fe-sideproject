@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getAllSchedule } from '../../api/auth'
 import { CalendarCategory } from './DetailItem'
 import { getUserSchedule } from './../../api/auth'
+import { getUserId } from '../..//utils/cookies'
 
 export interface IEventsData {
   title: number
@@ -24,11 +25,14 @@ const TotalCalendar = () => {
   const [switchData, setSwitchData] = useState<string>('my')
   const [events, setEvents] = useState<IEventsData[]>([])
 
+  const id = getUserId()
+  console.log(id)
+
   const { isLoading, data } = useQuery(
     ['getSchedule', switchData],
     () => {
-      if (switchData === 'my') return getAllSchedule()
-      else return getUserSchedule(2)
+      if (switchData === 'my') return getUserSchedule(id)
+      else return getAllSchedule()
     },
     {
       staleTime: 1000,
@@ -55,7 +59,7 @@ const TotalCalendar = () => {
         setEvents((prev: IEventsData[]) => [...prev, setData])
       }
     }
-  }, [data, switchData])
+  }, [id, data, switchData])
 
   return (
     <>

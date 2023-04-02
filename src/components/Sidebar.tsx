@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useLocation, useNavigate } from 'react-router-dom'
 import Logo from '@components/UI/Logo'
 import { SidebarElement } from '../env'
 import { useRouter } from '../hooks/useRouter'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { removeExpiration, removeToken } from '../utils/cookies'
+import { removeInfo } from '../utils/cookies'
 import Timer from './Timer'
 
 interface SidebarProps {
@@ -85,11 +84,10 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
           })}
         </ListStyle>
       )}
-      {/* <TimerStyle /> */}
+      <TimerStyle />
       <LogoutStyle
         onClick={() => {
-          removeToken()
-          removeExpiration()
+          removeInfo()
           sidebarMenuClickHandler('/')
         }}
       >

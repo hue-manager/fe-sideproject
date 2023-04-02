@@ -17,8 +17,6 @@ const Modal = ({ type, children, visible, onClose }: IModal) => {
     return null
   }
 
-  const selectOptions = ['병원 방문', '각종 경조사', '개인 업무', '개인 사유']
-
   return (
     <>
       <BackgroundStyle visible={visible} onClick={onClose} />

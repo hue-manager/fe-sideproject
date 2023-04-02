@@ -4,7 +4,7 @@ import { Action } from '@remix-run/router'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { login } from '../../api/auth'
+import { login, loginAdmin } from '../../api/auth'
 import { getToken, setExpiration } from '../../utils/cookies'
 // import { authCheck } from '../../utils/authCheck'
 
@@ -29,6 +29,8 @@ const Home = (props: Props) => {
     if (role) {
       const formData = new FormData(event?.currentTarget)
       const res = await login(formData.get('email') as string, formData.get('password') as string)
+      console.log('login:', res)
+
       // 비밀번호 불일치
       if (res === 'wrong assword') {
         setMessage(1)
@@ -53,6 +55,35 @@ const Home = (props: Props) => {
         console.log('야호')
       }
     } else {
+      // 관리자 로그인
+      const formData = new FormData(event?.currentTarget)
+      const res = await loginAdmin(
+        formData.get('email') as string,
+        formData.get('password') as string
+      )
+      // 비밀번호 불일치
+      if (res === 'wrong assword') {
+        setMessage(1)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      // 이메일, 비밀번호 불일치
+      if (res === 'fail') {
+        setMessage(2)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1000)
+        return
+      }
+      //로그인 성공시에 메인페이지로 이동
+      if (res) {
+        navigate('/main')
+        console.log('야호')
+      }
     }
   }
 

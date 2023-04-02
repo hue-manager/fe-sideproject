@@ -32,8 +32,8 @@ const Non_Member = (props: Props) => {
 
   return (
     <Content title={'비회원관리'} intro={'가입 신청을 승인할 수 있습니다.'}>
-      <Wrapper>
-        <Table>
+      <WrapperStyle>
+        <TableStyle>
           <thead>
             <tr>
               <th></th>
@@ -48,10 +48,9 @@ const Non_Member = (props: Props) => {
                 <td>
                   <Avatar
                     style={{
-                      width: '70px',
-                      height: '70px',
-                      border: '3px solid var(--color-primary)',
-                      margin: '20px auto',
+                      width: '55px',
+                      height: '55px',
+                      margin: '10px auto',
                     }}
                     {...genConfig(data.name)}
                   />
@@ -66,27 +65,27 @@ const Non_Member = (props: Props) => {
               </tr>
             ))}
           </tbody>
-        </Table>
-      </Wrapper>
+        </TableStyle>
+      </WrapperStyle>
     </Content>
   )
 }
 
-const Wrapper = styled.div`
+const WrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `
 
-const Table = styled.table`
+const TableStyle = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;
   table-layout: fixed;
 
   tr {
-    height: 70px;
-    box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
+    height: 3rem;
+    box-shadow: rgba(116, 92, 242, 0.12) 5px 6px 10px;
     border-radius: 40px;
     vertical-align: middle;
     margin: 40px;
@@ -107,6 +106,7 @@ const Table = styled.table`
 
   th {
     vertical-align: middle;
+    font-weight: 600;
   }
 
   thead > tr {
@@ -124,13 +124,13 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
-    padding-left: 30px;
+    padding-left: 40px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
-    padding-right: 30px;
+    padding-right: 40px;
   }
 `
 

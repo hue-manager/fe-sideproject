@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ILoginInput, IPostApply } from '../env'
+import { IPostApply } from '../env'
 
 const BASE_URL = 'http://13.124.96.231:8080/'
 
@@ -37,18 +37,6 @@ class Axios {
       return response
     } catch (error) {
       console.error('postApply error:', error)
-      throw error
-    }
-  }
-
-  async postLogin({ email, password }: ILoginInput) {
-    try {
-      const response = await this.axiosClient.post('/login', {
-        email,
-        password,
-      })
-    } catch (error) {
-      console.error('postLogin error:', error)
       throw error
     }
   }

@@ -31,10 +31,10 @@ const Pagination = ({ activePage, pages, setActivePage }: Props) => {
 
 const PaginationStyle = styled.div`
   position: absolute;
-  left: 50%;
   top: 100%;
   display: flex;
   justify-content: center;
+  width:100%
   margin: 20px auto;
   padding-bottom: 50px;
   > div {

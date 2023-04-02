@@ -1,4 +1,4 @@
-import { removeInfo, removeToken, setExpiration, setInfo, setToken } from '../utils/cookies'
+import { removeInfo, setInfo } from '../utils/cookies'
 import API_URLS from '../constants/apiConst'
 import instance from './apiController'
 
@@ -54,3 +54,24 @@ export const loginAdmin = async (email: string, password: string) => {
 export const logout = () => {
   removeInfo()
 }
+
+// export const schedulesSave = async () => {
+//   try {
+//     const response = await instance.post(API_URLS.SAVE, {
+//       category: 'WORK',
+//       endDate: '2023-04-02',
+//       memo: '개인 업무',
+//       startDate: '2023-04-02',
+//     })
+//     console.log(response)
+//     // 로그인 성공시에 토큰과 토큰 삭제시간 쿠키 저장소에 저장
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       return 'fail'
+//     } else {
+//       throw error
+//     }
+//   }
+// }
+
+// schedulesSave()

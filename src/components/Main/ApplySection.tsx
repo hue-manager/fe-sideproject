@@ -12,9 +12,10 @@ import AnnualLeaveModal from './AnnualLeaveModal'
 import Select from '../UI/Select'
 
 interface ApplySectionProps {
+  userInfo: any
   applyRef: MutableRefObject<HTMLDivElement | null>
 }
-const ApplySection = ({ applyRef }: ApplySectionProps) => {
+const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
   const [isAnnualLeaveOpen, setIsAnnualLeaveOpen] = useState(false)
   const [isDutyModalOpen, setIsDutyModalOpen] = useState(false)
   const [currentValue, setCurrentValue] = useState('전체')
@@ -33,6 +34,12 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
   }
 
   const selectOptions = ['전체', '연차', '당직']
+
+  // console.log('scheduleList', scheduleList)
+
+  // const { pages } = scheduleList
+  // console.log('pages', pages)
+  // const { content, number, totalElements, totalPages } = pages[0]
 
   return (
     <ContainerStyle ref={applyRef}>
@@ -88,7 +95,7 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                     options={selectOptions}
                     currentValue={currentValue}
                     setCurrentValue={setCurrentValue}
-                    width="100%"
+                    width="60%"
                     height="3rem"
                     borderRadius=".5rem"
                     fontSize="14px"
@@ -102,16 +109,17 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                 <div>신청자</div>
                 <div>소속/직급</div>
                 <div>신청 사유</div>
-                <div>신청 날짜</div>
+                <div>시작 날짜</div>
+                <div>종료 날짜</div>
                 <div>상태</div>
               </header>
               <ul>
-                {[1, 2, 3, 4, 5].map((item, index) => (
+                {[1, 2, 3, 4, 5].map((item: any, index: number) => (
                   <ApplicationCard key={index} />
                 ))}
               </ul>
             </InfoStyle>
-            <Pagination />
+            {/* <Pagination activePage={number} pages={totalPages} setActivePage={fetchNextPage} /> */}
           </SecondBoxStyle>
         </SectionStyle>
       </Inner>
@@ -167,7 +175,7 @@ const InfoStyle = styled.div`
     padding: 0 3rem;
     background-color: var(--color-primary);
     & > div:first-child {
-      width: 16.6%;
+      width: 14.2%;
       height: 100%;
       gap: 1.5rem;
       font-weight: 600;
@@ -175,7 +183,7 @@ const InfoStyle = styled.div`
       display: flex;
       justify-content: center;
       div:first-child {
-        width: 50%;
+        /* width: 50%; */
       }
     }
     div:not(:first-child) {

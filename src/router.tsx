@@ -80,19 +80,35 @@ export const routers: RemixRouter = createBrowserRouter(
     if (router.withAuth) {
       return {
         path: router.path,
-        element: <GeneralLayout>{router.element}</GeneralLayout>,
+        element: (
+          <GeneralLayout
+            isAdmin={'isAdmin' in router && router.isAdmin}
+            withAuth={'withAuth' in router && router.withAuth}
+            key={router.id}
+          >
+            {router.element}
+          </GeneralLayout>
+        ),
         errorElement: <NotFound />,
       }
     } else if (router.isAdmin) {
       return {
         path: router.path,
-        element: <GeneralLayout>{router.element}</GeneralLayout>,
+        element: (
+          <GeneralLayout
+            isAdmin={'isAdmin' in router && router.isAdmin}
+            withAuth={'withAuth' in router && router.withAuth}
+            key={router.id}
+          >
+            {router.element}
+          </GeneralLayout>
+        ),
         errorElement: <NotFound />,
       }
     } else {
       return {
         path: router.path,
-        element: <>{router.element}</>,
+        element: <GeneralLayout>{router.element}</GeneralLayout>,
         errorElement: <NotFound />,
       }
     }

@@ -7,18 +7,15 @@ import PostCalendar from '../DutyPostCalendar'
 import Select from '../UI/Select'
 import Button from '../UI/Button'
 import { ax } from '../../api/axiosClient' //'@src/api/axiosClient'
+import { getToken } from '../../utils/cookies'
 
-type FormData = {
-  dutyDate: string
-}
 interface IDutyDateModal {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
 
 const DutyDateModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
-  const accessToken =
-    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QxMDBAbmF2ZXIuY29tIiwiaWF0IjoxNjgwNDM1NjAzLCJleHAiOjE2ODA0NDI4MDN9.phiGaV7UH2WCu9ddZpYOGBByvCAG4rv2GPHf3Hjc9ag'
+  const accessToken = getToken()
   const { selectedDutyDate } = useSelector((state: RootState) => state.selectedDutyDate)
   const handleModal2Close = () => {
     setIsOpen(false)
@@ -44,6 +41,7 @@ const DutyDateModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
         alert('당직신청이 완료되었습니다.')
         setIsOpen(false)
       } else {
+        console.log('click')
         alert('당직신청에 실패하셨습니다')
       }
     }

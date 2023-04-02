@@ -121,12 +121,13 @@ const SelectBoxStyle = styled.div<{
 }>`
   display: flex;
   align-items: center;
+  justify-content: ${({ type }) => (type === 'bgPrimary' ? 'center' : 'start')};
   position: relative;
   font-weight: 600;
   line-height: 1.2;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  padding: 12px 16px;
+  padding: ${({ type }) => (type === 'bgPrimary' ? '0' : '12px 16px')}; //12px 16px;
   border-radius: ${({ borderRadius }) => borderRadius};
   /* background-color: ${({ isDisabled }) =>
     isDisabled ? 'var(--color-primary)' : 'var(--color-white)'}; */
@@ -144,7 +145,7 @@ const SelectBoxStyle = styled.div<{
     width: 16px;
     height: 16px;
     top: ${({ topPosition }) => topPosition};
-    right: 16px;
+    right: ${({ type }) => (type === 'bgPrimary' ? '-1px' : '12px')}; //12px;
     transform: translateY(-50%);
     font-size: 30px;
   }
@@ -195,10 +196,11 @@ const OptionStyle = styled.li<{
   color: string
   type: string
 }>`
+  justify-content: ${({ type }) => (type === 'bgPrimary' ? 'center' : 'start')};
   font-size: ${({ fontSize }) => fontSize};
-  width: ${({ width }) => width};
+  width: ${({ type, width }) => (type = 'bgPrimary' ? '100%' : width)};
   height: ${({ height }) => height};
-  padding: 12px 16px;
+  padding: ${({ type }) => (type === 'bgPrimary' ? '0 0' : '12px 16px')}; //12px 16px;
   display: flex;
   align-items: center;
   transition: background-color 0.2s ease-in;

@@ -1,16 +1,21 @@
 import React, { MutableRefObject } from 'react'
 import styled from 'styled-components'
 import Inner from '@components/Inner'
+import { getToken, getUserId } from '../../utils/cookies'
 interface UserInfoSectionProps {
+  userInfo: any
   applySectionRef: MutableRefObject<HTMLDivElement | null>
   calendarSectionRef: MutableRefObject<HTMLDivElement | null>
 }
 
-const UserInfoSection = ({ applySectionRef, calendarSectionRef }: UserInfoSectionProps) => {
-  const name = '노홍철' // 유저 네임 패칭
-  const annualLeave = 4 // 연차 패칭
+const UserInfoSection = ({
+  userInfo,
+  applySectionRef,
+  calendarSectionRef,
+}: UserInfoSectionProps) => {
+  const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
+
   const onDuty = 3 // 당직 패칭
-  const RemainingAnnualLeave = 15 - annualLeave // 잔여연차 패칭
   const application = 15 // 신청
   const approved = 12 // 승인 완료
   const pending = 3 // 승인 대기
@@ -32,14 +37,14 @@ const UserInfoSection = ({ applySectionRef, calendarSectionRef }: UserInfoSectio
         <SectionStyle>
           <FirstBoxStyle>
             <TitleStyle>
-              <span>{name}</span>
+              <span>{userName}</span>
               <span>님 안녕하세요.</span>
             </TitleStyle>
             <ContentStyle>
               <div>
-                <span>{name}</span>
+                <span>{userName}</span>
                 <span>님의 잔여 연차는</span>
-                <span>{RemainingAnnualLeave}</span>
+                <span>{vacationCount}</span>
                 <span>개입니다.</span>
               </div>
               <div>
@@ -52,7 +57,7 @@ const UserInfoSection = ({ applySectionRef, calendarSectionRef }: UserInfoSectio
           <SecondBoxStyle>
             <div>
               <span>잔여 연차</span>
-              <span>{RemainingAnnualLeave}일</span>
+              <span>{vacationCount}일</span>
             </div>
             <div>
               <span>당직</span>
@@ -130,6 +135,9 @@ const ContentStyle = styled.div`
     align-items: center;
 
     span {
+      :nth-child(1) {
+        font-weight: 600;
+      }
       :nth-child(3) {
         margin-left: 0.4rem;
         font-weight: 600;

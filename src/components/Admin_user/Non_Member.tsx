@@ -34,9 +34,9 @@ export const fetchNonMember = (page = 0): Promise<T> => {
 const Non_Member = (props: Props) => {
   const theads = ['이름', '이메일', '소속/직급', '전화 번호', '가입 관리']
   const queryClient = useQueryClient()
-  const [activePage, setActivePage] = useState<number>(0)
+  const [activePage, setActivePage] = useState<number>(1)
 
-  const { data, status, error, isFetching, isPreviousData } = useQuery({
+  const { data, status, isPreviousData } = useQuery({
     queryKey: ['non-members', activePage],
     queryFn: () => fetchNonMember(activePage),
     keepPreviousData: true,
@@ -44,10 +44,10 @@ const Non_Member = (props: Props) => {
   })
 
   useEffect(() => {
-    if (!isPreviousData && data!.totalElments - activePage * 5 > 0) {
+    if (!isPreviousData) {
       queryClient.prefetchQuery({
-        queryKey: ['non-members', activePage + 1],
-        queryFn: () => fetchNonMember(activePage + 1),
+        queryKey: ['non-members', activePage],
+        queryFn: () => fetchNonMember(activePage - 1),
       })
     }
   }, [data, isPreviousData, activePage, queryClient])
@@ -68,9 +68,17 @@ const Non_Member = (props: Props) => {
           </thead>
           <tbody>
             {status === 'loading' ? (
-              <div>Loading...</div>
+              <tr>
+                <td>
+                  <div>Loading...</div>
+                </td>
+              </tr>
             ) : status === 'error' ? (
-              <div>Error</div>
+              <tr>
+                <td>
+                  <div>Error</div>
+                </td>
+              </tr>
             ) : (
               data.content.map((data, index) => (
                 <tr key={index}>
@@ -105,7 +113,7 @@ const Non_Member = (props: Props) => {
 const WrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 `
 
 const TableStyle = styled.table`

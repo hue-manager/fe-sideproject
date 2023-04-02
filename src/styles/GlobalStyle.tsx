@@ -63,4 +63,26 @@ export const GlobalStyle = createGlobalStyle`
     color: var(--color-white);
     background: var(--color-primary);
   }
+
+  @media screen and (max-width:1400px){
+   body .big-screen-text{display: flex;}
+  }
+
+  .big-screen-text{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0; top: 0;
+    z-index: 10000;
+    background-color: var(--color-lightpurple);
+    font-weight: bold;
+    font-size: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-primary);
+  
+  }
+ 
+ 
 `

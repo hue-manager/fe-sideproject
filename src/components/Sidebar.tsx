@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useLocation, useNavigate } from 'react-router-dom'
 import Logo from '@components/UI/Logo'
 import { SidebarElement } from '../env'
 import { useRouter } from '../hooks/useRouter'
@@ -85,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
           })}
         </ListStyle>
       )}
-      {/* <TimerStyle /> */}
+      <TimerStyle />
       <LogoutStyle
         onClick={() => {
           removeInfo()

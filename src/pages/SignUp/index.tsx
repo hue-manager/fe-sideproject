@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Select from '@components/UI/Select'
+import { useState } from 'react'
 
 type FormValue = {
   email: string
@@ -22,6 +23,9 @@ const positionOptions = ['사원', '대리', '과장', '차장', '부장', '이�
 
 const SignUp = () => {
   const navigate = useNavigate()
+  const [departmentValue, setDepartmentValue] = useState('개발')
+  const [positionValue, setPositionValue] = useState('사원')
+
   const {
     register,
     watch,
@@ -31,7 +35,8 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<FormValue> = (data) => console.log(data)
 
-  const password = watch('password')
+  const formData = new FormData()
+  console.log(formData)
 
   console.log(watch('email'))
   return (
@@ -127,25 +132,35 @@ const SignUp = () => {
                 {/* <p className="select">소속</p> */}
                 <Select
                   options={departmentOptions}
-                  initial={'소속'}
+                  currentValue={departmentValue}
+                  setCurrentValue={setDepartmentValue}
                   width="100%"
                   height="40px;"
                   borderRadius="10px"
                   fontSize="14px"
+                  {...register('department', {
+                    required: true,
+                    validate: (value) => value !== '소속',
+                  })}
                 />
-                <p className={errors.email ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
+                <p className={errors.department ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
               </label>
               <label>
                 {/* <p className="select">직급</p> */}
                 <Select
                   options={positionOptions}
-                  initial={'직급'}
+                  currentValue={positionValue}
+                  setCurrentValue={setPositionValue}
                   width="100%"
                   height="40px;"
                   borderRadius="10px"
                   fontSize="14px"
+                  {...register('position', {
+                    required: true,
+                    validate: (value) => value === '개발',
+                  })}
                 />
-                <p className={errors.email ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
+                <p className={errors.position ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
               </label>
             </div>
             <Button

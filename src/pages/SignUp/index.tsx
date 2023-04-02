@@ -21,42 +21,21 @@ type FormValue = {
   position: string
 }
 
-const departmentList = [
-  { id: 0, value: '개발' },
-  { id: 1, value: '인사' },
-  { id: 2, value: '디자인' },
-  { id: 3, value: '기획' },
-  { id: 4, value: '회계' },
-  { id: 5, value: '법무' },
-]
+// 부서 셀렉 박스
+const departmentOptions = ['개발', '인사', '디자인', '기획', '회계', '법무']
+// 직급 셀렉 박스
+const positionOptions = ['사원', '대리', '과장', , '차장', '부장', '이사']
 
-const positionList = [
-  { id: 0, value: '사원' },
-  { id: 1, value: '대리' },
-  { id: 2, value: '과장' },
-  { id: 3, value: '차장' },
-  { id: 4, value: '부장' },
-  { id: 5, value: '이사' },
-]
-const selectOptions = ['정규 스케쥴', '업무 지시', '비상 근무', '기타']
 const SignUp = () => {
   const navigate = useNavigate()
-
   const { register, watch } = useForm<FormValue>()
-  const [department, setDepartment] = useState<SelectBox | null>({
-    show: false,
-    value: '소속을 선택해 주세요.',
-  })
-  const [position, setPosition] = useState<SelectBox | null>({
-    show: true,
-    value: '직급을 선택해 주세요.',
-  })
+
   console.log(watch('email'))
   return (
-    <Container>
-      <Background />
-      <Inner>
-        <Visual>
+    <ContainerStyle>
+      <BackgroundStyle />
+      <InnerStyle>
+        <LeftStyle>
           <div
             onClick={() => {
               navigate('/')
@@ -65,12 +44,12 @@ const SignUp = () => {
             <RxDoubleArrowLeft className="icon" />
             <p>로그인 화면으로 돌아가기</p>
           </div>
-        </Visual>
-        <Form>
-          <Title>
+        </LeftStyle>
+        <RightStyle>
+          <TitleStyle>
             <p>계정 만들기</p>
-          </Title>
-          <InputWrap>
+          </TitleStyle>
+          <InputWrapStyle>
             <label>
               이메일
               <input type="text" {...register('email')} placeholder="이메일을 입력해주세요." />
@@ -107,59 +86,42 @@ const SignUp = () => {
             </label>
             <div className="flex">
               <label>
-                소속
-                <input
-                  {...register('department')}
-                  className="selectBox"
-                  value={department?.value}
-                  readOnly
+                <p className="select">소속</p>
+                <Select
+                  options={departmentOptions}
+                  initial={'소속팀을 선택해 주세요.'}
+                  width="100%"
+                  height="40px;"
+                  borderRadius="10px"
+                  fontSize="14px"
                 />
-                <SelectBox id="department" style={{ display: `${department?.show}` }}>
-                  {departmentList.map((item) => (
-                    <li key={item.id}>{item.value}</li>
-                  ))}
-                </SelectBox>
               </label>
               <label>
-                직급
-                <input
-                  type="text"
-                  {...register('position')}
-                  value={position?.value}
-                  readOnly
-                  onClick={(prevState) => {
-                    // setDepartment()
-                  }}
-                />
+                <p className="select">직급</p>
                 <Select
-                  options={selectOptions}
-                  initial={'정규 스케쥴'}
+                  options={positionOptions}
+                  initial={'직급을 선택해 주세요.'}
                   width="100%"
-                  height="3rem"
-                  borderRadius=".5rem"
-                  fontSize="16px"
+                  height="40px;"
+                  borderRadius="10px"
+                  fontSize="14px"
                 />
-                <SelectBox id="position">
-                  {positionList.map((item) => (
-                    <li key={item.id}>{item.value}</li>
-                  ))}
-                </SelectBox>
               </label>
             </div>
-          </InputWrap>
+          </InputWrapStyle>
           <Button
             backgroundColor={'var(--color-primary)'}
             size={'width'}
             label={'회원가입'}
             type={'submit'}
           />
-        </Form>
-      </Inner>
-    </Container>
+        </RightStyle>
+      </InnerStyle>
+    </ContainerStyle>
   )
 }
 
-const Container = styled.div`
+const ContainerStyle = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -168,7 +130,7 @@ const Container = styled.div`
   position: relative;
 `
 
-const Background = styled.div`
+const BackgroundStyle = styled.div`
   width: 100%;
   height: 100%;
   background-image: url('/bg.jpg');
@@ -177,14 +139,13 @@ const Background = styled.div`
   opacity: 0.4;
 `
 
-const Inner = styled.section`
+const InnerStyle = styled.section`
   min-width: 70vw;
   height: 80vh;
   background-color: var(--color-white);
   position: absolute;
   border-radius: 40px;
   display: flex;
-  overflow: hidden;
   &::before {
     content: '';
     width: 200px;
@@ -198,7 +159,7 @@ const Inner = styled.section`
     opacity: 0.4;
   }
 `
-const Visual = styled.div`
+const LeftStyle = styled.div`
   width: 435px;
   height: 100%;
   div {
@@ -233,7 +194,7 @@ const Visual = styled.div`
   }
 `
 
-const Form = styled.div`
+const RightStyle = styled.div`
   width: 800px;
   height: 100%;
   padding: 80px 0;
@@ -249,7 +210,7 @@ const Form = styled.div`
   }
 `
 
-const Title = styled.div`
+const TitleStyle = styled.div`
   width: 100%;
   margin-top: 10px;
   padding: 0 80px;
@@ -259,7 +220,7 @@ const Title = styled.div`
   }
 `
 
-const InputWrap = styled.div`
+const InputWrapStyle = styled.div`
   width: 100%;
   padding: 30px 80px 20px 80px;
   label {
@@ -267,11 +228,15 @@ const InputWrap = styled.div`
     display: block;
     padding: 10px 0;
     position: relative;
+    .select {
+      padding-bottom: 10px;
+    }
     input {
       display: flex;
       align-content: center;
       width: 100%;
       height: 40px;
+      font-weight: 600;
       font-size: 14px;
       margin-top: 10px;
       margin-bottom: 5px;
@@ -294,29 +259,6 @@ const InputWrap = styled.div`
         height: 40px;
       }
     }
-  }
-`
-
-const SelectBox = styled.ul`
-  width: 100%;
-  height: 130px;
-  display: none;
-  overflow-y: auto;
-  position: absolute;
-  border-radius: 10px;
-  border: 1px solid var(--color-primary);
-  background-color: var(--color-white);
-  li {
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
-    :hover {
-      background-color: var(--color-black10);
-    }
-  }
-  ::-ms-value {
-    color: var(--color-primary);
   }
 `
 

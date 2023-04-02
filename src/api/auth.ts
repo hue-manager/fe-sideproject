@@ -16,7 +16,7 @@ export const login = async (email: string, password: string) => {
     }
     // 로그인 성공시에 유저 정보 저장
     if (response.data.message === '로그인 성공' || response.data.message === '계정 미승인') {
-      setInfo(response.data.token, response.data.userId, 'user')
+      setInfo(response.data.token, response.data.userId, 'user', false)
       return response
     }
   } catch (error) {
@@ -42,7 +42,7 @@ export const loginAdmin = async (email: string, password: string) => {
     }
     // 로그인 성공시에 토큰과 토큰 삭제시간 쿠키 저장소에 저장
     if (response.data.message === '관리자 로그인 성공') {
-      setInfo(response.data.token, response.data.userId, 'admin')
+      setInfo(response.data.token, response.data.userId, 'admin', false)
       return response
     }
   } catch (error) {

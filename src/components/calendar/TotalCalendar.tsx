@@ -26,7 +26,6 @@ const TotalCalendar = () => {
   const [events, setEvents] = useState<IEventsData[]>([])
 
   const id = getUserId()
-  console.log(id)
 
   const { isLoading, data } = useQuery(
     ['getSchedule', switchData],

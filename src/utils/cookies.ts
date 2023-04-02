@@ -92,12 +92,34 @@ export const removeUserRole = () => {
   })
 }
 
+/* 로그인 상태, 로그아웃 상태일 때 홈으로 가도 되는지 탐지 */
+// 저장
+export const setAcceptHome = (acceptHome: boolean) => {
+  return cookies.set('acceptHome', acceptHome, {
+    path: '/',
+    maxAge: 900,
+  })
+}
+// 가져오기
+export const getAcceptHome = () => {
+  const acceptHome = cookies.get('acceptHome')
+  return acceptHome
+}
+// 삭제
+export const removeAcceptHome = () => {
+  return cookies.set('acceptHome', true, {
+    path: '/',
+    maxAge: -1,
+  })
+}
+
 // 로그인 정보 한번에 저장
-export const setInfo = (token: string, userId: number, userRole: string) => {
+export const setInfo = (token: string, userId: number, userRole: string, acceptHome: boolean) => {
   setToken(token)
   setExpiration()
   setUserId(userId)
   setUserRole(userRole)
+  setAcceptHome(acceptHome)
 }
 
 // 로그인 정보 한번에 삭제
@@ -106,6 +128,7 @@ export const removeInfo = () => {
   removeExpiration()
   removeUserId()
   removeUserRole()
+  removeAcceptHome()
 }
 
 export const expirationToken = () => {}

@@ -24,7 +24,7 @@ type FormValue = {
 // 부서 셀렉 박스
 const departmentOptions = ['개발', '인사', '디자인', '기획', '회계', '법무']
 // 직급 셀렉 박스
-const positionOptions = ['사원', '대리', '과장', , '차장', '부장', '이사']
+const positionOptions = ['사원', '대리', '과장', '차장', '부장', '이사']
 
 const SignUp = () => {
   const navigate = useNavigate()

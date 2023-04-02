@@ -48,18 +48,17 @@ export const fetchMembers = (): Promise<T> => {
 export const useMembers = () => {}
 
 const Member = (props: Props) => {
-  const theads = ['이름', '소속/직급', '전화 번호', '권한', '계정삭제']
+  const theads = ['이름', '이메일', '소속/직급', '권한', '계정삭제']
 
   const [activePage, setActivePage] = useState<number>(1)
 
   const { data, isLoading, error } = useQuery<T, Error>(['members'], fetchMembers)
 
-  const membersList = data?.ROLE_ADMIN.concat(data.ROLE_USER)
+  if (isLoading) return <h3>Loading...</h3>
+  if (error) return <h3>Error {error.message}</h3>
 
-  if (isLoading) return 'Loading...'
-  if (error) return 'An error has occurred: ' + error.message
+  const membersList = data.ROLE_ADMIN.concat(data.ROLE_USER)
 
-  // console.log(membersList.ROLE_ADMIN.concat(membersList.ROLE_USER))
   const memebersLength = membersList?.length
   const limit = 5
   const totalPages = Math.ceil(memebersLength! / limit)
@@ -74,10 +73,8 @@ const Member = (props: Props) => {
     }
     pageGroups.push(tmp)
   }
-  console.log(pageGroups[activePage - 1])
   let numbering = pageGroups[activePage - 1]
-  let pageMembersList = numbering.map((number) => (membersList ? membersList[number] : [null]))
-  console.log(pageMembersList)
+  let pageMembersList = numbering.map((number) => membersList[number])
 
   return (
     <Content title={'회원관리'} intro={'관리자 권한을 부여할 수 있습니다.'}>
@@ -101,13 +98,13 @@ const Member = (props: Props) => {
                       height: '55px',
                       margin: '10px auto',
                     }}
-                    {...genConfig(data.userName)}
+                    {...genConfig(data?.userName)}
                   />
                 </td>
-                <td>{data.userName}</td>
-                <td>{`${data.department}/${data.position}`}</td>
-                <td>{data.phoneNumber}</td>
-                <td>{data.role === 'ROLE_ADMIN' ? '관리자' : '일반'}</td>
+                <td>{data?.userName}</td>
+                <td>{data?.email}</td>
+                <td>{`${data?.department}/${data?.position}`}</td>
+                <td>{data?.role === 'ROLE_ADMIN' ? '관리자' : '일반'}</td>
                 <td>
                   <Button_white text={'계정삭제'} />
                 </td>
@@ -124,7 +121,7 @@ const Member = (props: Props) => {
 const WrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 `
 
 const TableStyle = styled.table`

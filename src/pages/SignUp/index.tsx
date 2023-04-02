@@ -35,7 +35,8 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<FormValue> = (data) => console.log(data)
 
-  const password = watch('password')
+  const formData = new FormData()
+  console.log(formData)
 
   console.log(watch('email'))
   return (
@@ -137,8 +138,12 @@ const SignUp = () => {
                   height="40px;"
                   borderRadius="10px"
                   fontSize="14px"
+                  {...register('department', {
+                    required: true,
+                    validate: (value) => value !== '소속',
+                  })}
                 />
-                <p className={errors.email ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
+                <p className={errors.department ? 'active' : 'basic'}>소속팀을 선택해 주세요.</p>
               </label>
               <label>
                 {/* <p className="select">직급</p> */}
@@ -150,8 +155,12 @@ const SignUp = () => {
                   height="40px;"
                   borderRadius="10px"
                   fontSize="14px"
+                  {...register('position', {
+                    required: true,
+                    validate: (value) => value === '개발',
+                  })}
                 />
-                <p className={errors.email ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
+                <p className={errors.position ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
               </label>
             </div>
             <Button

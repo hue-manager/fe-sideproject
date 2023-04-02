@@ -1,3 +1,5 @@
+import { getToken } from './../utils/cookies'
+import { getUserId } from '../utils/cookies'
 import axios from 'axios'
 import { IPostApply } from '../env'
 
@@ -33,10 +35,84 @@ class Axios {
           },
         }
       )
-      // console.log(response)
       return response
     } catch (error) {
       console.error('postApply error:', error)
+      throw error
+    }
+  }
+
+  /**유저 정보 get api */
+  async getUserInfo(accessToken: string) {
+    if (!accessToken) throw Error(`[에러]accessToken = "${accessToken}" 입니다`)
+    try {
+      const userId = getUserId()
+      const response = await this.axiosClient.get(`users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return response.data.user
+    } catch (error) {
+      console.error('postApply error:', error)
+      throw error
+    }
+  }
+
+  /**유저 신청 정보 조회 get api */
+  async getUserSchedules(accessToken: string, page = 0) {
+    if (!accessToken) throw Error(`accessToken = "${accessToken}" 입니다`)
+    try {
+      const userId = getUserId()
+      const response = await this.axiosClient.get(`schedules/userinfo/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          page,
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error('getUserSchedules error:', error)
+      throw error
+    }
+  }
+  /**유저 신청 정보 조회22222 get api */
+  async fetchApply(page: number = 0) {
+    const accessToken = getToken()
+    try {
+      const userId = getUserId()
+      const response = await this.axiosClient.get(`schedules/userinfo/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          page,
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error('getUserSchedules error:', error)
+      throw error
+    }
+  }
+
+  /**유저 신청 정보 엑셀 */
+  async getUserExcel(accessToken: string, role: string) {
+    if (!accessToken) throw Error(`accessToken = "${accessToken}" 입니다`)
+    try {
+      const response = await this.axiosClient.get(`schedules/excel`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          role: `${role}`,
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error('getUserSchedules error:', error)
       throw error
     }
   }

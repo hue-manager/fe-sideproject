@@ -3,7 +3,6 @@ import { Cookies } from 'react-cookie'
 const cookies = new Cookies()
 const date = new Date()
 date.setMinutes(date.getMinutes() + 15)
-date.setSeconds(0)
 
 // 토큰 저장
 export const setToken = (token: string) => {

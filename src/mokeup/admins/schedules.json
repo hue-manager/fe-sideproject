@@ -1,0 +1,557 @@
+{
+  "content": [
+    {
+      "id": 3,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:21.111661",
+        "modifiedAt": "2023-04-01T09:42:21.111661",
+        "id": 2,
+        "email": "hyein@naver.com",
+        "userName": "김혜인인",
+        "password": "$2a$10$FXbmdxI8v8xkOpPadnslUu5AwAT/mKvN7XLOWdh8Z/brMLRsjuyCO",
+        "phoneNumber": "010-1234-5678",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "부장",
+        "department": "개발팀",
+        "enabled": true,
+        "username": "김혜인인",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-01",
+      "endDate": "2023-04-01",
+      "memo": "긴히 쓸 일이 있어용"
+    },
+    {
+      "id": 4,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T09:42:21.111661",
+        "modifiedAt": "2023-04-01T09:42:21.111661",
+        "id": 2,
+        "email": "hyein@naver.com",
+        "userName": "김혜인인",
+        "password": "$2a$10$FXbmdxI8v8xkOpPadnslUu5AwAT/mKvN7XLOWdh8Z/brMLRsjuyCO",
+        "phoneNumber": "010-1234-5678",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "부장",
+        "department": "개발팀",
+        "enabled": true,
+        "username": "김혜인인",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-04",
+      "endDate": "2023-04-03",
+      "memo": "피곤해여"
+    },
+    {
+      "id": 5,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:55.077346",
+        "modifiedAt": "2023-04-01T09:42:55.077346",
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "password": "$2a$10$BiROT.Z6HoIIrXKsksZ2juDg.20j/5fBQRyFFZWl94/hoNlbdMbGW",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "팀원",
+        "department": "프론트",
+        "enabled": true,
+        "username": "혜원",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "병원 방문"
+    },
+    {
+      "id": 6,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:55.077346",
+        "modifiedAt": "2023-04-01T09:42:55.077346",
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "password": "$2a$10$BiROT.Z6HoIIrXKsksZ2juDg.20j/5fBQRyFFZWl94/hoNlbdMbGW",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "팀원",
+        "department": "프론트",
+        "enabled": true,
+        "username": "혜원",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-03",
+      "endDate": "2023-04-03",
+      "memo": "병원 방문"
+    },
+    {
+      "id": 7,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:55.077346",
+        "modifiedAt": "2023-04-01T09:42:55.077346",
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "password": "$2a$10$BiROT.Z6HoIIrXKsksZ2juDg.20j/5fBQRyFFZWl94/hoNlbdMbGW",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "팀원",
+        "department": "프론트",
+        "enabled": true,
+        "username": "혜원",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-06",
+      "endDate": "2023-04-06",
+      "memo": "개인 사유"
+    },
+    {
+      "id": 8,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:55.077346",
+        "modifiedAt": "2023-04-01T09:42:55.077346",
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "password": "$2a$10$BiROT.Z6HoIIrXKsksZ2juDg.20j/5fBQRyFFZWl94/hoNlbdMbGW",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "팀원",
+        "department": "프론트",
+        "enabled": true,
+        "username": "혜원",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-06",
+      "endDate": "2023-04-06",
+      "memo": "개인 사유"
+    },
+    {
+      "id": 9,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 10,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 11,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 12,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 13,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:42:55.077346",
+        "modifiedAt": "2023-04-01T09:42:55.077346",
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "password": "$2a$10$BiROT.Z6HoIIrXKsksZ2juDg.20j/5fBQRyFFZWl94/hoNlbdMbGW",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "팀원",
+        "department": "프론트",
+        "enabled": true,
+        "username": "혜원",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-22",
+      "endDate": "2023-04-22",
+      "memo": "병원 방문"
+    },
+    {
+      "id": 14,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T10:39:03.66962",
+        "modifiedAt": "2023-04-02T08:59:44.057069",
+        "id": 6,
+        "email": "manman@abc.com",
+        "userName": "만만이",
+        "password": "$2a$10$gldtKhbyhaMT86zpCYZZqezhPKjbo7e3w7VDU.JjPV/JrZ314rez.",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 12,
+        "position": "사원",
+        "department": "재무팀",
+        "enabled": true,
+        "username": "만만이",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-03-02",
+      "endDate": "2023-03-04",
+      "memo": "각종 경조사"
+    },
+    {
+      "id": 15,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 16,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 17,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    },
+    {
+      "id": 18,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-01T09:45:21.835961",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "전현무",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "전현무",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ],
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 1,
+  "totalElements": 16,
+  "last": true,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "size": 20,
+  "numberOfElements": 16,
+  "first": true,
+  "empty": false
+}

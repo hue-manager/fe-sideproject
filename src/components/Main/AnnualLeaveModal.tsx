@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../main'
 import Button from '../UI/Button'
 import { ax } from '../../api/axiosClient'
+import { getToken } from '../../utils/cookies'
 
 interface IAnnualLeaveModal {
   isOpen: boolean
@@ -15,8 +16,8 @@ interface IAnnualLeaveModal {
 }
 
 const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
-  const accessToken =
-    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QxMDBAbmF2ZXIuY29tIiwiaWF0IjoxNjgwNDM1NjAzLCJleHAiOjE2ODA0NDI4MDN9.phiGaV7UH2WCu9ddZpYOGBByvCAG4rv2GPHf3Hjc9ag'
+  const accessToken = getToken()
+
   const [currentValue, setCurrentValue] = useState('정규 스케쥴')
   const { startDate, endDate } = useSelector((state: RootState) => state.selectedAnnualDate)
 

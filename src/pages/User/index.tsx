@@ -1,12 +1,15 @@
-import Member from '@components/Admin_user/Member'
+import Member from '../../components/Admin_user/Member'
 import React, { useState } from 'react'
 import Non_Member from '@components/Admin_user/Non_Member'
 import styled from 'styled-components'
+import { useQuery } from '@tanstack/react-query'
+import instance from '../../../src/api/apiController'
 
 type Props = {}
 
 const index = (props: Props) => {
   const [member, setMember] = useState(true)
+
   return (
     <Wrapper>
       <Selected>

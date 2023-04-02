@@ -2,11 +2,12 @@ import styled from 'styled-components'
 import Avatar, { genConfig } from 'react-nice-avatar'
 import Content from '@components/Content'
 import { Button } from '@components/Button/Button'
-import Timer from '@components/Timer'
 import Lottie from 'lottie-react'
 import mypage from '../../assets/lottie/mypage.json'
 import { getUserInfo } from '../../api/mypage'
 import { useEffect, useState } from 'react'
+import Modal from '../../components/Modal'
+import EditInfoModal from '../../components/Mypage/EditInfoModal'
 
 interface Props {}
 
@@ -23,15 +24,22 @@ type UserInfo = {
 
 const MyPage = (props: Props) => {
   const [userInfo, setuserInfo] = useState<UserInfo | null>()
+  const [editInfoModalOpen, setEditInfoModalOpen] = useState(false)
+  const [currentEmail, setCurrentEmail] = useState<string>('')
+  const [currentName, setCurrentName] = useState<string>('')
   useEffect(() => {
     const fetchData = async () => {
       const response = await getUserInfo()
       setuserInfo(response.user)
+      setCurrentEmail(response.user.email)
+      setCurrentName(response.user.userName)
     }
     fetchData()
   }, [])
-  const config = genConfig(userInfo?.email)
-
+  const config = genConfig(currentEmail)
+  const handleAnnualLeaveOpen = () => {
+    setEditInfoModalOpen(true)
+  }
   return (
     <Page>
       <Container>
@@ -49,11 +57,11 @@ const MyPage = (props: Props) => {
             <Info>
               <div>
                 <p className="title">이름</p>
-                <p>{userInfo?.userName}</p>
+                <p>{currentName}</p>
               </div>
               <div>
                 <p className="title">이메일</p>
-                <p>{userInfo?.email}</p>
+                <p>{currentEmail}</p>
               </div>
               <div>
                 <p className="title">소속</p>
@@ -68,6 +76,7 @@ const MyPage = (props: Props) => {
                 size={'width'}
                 label={'개인정보 수정하기'}
                 type={'submit'}
+                onClick={handleAnnualLeaveOpen}
               />
               <Button
                 backgroundColor={'var(--color-black30)'}
@@ -78,6 +87,13 @@ const MyPage = (props: Props) => {
             </Info>
           </Profile>
         </Content>
+        <EditInfoModal
+          isOpen={editInfoModalOpen}
+          setIsOpen={setEditInfoModalOpen}
+          email={userInfo?.email}
+          setCurrentEmail={setCurrentEmail}
+          setCurrentName={setCurrentName}
+        />
       </Container>
       <Lottie animationData={mypage} className="lottie" />
     </Page>

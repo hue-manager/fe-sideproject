@@ -2,8 +2,14 @@ import Content from '@components/Content'
 import React from 'react'
 import styled from 'styled-components'
 import Button_primary from '@components/Button/Button_primary'
+import instance from '../../../src/api/apiController'
 
 interface Props {}
+
+async function fetchPages(pageNum: number) {
+  const { data } = await instance.get(`/admins/schedules`)
+  return data.content
+}
 
 const Admin = (props: Props) => {
   const theads = ['요청종류', '요청자', '소속/직급', '요청 사유', '요청 날짜', '상태', '관리']
@@ -40,9 +46,9 @@ const Admin = (props: Props) => {
       title={'승인요청'}
       intro={'연차, 당직 신청 내역을 확인하고 승인이나 거절할 수 있습니다.'}
     >
-      <Wrapper>
+      <WrapperStyle>
         <Button_primary text={'엑셀로 내보내기'} />
-        <Table>
+        <TableStyle>
           <thead>
             <tr>
               {theads.map((thead, index) => (
@@ -63,34 +69,32 @@ const Admin = (props: Props) => {
               </tr>
             ))}
           </tbody>
-        </Table>
-      </Wrapper>
+        </TableStyle>
+      </WrapperStyle>
     </Content>
   )
 }
 
-const Wrapper = styled.div`
+const WrapperStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `
 
-const Table = styled.table`
+const TableStyle = styled.table`
   border-collapse: separate;
   border-spacing: 0 30px;
   width: 100%;
   margin: 0 auto;
   tr {
-    height: 70px;
-    box-shadow: 5px 6px 10px rgba(116, 92, 242, 0.4);
+    height: 3rem;
+    box-shadow: rgba(116, 92, 242, 0.12) 5px 6px 10px;
     border-radius: 40px;
     text-align: center;
-    margin: 40px;
   }
   td {
     vertical-align: middle;
     background-color: var(--color-white);
-    font-weight: 600;
     &.purple {
       color: var(--color-primary);
     }
@@ -100,6 +104,7 @@ const Table = styled.table`
   }
   th {
     vertical-align: middle;
+    font-weight: 600;
   }
 
   thead > tr {
@@ -117,11 +122,13 @@ const Table = styled.table`
   td:first-child,
   th:first-child {
     border-radius: 40px 0 0 40px;
+    padding-left: 40px;
   }
 
   td:last-child,
   th:last-child {
     border-radius: 0 40px 40px 0;
+    padding-right: 40px;
   }
 `
 

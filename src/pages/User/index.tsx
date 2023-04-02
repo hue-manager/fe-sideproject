@@ -33,7 +33,7 @@ const index = (props: Props) => {
 }
 
 const Wrapper = styled.div`
-  margin-top: 100px;
+  margin-top: 40px;
 `
 const Selected = styled.div`
   width: 100%;

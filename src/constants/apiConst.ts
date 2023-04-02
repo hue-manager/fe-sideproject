@@ -1,7 +1,9 @@
 const API_URLS = {
   LOGIN: '/login',
   LOGOUT: '/logout',
-  LOGIN_ADMIN: '/admins/login',
+  LOGIN_ADMIN: '/login/admin',
+  USER_SCHEDULE: '/schedules/userinfo',
+  ALL_SCHEDULE: '/schedules/all',
   USER_INFO: '/users/',
   SAVE: '/schedules/save',
 }

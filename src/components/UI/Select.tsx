@@ -4,7 +4,6 @@ import useOnClickOutside from '../../hooks/useOnClickOutside'
 
 interface ISelect {
   options?: string[] | number[]
-  initial: string | number
   value?: string | number
   unit?: any
   width?: string
@@ -19,13 +18,14 @@ interface ISelect {
   type?: string
   bgColor?: string
   color?: string
+  currentValue: string | number
+  setCurrentValue: (newValue: any) => void
   onChange?: React.ChangeEventHandler<HTMLLIElement>
   onClick?: React.MouseEventHandler<HTMLLIElement>
 }
 
 const Select = ({
   options,
-  initial,
   value,
   unit,
   width = '128px',
@@ -40,10 +40,11 @@ const Select = ({
   type = '',
   bgColor = 'var(--color-white)',
   color = 'var(--color-primary)',
+  currentValue,
+  setCurrentValue,
   onChange,
   onClick,
 }: ISelect) => {
-  const [currentValue, setCurrentValue] = useState(initial)
   const [showOptions, setShowOptions] = useState(false)
   const ref = useRef(null)
   useOnClickOutside(ref, () => setShowOptions(false))

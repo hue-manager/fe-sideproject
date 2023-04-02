@@ -6,46 +6,54 @@ import Select from '../UI/Select'
 import AnnualPostCalendar from '../AnnualPostCalendar'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../main'
-import { useForm } from 'react-hook-form'
 import Button from '../UI/Button'
+import { ax } from '../../api/axiosClient'
 
-type FormData = {
-  start: string
-  end: string
-}
-
-interface IDutyDateModal {
+interface IAnnualLeaveModal {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
 
-const AnnualLeaveModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>()
-
-  const onValid = (data: FormData) => {
-    const { start, end } = data
-
-    const startDate = new Date(start)
-    const endDate = new Date(end)
-
-    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime())
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
-
-    if (diffDays > 3) {
-      alert('날짜 차이가 3일 이내가 아닙니다.')
-      return
-    }
-
-    // 유효성 검사를 통과한 경우 실행될 코드
-    console.log('Submit success!')
-    alert(JSON.stringify(data))
-  }
-
+const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
+  const accessToken =
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QxMDBAbmF2ZXIuY29tIiwiaWF0IjoxNjgwNDM1NjAzLCJleHAiOjE2ODA0NDI4MDN9.phiGaV7UH2WCu9ddZpYOGBByvCAG4rv2GPHf3Hjc9ag'
+  const [currentValue, setCurrentValue] = useState('정규 스케쥴')
   const { startDate, endDate } = useSelector((state: RootState) => state.selectedAnnualDate)
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    if (!currentValue) {
+      alert('신청사유를 입력해주세요.')
+    } else if (!startDate || !endDate) {
+      alert('신청 날짜를 선택해주세요.')
+    } else {
+      // const start = new Date(startDate)
+      // const end = new Date(endDate)
+
+      // const timeDiff = Math.abs(end.getTime() - start.getTime())
+      // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+
+      // if (diffDays > 3) {
+      //   alert('날짜 차이가 3일 이내가 아닙니다.')
+      //   return
+      // }
+
+      const response = await ax.postApply(accessToken, {
+        category: 'VACATION',
+        memo: currentValue,
+        startDate: startDate,
+        endDate: endDate,
+      })
+
+      if (response.status === 200) {
+        alert('연차신청이 완료되었습니다.')
+
+        setIsOpen(false)
+      } else {
+        alert('연차신청에 실패하셨습니다')
+      }
+    }
+  }
 
   const handleModalClose = () => {
     setIsOpen(false)
@@ -53,12 +61,13 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
   const selectOptions = ['정규 스케쥴', '업무 지시', '비상 근무', '기타']
   return (
     <Modal type="연차 신청" visible={isOpen} onClose={handleModalClose}>
-      <FormStyle onSubmit={handleSubmit(onValid)}>
+      <FormStyle onSubmit={handleSubmit}>
         <SelectBoxStyle>
           <span>신청 사유</span>
           <Select
             options={selectOptions}
-            initial={'정규 스케쥴'}
+            currentValue={currentValue}
+            setCurrentValue={setCurrentValue}
             width="100%"
             height="3rem"
             borderRadius=".5rem"
@@ -67,37 +76,19 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
         </SelectBoxStyle>
         <InputStyle>
           <div>
-            <span>신청 날짜</span>
-            <input
-              type="text"
-              readOnly
-              value={startDate ? startDate : ''}
-              // name="startDate"
-              {...register('start')}
-            />
+            <div>
+              <span>신청 날짜</span>
+              <input type="text" readOnly value={startDate ? startDate : ''} />
+            </div>
+            <div>
+              <span>종료 날짜</span>
+              <input type="text" readOnly value={endDate ? endDate : ''} />
+            </div>
           </div>
-          <div>
-            <span>신청 날짜</span>
-            <input
-              type="text"
-              readOnly
-              value={endDate ? endDate : ''}
-              // name="endDate"
-              {...register('end', { required: true })}
-              // {...(register &&
-              //   register('end', {
-              //     required: 'dasdasdsa',
-              //   }))}
-            />
-          </div>
+          <p>신청날짜와 종료날짜를 드래그하여 선택하실 수 있습니다.</p>
         </InputStyle>
-        <CalendarSectionStyle>
-          <AnnualPostCalendar type="start" />
-          <AnnualPostCalendar type="end" />
-        </CalendarSectionStyle>
-        {/* <CalendarSection2Style>
-          <AnnualPostCalendar />
-        </CalendarSection2Style> */}
+
+        <AnnualPostCalendar />
         <ApplyBtnStyle>
           <Button
             type="submit"
@@ -133,49 +124,48 @@ const SelectBoxStyle = styled.div`
 
 const InputStyle = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  div {
+  & > div {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.25rem;
-    span {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    & > input {
-      height: 2.5rem;
-      border-radius: 0.5rem;
-      border: 1px solid var(--color-primary);
-      padding: 12px 16px;
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.2;
-      color: var(--color-primary);
-    }
-    :first-child {
-      width: 50%;
-    }
-    :last-child {
-      width: 50%;
+    margin-top: 0.75rem;
+    div {
+      span {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      & > input {
+        margin-top: 0.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-primary);
+        padding: 12px 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--color-primary);
+      }
+      :first-child {
+        width: 50%;
+      }
+      :last-child {
+        width: 50%;
+      }
     }
   }
-`
-
-const CalendarSectionStyle = styled.section`
-  display: flex;
-  gap: 1rem;
+  p {
+    align-self: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
 `
 
 const ApplyBtnStyle = styled.div`
   display: flex;
   align-items: center;
 `
-
-/**test */
-// const CalendarSection2Style = styled.section``
 
 const FormStyle = styled.form`
   display: flex;
@@ -190,9 +180,10 @@ const FormStyle = styled.form`
     height: 14%;
     margin-bottom: 1rem;
   }
-  ${CalendarSectionStyle} {
+  & > div:nth-child(3) {
+    align-self: center;
     height: 74%;
-    margin-bottom: 1.5rem;
+    padding-bottom: 2rem;
   }
   ${ApplyBtnStyle} {
     height: 6%;

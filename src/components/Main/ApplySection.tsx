@@ -17,18 +17,19 @@ interface ApplySectionProps {
 const ApplySection = ({ applyRef }: ApplySectionProps) => {
   const [isAnnualLeaveOpen, setIsAnnualLeaveOpen] = useState(false)
   const [isDutyModalOpen, setIsDutyModalOpen] = useState(false)
+  const [currentValue, setCurrentValue] = useState('전체')
 
   const dispatch = useDispatch()
 
   const handleAnnualLeaveOpen = () => {
+    dispatch(setStartDate(null))
+    dispatch(setEndDate(null))
     setIsAnnualLeaveOpen(true)
-    dispatch(setStartDate(''))
-    dispatch(setEndDate(''))
   }
 
   const handleDutyModalOpen = () => {
+    dispatch(setSelectedDutyDate(null))
     setIsDutyModalOpen(true)
-    dispatch(setSelectedDutyDate(''))
   }
 
   const selectOptions = ['전체', '연차', '당직']
@@ -85,7 +86,8 @@ const ApplySection = ({ applyRef }: ApplySectionProps) => {
                 <div>
                   <Select
                     options={selectOptions}
-                    initial={'전체'}
+                    currentValue={currentValue}
+                    setCurrentValue={setCurrentValue}
                     width="100%"
                     height="3rem"
                     borderRadius=".5rem"

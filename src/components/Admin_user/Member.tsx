@@ -55,9 +55,9 @@ const Member = (props: Props) => {
 
   const membersList = useMembers()
   // console.log(membersList.ROLE_ADMIN.concat(membersList.ROLE_USER))
-  // const memberLength =
+  const memebersLength = membersList?.length
 
-  const totalPages = Math.ceil(membersList!.length / 10)
+  const totalPages = Math.ceil(memebersLength! / 10)
 
   const mockData = [
     {

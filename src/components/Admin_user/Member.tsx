@@ -22,14 +22,18 @@ type D = {
   department: string
 }
 
+type List = {
+  [index: number]: D
+}
+
 type T = {
   ROLE_ADMIN: Array<D>
   ROLE_USER: Array<D>
   totalPages: number
 }
 
-export const fetchMembers = () => {
-  return instance.get('/users/').then((response) => {
+export const fetchMembers = (): Promise<T> => {
+  return instance.get(`/users/`).then((response) => {
     return response.data.users.content.reduce((acc: any, curr: any) => {
       const { role }: any = curr
       if (acc[role]) acc[role].push(curr)
@@ -41,44 +45,39 @@ export const fetchMembers = () => {
   })
 }
 
-export const useMembers = () => {
-  const { data, isLoading } = useQuery<T, Error>(['members'], fetchMembers)
-  if (isLoading) return
-
-  return data?.ROLE_ADMIN.concat(data.ROLE_USER)
-}
+export const useMembers = () => {}
 
 const Member = (props: Props) => {
-  const theads = ['이름', '소속/직급', '가입 날짜', '권한', '계정삭제']
+  const theads = ['이름', '소속/직급', '전화 번호', '권한', '계정삭제']
 
   const [activePage, setActivePage] = useState<number>(1)
 
-  const membersList = useMembers()
+  const { data, isLoading, error } = useQuery<T, Error>(['members'], fetchMembers)
+
+  const membersList = data?.ROLE_ADMIN.concat(data.ROLE_USER)
+
+  if (isLoading) return 'Loading...'
+  if (error) return 'An error has occurred: ' + error.message
+
   // console.log(membersList.ROLE_ADMIN.concat(membersList.ROLE_USER))
   const memebersLength = membersList?.length
+  const limit = 5
+  const totalPages = Math.ceil(memebersLength! / limit)
+  let pageGroups = []
 
-  const totalPages = Math.ceil(memebersLength! / 10)
-
-  const mockData = [
-    {
-      name: '공혜지',
-      level: '인사팀/사원',
-      date: '2023.01.25',
-      auth: '관리자',
-    },
-    {
-      name: '나다',
-      level: '재무팀/과장',
-      date: '2023.01.25',
-      auth: '일반',
-    },
-    {
-      name: '가다',
-      level: '기획팀/과장',
-      date: '2023.01.25',
-      auth: '일반',
-    },
-  ]
+  for (let pageGroup = 1; pageGroup <= totalPages; pageGroup++) {
+    let tmp = []
+    let offset = (pageGroup - 1) * limit
+    let end = Math.min(offset + limit, memebersLength!)
+    for (let page = offset; page < end; page++) {
+      tmp.push(page)
+    }
+    pageGroups.push(tmp)
+  }
+  console.log(pageGroups[activePage - 1])
+  let numbering = pageGroups[activePage - 1]
+  let pageMembersList = numbering.map((number) => (membersList ? membersList[number] : [null]))
+  console.log(pageMembersList)
 
   return (
     <Content title={'회원관리'} intro={'관리자 권한을 부여할 수 있습니다.'}>
@@ -93,7 +92,7 @@ const Member = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {membersList?.map((data, index) => (
+            {pageMembersList?.map((data, index) => (
               <tr key={index}>
                 <td>
                   <Avatar

@@ -93,7 +93,7 @@ const CalendarStyle = styled(Calendar)`
   }
 
   .rbc-month-view {
-    border: 1px solid #745cf2;
+    border: 1px solid var(--color-primary);
     border-radius: 1rem;
     padding: 1.5rem;
     .rbc-month-row {
@@ -127,10 +127,10 @@ const CalendarStyle = styled(Calendar)`
     .rbc-header::first-letter {
       border: none;
       font-size: 18px;
-      color: #745cf2;
+      color: var(--color-primary);
     }
     .rbc-month-header .rbc-header:first-child:first-letter {
-      color: #ff99e5;
+      color: var(--color-pink);
     }
     /* 각 일자 */
     .rbc-month-row {
@@ -144,10 +144,10 @@ const CalendarStyle = styled(Calendar)`
         }
       }
       .rbc-off-range-bg {
-        background-color: #ffffff;
+        background-color: var(--color-white);
       }
       .rbc-day-bg + .rbc-today {
-        background-color: #ffffff;
+        background-color: var(--color-white);
       }
     }
   }

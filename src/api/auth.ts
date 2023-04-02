@@ -6,8 +6,8 @@ import instance from './apiController'
 export const login = async (email: string, password: string) => {
   try {
     const response = await instance.post(API_URLS.LOGIN, {
-      email: email,
-      password: password,
+      email: 'hyein@naver.com',
+      password: 'hyein1234!',
     })
     if (response.data.message === '비밀번호를 확인해주세요.') {
       console.log(response.data.message)
@@ -21,6 +21,8 @@ export const login = async (email: string, password: string) => {
       return response
     }
   } catch (error) {
+    console.log(error)
+
     if (error instanceof Error) {
       return 'fail'
     } else {
@@ -55,3 +57,29 @@ export const loginAdmin = async (email: string, password: string) => {
 }
 
 export const logout = () => {}
+
+export const getAllSchedule = async () => {
+  try {
+    const response = await instance.get(API_URLS.ALL_SCHEDULE)
+    if (response.status === 200) return response.data.content
+  } catch (error) {
+    if (error instanceof Error) {
+      return 'fail'
+    } else {
+      throw error
+    }
+  }
+}
+
+export const getUserSchedule = async (userId: number) => {
+  try {
+    const response = await instance.get(API_URLS.USER_SCHEDULE + `/${userId}`)
+    if (response.status === 200) return response.data.content
+  } catch (error) {
+    if (error instanceof Error) {
+      return 'fail'
+    } else {
+      throw error
+    }
+  }
+}

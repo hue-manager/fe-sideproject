@@ -16,10 +16,10 @@ const CalendarSection = ({ calendarRef }: CalendarSectionProps) => {
   const logoutSubmitHandler = async (event: React.MouseEvent) => {
     event.preventDefault()
     removeToken()
-    const res = await logout()
-    if (res) {
-      navigate('/')
-    }
+    // const res = await logout()
+    // if (res) {
+    //   navigate('/')
+    // }
   }
   return (
     <ContainerStyle ref={calendarRef}>

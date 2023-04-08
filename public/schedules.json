@@ -1,59 +1,199 @@
 {
   "content": [
     {
+      "id": 44,
       "category": "VACATION",
-      "endDate": "2023-04-02",
-      "id": 0,
-      "memo": "string",
-      "startDate": "2023-04-02",
       "user": {
-        "accountNonExpired": true,
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-02T20:51:10.328375",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "우지수",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 7,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "credentialsNonExpired": true,
         "accountNonLocked": true,
+        "username": "우지수",
+        "accountNonExpired": true,
         "authorities": [
           {
-            "authority": "string"
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
           }
-        ],
-        "createdAt": "2023-04-02T14:10:05.089Z",
-        "credentialsNonExpired": true,
-        "department": "string",
-        "email": "string",
+        ]
+      },
+      "startDate": "2023-04-25",
+      "endDate": "2023-04-26",
+      "memo": "정규 스케쥴",
+      "status": "WAITING"
+    },
+    {
+      "id": 43,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-02T20:51:10.328375",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "우지수",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 7,
+        "position": "사원",
+        "department": "개발",
         "enabled": true,
-        "id": 0,
-        "modifiedAt": "2023-04-02T14:10:05.089Z",
-        "password": "string",
-        "phoneNumber": "string",
-        "position": "string",
-        "role": "DEFAULT",
-        "userName": "string",
-        "username": "string",
-        "vacationCount": 0
-      }
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "username": "우지수",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ]
+      },
+      "startDate": "2023-04-08",
+      "endDate": "2023-04-08",
+      "memo": "개인 업무",
+      "status": "WAITING"
+    },
+    {
+      "id": 42,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-02T20:51:10.328375",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "우지수",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 7,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "username": "우지수",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ]
+      },
+      "startDate": "2023-04-04",
+      "endDate": "2023-04-06",
+      "memo": "정규 스케쥴",
+      "status": "WAITING"
+    },
+    {
+      "id": 37,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-02T20:51:10.328375",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "우지수",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 7,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "username": "우지수",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ]
+      },
+      "startDate": "2023-04-08",
+      "endDate": "2023-04-08",
+      "memo": "병원 방문",
+      "status": "PERMIT"
+    },
+    {
+      "id": 35,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-02T20:51:10.328375",
+        "id": 4,
+        "email": "jisooround@jisooround.com",
+        "userName": "우지수",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 7,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "username": "우지수",
+        "accountNonExpired": true,
+        "authorities": [
+          {
+            "authority": "ROLE_USER"
+          },
+          {
+            "authority": "ROLE_ADMIN"
+          }
+        ]
+      },
+      "startDate": "2023-04-04",
+      "endDate": "2023-04-06",
+      "memo": "정규 스케쥴",
+      "status": "WAITING"
     }
   ],
-  "empty": true,
-  "first": true,
-  "last": true,
-  "number": 0,
-  "numberOfElements": 0,
   "pageable": {
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
     "offset": 0,
     "pageNumber": 0,
-    "pageSize": 0,
+    "pageSize": 5,
     "paged": true,
-    "sort": {
-      "empty": true,
-      "sorted": true,
-      "unsorted": true
-    },
-    "unpaged": true
+    "unpaged": false
   },
-  "size": 0,
+  "totalPages": 3,
+  "totalElements": 15,
+  "last": false,
+  "number": 0,
   "sort": {
-    "empty": true,
+    "empty": false,
     "sorted": true,
-    "unsorted": true
+    "unsorted": false
   },
-  "totalElements": 0,
-  "totalPages": 0
+  "size": 5,
+  "numberOfElements": 5,
+  "first": true,
+  "empty": false
 }

@@ -3,10 +3,11 @@ import styled from 'styled-components'
 
 type Props = {
   text: string
+  fn: any
 }
 
-const Button_white = ({ text }: Props) => {
-  return <Button>{text}</Button>
+const Button_white = ({ text, fn }: Props) => {
+  return <Button onClick={fn}>{text}</Button>
 }
 
 const Button = styled.button`

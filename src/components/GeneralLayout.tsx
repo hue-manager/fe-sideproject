@@ -26,9 +26,9 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   }, [pathname])
 
   // userRole=user 일때 어드민 페이지에 접속할 경우
-  if (isAdmin && userRole === 'user') {
-    routeTo('/main')
-  }
+  // if (isAdmin && userRole === 'user') {
+  //   routeTo('/main')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
   if (!isAdmin && userRole === 'admin') {
@@ -36,9 +36,9 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (withAuth && token === undefined) {
-    routeTo('/')
-  }
+  // if (withAuth && token === undefined) {
+  //   routeTo('/')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
   if (!withAuth && token === 'admin') {

@@ -2,7 +2,6 @@ import { Button } from '@components/Button/Button'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { login, loginAdmin } from '../../api/auth'
 import { setExpiration } from '../../utils/cookies'
 import { ax } from '../../api/axiosClient'
 

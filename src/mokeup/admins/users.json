@@ -1,39 +1,231 @@
 {
-  "content": [
-    {
-      "id": 6,
-      "email": "manman@abc.com",
-      "userName": "만만이",
-      "phoneNumber": "010-3456-7857",
-      "role": "DEFAULT",
-      "vacationCount": 15,
-      "position": "사원",
-      "department": "재무팀"
-    }
-  ],
-  "pageable": {
+  "users": {
+    "content": [
+      {
+        "id": 1,
+        "email": "hyeji@abc.com",
+        "userName": "공치기",
+        "phoneNumber": "010-8751-9138",
+        "role": "ROLE_ADMIN",
+        "vacationCount": 15,
+        "position": "팀장",
+        "department": "개발팀"
+      },
+      {
+        "id": 2,
+        "email": "hyein@naver.com",
+        "userName": "김혜인인",
+        "phoneNumber": "010-1234-5678",
+        "role": "ROLE_USER",
+        "vacationCount": 0,
+        "position": "부장",
+        "department": "개발팀"
+      },
+      {
+        "id": 3,
+        "email": "test100@naver.com",
+        "userName": "혜원",
+        "phoneNumber": "010-1234-1222",
+        "role": "ROLE_USER",
+        "vacationCount": 9,
+        "position": "팀원",
+        "department": "프론트"
+      },
+      {
+        "id": 4,
+        "email": "jisooround123@jisooround.com",
+        "userName": "송혜교",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 9,
+        "position": "사원",
+        "department": "개발"
+      },
+      {
+        "id": 5,
+        "email": "gram753@gmail.com",
+        "userName": "이승환",
+        "phoneNumber": "010-1111-2222",
+        "role": "ROLE_USER",
+        "vacationCount": 34,
+        "position": "팀장",
+        "department": "Back-End"
+      },
+      {
+        "id": 6,
+        "email": "manman@abc.com",
+        "userName": "만만이",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 12,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 7,
+        "email": "test2@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 8,
+        "email": "test3@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 9,
+        "email": "test4@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 10,
+        "email": "test5@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 11,
+        "email": "test6@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 12,
+        "email": "test7@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 13,
+        "email": "test8@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 14,
+        "email": "test9@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 15,
+        "email": "test10@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 16,
+        "email": "test11@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 17,
+        "email": "test12@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 18,
+        "email": "test13@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 19,
+        "email": "test14@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "DEFAULT",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      },
+      {
+        "id": 20,
+        "email": "test15@abc.com",
+        "userName": "테스트",
+        "phoneNumber": "010-3456-7857",
+        "role": "ROLE_USER",
+        "vacationCount": 15,
+        "position": "사원",
+        "department": "재무팀"
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageSize": 20,
+      "pageNumber": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "last": false,
+    "totalPages": 3,
+    "totalElements": 48,
+    "size": 20,
+    "number": 0,
     "sort": {
       "empty": true,
       "sorted": false,
       "unsorted": true
     },
-    "offset": 0,
-    "pageSize": 20,
-    "pageNumber": 0,
-    "paged": true,
-    "unpaged": false
-  },
-  "totalPages": 1,
-  "totalElements": 1,
-  "last": true,
-  "number": 0,
-  "sort": {
-    "empty": true,
-    "sorted": false,
-    "unsorted": true
-  },
-  "size": 20,
-  "numberOfElements": 1,
-  "first": true,
-  "empty": false
+    "first": true,
+    "numberOfElements": 20,
+    "empty": false
+  }
 }

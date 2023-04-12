@@ -3,7 +3,7 @@ import { getUserId } from '../utils/cookies'
 import axios from 'axios'
 import { IPostApply } from '../env'
 
-const BASE_URL = 'http://13.124.96.231:8080/'
+const BASE_URL = '0f27-58-227-41-28.ngrok-free.app'
 
 const HEADERS = {
   'Content-Type': 'application/json',

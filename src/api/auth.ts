@@ -67,23 +67,23 @@ export interface ISignUp {
 // }
 
 // 로그아웃
-// export const logout = () => {
-//   removeInfo()
-// }
+export const logout = () => {
+  removeInfo()
+}
 
 // 모든 스케줄 가져오기
-// export const getAllSchedule = async () => {
-//   try {
-//     const response = await instance.get(API_URLS.ALL_SCHEDULE)
-//     if (response.status === 200) return response.data.content
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       return 'fail'
-//     } else {
-//       throw error
-//     }
-//   }
-// }
+export const getAllSchedule = async () => {
+  try {
+    const response = await instance.get(API_URLS.ALL_SCHEDULE)
+    if (response.status === 200) return response.data.content
+  } catch (error) {
+    if (error instanceof Error) {
+      return 'fail'
+    } else {
+      throw error
+    }
+  }
+}
 
 // 유저 스케줄 불러오기
 export const getUserSchedule = async (userId: number) => {
@@ -114,7 +114,7 @@ export const signUp = async (data: ISignUp) => {
     if (response.data.message === 'Email is duplicated') {
       return 'duplicated'
     }
-    // 로그인 성공시에 유저 정보 저장
+    // 로그인 성공시에 유저 정보 저장g
     if (response.data.message === '회원가입 성공') {
       console.log(response.data.message)
       return response.data.message

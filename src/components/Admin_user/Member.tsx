@@ -7,7 +7,8 @@ import instance from '../../../src/api/apiController'
 import Pagination from '../UI/Pagination'
 import { useQuery } from '@tanstack/react-query'
 import _ from 'lodash'
-// import { useMembers } from '../../../src/hooks/useMembers'
+import { current } from '@reduxjs/toolkit'
+import userJson from '../../mokeup/admins/users.json'
 
 interface Props {}
 
@@ -33,33 +34,64 @@ type T = {
 }
 
 export const fetchMembers = (): Promise<T> => {
-  return instance.get(`/users/`).then((response) => {
-    return response.data.users.content.reduce((acc: any, curr: any) => {
-      const { role }: any = curr
-      if (acc[role]) acc[role].push(curr)
-      else acc[role] = [curr]
-      delete acc.DEFAULT
-      // console.log(acc.ROLE_ADMIN.concat(acc.ROLE_USER))
-      return acc
-    }, {})
-  })
+  return instance
+    .get(`/users/`)
+    .then((response) => {
+      return response.data.users.content.reduce((acc: any, curr: any) => {
+        const { role }: any = curr
+        if (acc[role]) acc[role].push(curr)
+        else acc[role] = [curr]
+        delete acc.DEFAULT
+        // console.log(acc.ROLE_ADMIN.concat(acc.ROLE_USER))
+        return acc
+      }, {})
+    })
+    .catch(() => {
+      return userJson.content
+    })
 }
 
-export const useMembers = () => {}
+// export const editRole = (data) => {
+//   return instance
+//     .post(`/users/${data.userId}/editrole`, {
+//       role: { data.role },
+//     })
+//     .then((response) => {
+//       return response
+//     })
+// }
 
 const Member = (props: Props) => {
-  const theads = ['이름', '이메일', '소속/직급', '권한', '계정삭제']
+  const theads = ['이름', '이메일', '소속/직급', '전화번호', '권한']
 
   const [activePage, setActivePage] = useState<number>(1)
+  const [selected, setSelected] = useState('관리자')
+
+  const selectList = ['관리자', '일반']
+
+  const handleSelect = (e: any) => {
+    setSelected(e.target.value)
+  }
 
   const { data, isLoading, error } = useQuery<T, Error>(['members'], fetchMembers)
 
   if (isLoading) return <h3>Loading...</h3>
   if (error) return <h3>Error {error.message}</h3>
 
-  const membersList = data.ROLE_ADMIN.concat(data.ROLE_USER)
+  const createList = () => {
+    let membersList: Array<D> = []
+    if (data.ROLE_ADMIN && data.ROLE_USER) {
+      return (membersList = data.ROLE_ADMIN.concat(data.ROLE_USER))
+    } else if (data.ROLE_ADMIN) {
+      return (membersList = data?.ROLE_ADMIN)
+    } else if (data.ROLE_USER) {
+      return (membersList = data?.ROLE_USER)
+    }
+    return membersList
+  }
+  const membersList = createList()
 
-  const memebersLength = membersList?.length
+  const memebersLength = membersList.length
   const limit = 5
   const totalPages = Math.ceil(memebersLength! / limit)
   let pageGroups = []
@@ -73,6 +105,7 @@ const Member = (props: Props) => {
     }
     pageGroups.push(tmp)
   }
+  if (pageGroups.length <= 5) return
   let numbering = pageGroups[activePage - 1]
   let pageMembersList = numbering.map((number) => membersList[number])
 
@@ -104,9 +137,16 @@ const Member = (props: Props) => {
                 <td>{data?.userName}</td>
                 <td>{data?.email}</td>
                 <td>{`${data?.department}/${data?.position}`}</td>
-                <td>{data?.role === 'ROLE_ADMIN' ? '관리자' : '일반'}</td>
+                <td>{data?.phoneNumber}</td>
                 <td>
-                  <Button_white text={'계정삭제'} />
+                  {data.role === 'ROLE_USER' ? '일반' : '관리자'}
+                  <SelectStyle defaultValue={data.role === 'ROLE_USER' ? '일반' : '관리자'}>
+                    {selectList.map((item, idx) => (
+                      <option key={idx} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </SelectStyle>
                 </td>
               </tr>
             ))}
@@ -178,6 +218,10 @@ const TableStyle = styled.table`
     border-radius: 0 40px 40px 0;
     padding-right: 40px;
   }
+`
+const SelectStyle = styled.select`
+  display: none;
+  cursor: pointer;
 `
 
 export default Member

@@ -1,18 +1,62 @@
 import Content from '@components/Content'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button_primary from '@components/Button/Button_primary'
 import instance from '../../../src/api/apiController'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 interface Props {}
 
-async function fetchPages(pageNum: number) {
-  const { data } = await instance.get(`/admins/schedules`)
-  return data.content
+type D = {
+  category: string
+  endDate: string
+  id: number
+  memo: string
+  startDate: string
+  status: string
+  createdAt: string
+  department: string
+  email: string
+  modifiedAt: string
+  position: string
+  userName: string
+}
+
+type T = {
+  contnet: Array<D>
+  totalElements: number
+  totalPages: number
+}
+
+async function fetchSchedules(page = 0) {
+  return instance.get(`/admins/schedules?page=` + page).then((response) => {
+    return response.data
+  })
 }
 
 const Admin = (props: Props) => {
   const theads = ['요청종류', '요청자', '소속/직급', '요청 사유', '요청 날짜', '상태', '관리']
+
+  const queryClient = useQueryClient()
+  const [activePage, setActivePage] = useState<number>(1)
+
+  const { data, status, isPreviousData } = useQuery({
+    queryKey: ['schedules', activePage],
+    queryFn: () => fetchSchedules(activePage),
+    keepPreviousData: true,
+    staleTime: 5000,
+  })
+
+  useEffect(() => {
+    if (!isPreviousData) {
+      queryClient.prefetchQuery({
+        queryKey: ['schedules', activePage],
+        queryFn: () => fetchSchedules(activePage - 1),
+      })
+    }
+  }, [data, isPreviousData, activePage, queryClient])
+
+  const totalPages = data?.totalPages
 
   const mockData = [
     {
@@ -57,17 +101,32 @@ const Admin = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {mockData.map((data, index) => (
-              <tr key={index}>
-                <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
-                <td>{data.person}</td>
-                <td>{data.level}</td>
-                <td>{data.reason}</td>
-                <td>{data.date}</td>
-                <td>{data.state}</td>
-                <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
+            {status === 'loading' ? (
+              <tr>
+                <td>
+                  <div>Loading...</div>
+                </td>
               </tr>
-            ))}
+            ) : status === 'error' ? (
+              <tr>
+                <td>
+                  <div>Error</div>
+                </td>
+              </tr>
+            ) : (
+              <tr>error</tr>
+              // data?.content.map((data, index) => (
+              //   <tr key={index}>
+              //     <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
+              //     <td>{data.person}</td>
+              //     <td>{data.level}</td>
+              //     <td>{data.reason}</td>
+              //     <td>{data.date}</td>
+              //     <td>{data.state}</td>
+              //     <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
+              //   </tr>
+              // ))
+            )}
           </tbody>
         </TableStyle>
       </WrapperStyle>

@@ -30,6 +30,8 @@ const Home = (props: Props) => {
     // 일반 유저 로그인
     if (role) {
       const formData = new FormData(event?.currentTarget)
+      console.log(formData.get('email'))
+      console.log(formData.get('password'))
       const res = await login(formData.get('email') as string, formData.get('password') as string)
       console.log('login:', res)
 

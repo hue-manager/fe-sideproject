@@ -1,16 +1,18 @@
-import TotalCalendar from './../../components/calendar/TotalCalendar'
 import { Button } from '@components/Button/Button'
-import { Action } from '@remix-run/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { login, loginAdmin } from '../../api/auth'
-import { getToken, setExpiration } from '../../utils/cookies'
-// import { authCheck } from '../../utils/authCheck'
+import { setExpiration } from '../../utils/cookies'
+import { ax } from '../../api/axiosClient'
 
 interface Props {}
 
-const errorMessage = ['', '비밀번호를 확인해주세요.', '이메일 혹은 비밀번호가 일치하지 않습니다.']
+const errorMessage = [
+  '',
+  '비밀번호를 확인해주세요.',
+  '이메일 혹은 비밀번호가 일치하지 않습니다.',
+  '관리자 미승인 계정으로 로그인할 수 없습니다.',
+]
 
 const Home = (props: Props) => {
   // 유저 선택 상태 (true일반유저/false관리자)
@@ -28,7 +30,12 @@ const Home = (props: Props) => {
     // 일반 유저 로그인
     if (role) {
       const formData = new FormData(event?.currentTarget)
-      const res = await login(formData.get('email') as string, formData.get('password') as string)
+      console.log(formData.get('email'))
+      console.log(formData.get('password'))
+      const res = await ax.login(
+        formData.get('email') as string,
+        formData.get('password') as string
+      )
       console.log('login:', res)
 
       // 비밀번호 불일치
@@ -49,6 +56,15 @@ const Home = (props: Props) => {
         }, 1000)
         return
       }
+      // 계정 미승인
+      if (res === '계정 미승인') {
+        setMessage(3)
+        setError(true)
+        setTimeout(() => {
+          setError(false)
+        }, 1500)
+        return
+      }
       //로그인 성공시에 메인페이지로 이동
       if (res) {
         navigate('/main')
@@ -57,12 +73,12 @@ const Home = (props: Props) => {
     } else {
       // 관리자 로그인
       const formData = new FormData(event?.currentTarget)
-      const res = await loginAdmin(
+      const res = await ax.loginAdmin(
         formData.get('email') as string,
         formData.get('password') as string
       )
       // 비밀번호 불일치
-      if (res === 'wrong assword') {
+      if (res === 'wrong password') {
         setMessage(1)
         setError(true)
         setTimeout(() => {

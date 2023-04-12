@@ -4,8 +4,11 @@ import Logo from '@components/UI/Logo'
 import { SidebarElement } from '../env'
 import { useRouter } from '../hooks/useRouter'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { removeInfo } from '../utils/cookies'
+import { getToken, removeInfo } from '../utils/cookies'
 import Timer from './Timer'
+import { useQuery } from '@tanstack/react-query'
+import { ax } from '../api/axiosClient'
+import Avatar, { genConfig } from 'react-nice-avatar'
 
 interface SidebarProps {
   sidebarContent: SidebarElement[]
@@ -13,9 +16,17 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
+  const accessToken = getToken()
   const { currentPath, routeTo } = useRouter()
-  console.log('currentPath', currentPath)
 
+  const { data: userInfo, isLoading: fetchingUser } = useQuery(['SidebarUserInfo'], () =>
+    ax.getUserInfo(accessToken)
+  )
+
+  if (fetchingUser) return <p>Lodaing...</p>
+
+  const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
+  // const config = genConfig(email)
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달
@@ -49,19 +60,25 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
     </svg>,
   ]
 
-  const name = '노홍철' // 유저 이름. 실제로는 데이터에서 패치할 것 입니다.
-  const profilImg = '노홍철' // 유저 사진. 실제로는 데이터에서 패치할 것 입니다.
   const userPages = sidebarContent.filter((content) => !content.isAdmin)
   const adminPages = sidebarContent.filter((content) => content.isAdmin)
 
   return (
     <SidebarStyle>
-      <Logo width="13rem" height="3rem" type="white" />
+      <Logo width="13rem" height="3rem" type="white" onClick={() => routeTo('/main')} />
       <ProfilStyle>
-        <div></div>
-        <p>{name}</p>
+        {/* <Avatar
+          style={{
+            width: '10rem',
+            height: '10rem',
+            border: 'none',
+            margin: '0',
+          }}
+          {...config}
+        /> */}
+        <p>{userName}</p>
       </ProfilStyle>
-      {currentPath === '/admin' ? (
+      {role === 'ROLE_ADMIN' ? (
         <ListStyle>
           {adminPages.map((element, index) => {
             return (
@@ -107,12 +124,6 @@ const ProfilStyle = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1.2rem;
-  div {
-    width: 7.25rem;
-    height: 7.25rem;
-    border-radius: 50%;
-    background-color: var(--color-white);
-  }
   p {
     font-weight: 700;
     font-size: 1.2rem;
@@ -182,10 +193,10 @@ const SidebarStyle = styled.div`
   box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
 
   ${ProfilStyle} {
-    height: 20%;
+    height: 30%;
   }
   ${ListStyle} {
-    height: 80%;
+    height: 70%;
   }
   ${TimerStyle} {
     height: 15%;

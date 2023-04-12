@@ -99,10 +99,7 @@ const Non_Member = (props: Props) => {
                   <td>{data.email}</td>
                   <td>{`${data.department}/${data.position}`}</td>
                   <td>{data.phoneNumber}</td>
-                  <td>
-                    <Button_white text={'허가'} onClick={() => setIsModal(true)} />
-                  </td>
-                  {isModal ? <ConfirmModal /> : null}
+                  <td>{/* <Button_white text={'허가'} /> */}</td>
                 </tr>
               ))
             )}

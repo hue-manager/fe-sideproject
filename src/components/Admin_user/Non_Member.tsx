@@ -7,6 +7,8 @@ import instance from '../../../src/api/apiController'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@src/react-query/constants'
 import Pagination from '../UI/Pagination'
+import Modal from '../../components/Modal'
+import ConfirmModal from '../UI/ConfirmModal'
 
 interface Props {}
 
@@ -35,6 +37,7 @@ const Non_Member = (props: Props) => {
   const theads = ['이름', '이메일', '소속/직급', '전화 번호', '가입 관리']
   const queryClient = useQueryClient()
   const [activePage, setActivePage] = useState<number>(1)
+  const [isModal, setIsModal] = useState(false)
 
   const { data, status, isPreviousData } = useQuery({
     queryKey: ['non-members', activePage],
@@ -97,13 +100,15 @@ const Non_Member = (props: Props) => {
                   <td>{`${data.department}/${data.position}`}</td>
                   <td>{data.phoneNumber}</td>
                   <td>
-                    <Button_white text={'허가'} />
+                    <Button_white text={'허가'} onClick={() => setIsModal(true)} />
                   </td>
+                  {isModal ? <ConfirmModal /> : null}
                 </tr>
               ))
             )}
           </tbody>
         </TableStyle>
+
         <Pagination activePage={activePage} setActivePage={setActivePage} pages={totalPages!} />
       </WrapperStyle>
     </Content>

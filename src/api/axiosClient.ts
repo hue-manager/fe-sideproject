@@ -2,6 +2,7 @@ import { getToken } from './../utils/cookies'
 import { getUserId } from '../utils/cookies'
 import axios from 'axios'
 import { IPostApply } from '../env'
+import { removeInfo, setInfo } from '../utils/cookies'
 
 const BASE_URL = '0f27-58-227-41-28.ngrok-free.app'
 
@@ -114,6 +115,63 @@ class Axios {
     } catch (error) {
       console.error('getUserSchedules error:', error)
       throw error
+    }
+  }
+
+  // 일반 유저 로그인
+  async login(email: string, password: string) {
+    try {
+      const response = await this.axiosClient.post(`/login`, {
+        email,
+        password,
+      })
+      console.log(response)
+      if (response.data.message === '비밀번호를 확인해주세요.') {
+        console.log(response.data.message)
+        return 'wrong assword'
+      }
+      if (response.data.message === '계정 미승인') {
+        console.log(response.data.message)
+        return '계정 미승인'
+      }
+      // 로그인 성공시에 유저 정보 저장
+      if (response.data.message === '로그인 성공' || response.data.message === '계정 미승인') {
+        setInfo(response.data.token, response.data.userId, 'user', false)
+        return response
+      }
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof Error) {
+        return 'fail'
+      } else {
+        throw error
+      }
+    }
+  }
+
+  // 관리자 로그인
+  async loginAdmin(email: string, password: string) {
+    try {
+      const response = await this.axiosClient.post(`/admins/login`, {
+        email: email,
+        password: password,
+      })
+      if (response.data.message === '비밀번호를 확인해주세요.') {
+        console.log(response.data.message)
+        return 'wrong password'
+      }
+      // 로그인 성공시에 토큰과 토큰 삭제시간 쿠키 저장소에 저장
+      if (response.data.message === '관리자 로그인 성공') {
+        setInfo(response.data.token, response.data.userId, 'admin', false)
+        return response
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return 'fail'
+      } else {
+        throw error
+      }
     }
   }
 }

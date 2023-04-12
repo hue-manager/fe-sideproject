@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { login, loginAdmin } from '../../api/auth'
 import { setExpiration } from '../../utils/cookies'
+import { ax } from '../../api/axiosClient'
 
 interface Props {}
 
@@ -32,7 +33,10 @@ const Home = (props: Props) => {
       const formData = new FormData(event?.currentTarget)
       console.log(formData.get('email'))
       console.log(formData.get('password'))
-      const res = await login(formData.get('email') as string, formData.get('password') as string)
+      const res = await ax.login(
+        formData.get('email') as string,
+        formData.get('password') as string
+      )
       console.log('login:', res)
 
       // 비밀번호 불일치
@@ -70,7 +74,7 @@ const Home = (props: Props) => {
     } else {
       // 관리자 로그인
       const formData = new FormData(event?.currentTarget)
-      const res = await loginAdmin(
+      const res = await ax.loginAdmin(
         formData.get('email') as string,
         formData.get('password') as string
       )

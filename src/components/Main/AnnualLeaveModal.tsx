@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Modal from '../Modal'
-import PostCalendar from '../DutyPostCalendar'
 import Select from '../UI/Select'
 import AnnualPostCalendar from '../AnnualPostCalendar'
 import { useSelector } from 'react-redux'
@@ -34,8 +33,8 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
       // const timeDiff = Math.abs(end.getTime() - start.getTime())
       // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
 
-      // if (diffDays > 3) {
-      //   alert('날짜 차이가 3일 이내가 아닙니다.')
+      // if (diffDays > 15) {
+      //   alert('날짜 차이가 15일 이내가 아닙니다.')
       //   return
       // }
 
@@ -47,9 +46,11 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
       })
 
       if (response.status === 200) {
-        alert('연차신청이 완료되었습니다.')
-
-        setIsOpen(false)
+        if (response.data.message) alert(response.data.message)
+        else {
+          alert('연차 신청이 완료되었습니다. ')
+          setIsOpen(false)
+        }
       } else {
         alert('연차신청에 실패하셨습니다')
       }

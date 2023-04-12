@@ -2,16 +2,17 @@ import { Button } from '@components/Button/Button'
 import { RxDoubleArrowLeft } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Select from '@components/UI/Select'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { signUp } from '../../api/auth'
 
 type FormValue = {
   email: string
   password: string
   passwordConfirm: string
-  name: string
-  number: number
+  userName: string
+  phoneNumber: string
   department: string
   position: string
 }
@@ -25,20 +26,37 @@ const SignUp = () => {
   const navigate = useNavigate()
   const [departmentValue, setDepartmentValue] = useState('개발')
   const [positionValue, setPositionValue] = useState('사원')
+  const [duplicated, setDuplicated] = useState<boolean>(false)
 
   const {
     register,
     watch,
     formState: { errors },
     handleSubmit,
+    setValue,
+    getValues,
   } = useForm<FormValue>()
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => console.log(data)
+  useEffect(() => {
+    setValue('department', departmentValue)
+    setValue('position', positionValue)
+  }, [departmentValue, positionValue])
 
-  const formData = new FormData()
-  console.log(formData)
+  const onSubmit = async () => {
+    const values = getValues()
+    const { passwordConfirm, ...rest } = values
+    const res = await signUp(rest)
+    if (res === '회원가입 성공') {
+      navigate('/')
+    }
+    if (res === 'duplicated') {
+      setDuplicated(true)
+      setTimeout(() => {
+        setDuplicated(false)
+      }, 1500)
+    }
+  }
 
-  console.log(watch('email'))
   return (
     <ContainerStyle>
       <BackgroundStyle />
@@ -105,25 +123,25 @@ const SignUp = () => {
               {/* 이름 */}
               <input
                 type="text"
-                {...register('name', {
+                {...register('userName', {
                   required: true,
                   pattern: /^[가-힣]{2,6}$/,
                 })}
                 placeholder="이름"
               />
-              <p className={errors.name ? 'active' : 'basic'}>한글 2~6자로 입력해 주세요.</p>
+              <p className={errors.userName ? 'active' : 'basic'}>한글 2~6자로 입력해 주세요.</p>
             </label>
             <label>
               {/* 휴대폰 번호 */}
               <input
                 type="text"
-                {...register('number', {
+                {...register('phoneNumber', {
                   required: true,
                   pattern: /^01(?:0|1|6)-(?:\d{3}|\d{4})-\d{4}$/,
                 })}
                 placeholder="휴대폰 번호"
               />
-              <p className={errors.number ? 'active' : 'basic'}>
+              <p className={errors.phoneNumber ? 'active' : 'basic'}>
                 '010-0000-0000' 형태로 입력해 주세요.
               </p>
             </label>
@@ -157,12 +175,14 @@ const SignUp = () => {
                   fontSize="14px"
                   {...register('position', {
                     required: true,
-                    validate: (value) => value === '개발',
                   })}
                 />
                 <p className={errors.position ? 'active' : 'basic'}>직급을 선택해 주세요.</p>
               </label>
             </div>
+            <p className={`${duplicated ? 'active' : 'basic'} hello`}>
+              이미 중복된 이메일이 존재합니다.
+            </p>
             <Button
               backgroundColor={'var(--color-primary)'}
               size={'width'}
@@ -313,7 +333,7 @@ const InputWrapStyle = styled.form`
     }
   }
   button {
-    margin-top: 100px;
+    margin-top: 30px;
     :hover {
       opacity: 0.8;
     }
@@ -331,6 +351,9 @@ const InputWrapStyle = styled.form`
     }
     &.select {
       margin-top: 0;
+    }
+    &.hello {
+      margin-top: 70px;
     }
   }
 `

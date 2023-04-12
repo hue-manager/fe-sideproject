@@ -1,68 +1,6 @@
 {
   "content": [
     {
-      "id": 48,
-      "category": "VACATION",
-      "user": {
-        "createdAt": "2023-04-04T04:36:27.331836",
-        "modifiedAt": "2023-04-04T10:31:52.398061",
-        "id": 46,
-        "email": "abcd@abcd.com",
-        "userName": "프링글스",
-        "password": "$2a$10$UUEQbM9o.j.SklMqFLSzUuDf1yy1tUihKjQwxniPsTdDXe1wuOZge",
-        "phoneNumber": "010-1111-2222",
-        "role": "ROLE_ADMIN",
-        "vacationCount": 11,
-        "position": "사원",
-        "department": "개발",
-        "enabled": true,
-        "username": "프링글스",
-        "accountNonLocked": true,
-        "authorities": [
-          {
-            "authority": "ADMIN"
-          }
-        ],
-        "accountNonExpired": true,
-        "credentialsNonExpired": true
-      },
-      "startDate": "2023-04-01",
-      "endDate": "2023-04-04",
-      "memo": "롤 5인팟 약속있음",
-      "status": "WAITING"
-    },
-    {
-      "id": 45,
-      "category": "WORK",
-      "user": {
-        "createdAt": "2023-04-01T10:37:34.038444",
-        "modifiedAt": "2023-04-02T21:19:37.235774",
-        "id": 5,
-        "email": "gram753@gmail.com",
-        "userName": "이승환",
-        "password": "$2a$10$67arl7T5C4lx/n1waS2sLuLGEGPFhFTrn9LwrSbCmEkOZu5/FcBXS",
-        "phoneNumber": "010-1111-2222",
-        "role": "ROLE_USER",
-        "vacationCount": 34,
-        "position": "팀장",
-        "department": "Back-End",
-        "enabled": true,
-        "username": "이승환",
-        "accountNonLocked": true,
-        "authorities": [
-          {
-            "authority": "USER"
-          }
-        ],
-        "accountNonExpired": true,
-        "credentialsNonExpired": true
-      },
-      "startDate": "2023-04-02",
-      "endDate": "2023-04-02",
-      "memo": "sssssg",
-      "status": "WAITING"
-    },
-    {
       "id": 43,
       "category": "WORK",
       "user": {
@@ -125,22 +63,22 @@
       "status": "WAITING"
     },
     {
-      "id": 41,
-      "category": "VACATION",
+      "id": 37,
+      "category": "WORK",
       "user": {
-        "createdAt": "2023-04-01T10:37:34.038444",
-        "modifiedAt": "2023-04-02T21:19:37.235774",
-        "id": 5,
-        "email": "gram753@gmail.com",
-        "userName": "이승환",
-        "password": "$2a$10$67arl7T5C4lx/n1waS2sLuLGEGPFhFTrn9LwrSbCmEkOZu5/FcBXS",
-        "phoneNumber": "010-1111-2222",
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-04T08:48:40.991376",
+        "id": 4,
+        "email": "jisooround123@jisooround.com",
+        "userName": "송혜교",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
         "role": "ROLE_USER",
-        "vacationCount": 34,
-        "position": "팀장",
-        "department": "Back-End",
+        "vacationCount": 9,
+        "position": "사원",
+        "department": "개발",
         "enabled": true,
-        "username": "이승환",
+        "username": "송혜교",
         "accountNonLocked": true,
         "authorities": [
           {
@@ -150,9 +88,71 @@
         "accountNonExpired": true,
         "credentialsNonExpired": true
       },
-      "startDate": "2023-04-06",
-      "endDate": "2023-04-04",
-      "memo": "제발....",
+      "startDate": "2023-04-08",
+      "endDate": "2023-04-08",
+      "memo": "병원 방문",
+      "status": "PERMIT"
+    },
+    {
+      "id": 35,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-04T08:48:40.991376",
+        "id": 4,
+        "email": "jisooround123@jisooround.com",
+        "userName": "송혜교",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 9,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "송혜교",
+        "accountNonLocked": true,
+        "authorities": [
+          {
+            "authority": "USER"
+          }
+        ],
+        "accountNonExpired": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-04",
+      "endDate": "2023-04-06",
+      "memo": "정규 스케쥴",
+      "status": "WAITING"
+    },
+    {
+      "id": 20,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-04T08:48:40.991376",
+        "id": 4,
+        "email": "jisooround123@jisooround.com",
+        "userName": "송혜교",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 9,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "송혜교",
+        "accountNonLocked": true,
+        "authorities": [
+          {
+            "authority": "USER"
+          }
+        ],
+        "accountNonExpired": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-02",
+      "endDate": "2023-04-02",
+      "memo": "개인 업무",
       "status": "WAITING"
     }
   ],
@@ -169,8 +169,8 @@
     "unpaged": false
   },
   "last": false,
-  "totalPages": 8,
-  "totalElements": 40,
+  "totalPages": 3,
+  "totalElements": 14,
   "size": 5,
   "number": 0,
   "sort": {

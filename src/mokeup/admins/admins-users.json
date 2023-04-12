@@ -1,0 +1,79 @@
+{
+  "content": [
+    {
+      "id": 53,
+      "email": "testyong@email.com",
+      "userName": "디구디디",
+      "phoneNumber": "010-3338-8484",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "대리",
+      "department": "개발"
+    },
+    {
+      "id": 43,
+      "email": "abcd@abc.com",
+      "userName": "프링글스",
+      "phoneNumber": "010-1111-2222",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "사원",
+      "department": "개발"
+    },
+    {
+      "id": 42,
+      "email": "abc@abc.com",
+      "userName": "프링글스",
+      "phoneNumber": "010-1111-2222",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "사원",
+      "department": "개발"
+    },
+    {
+      "id": 41,
+      "email": "hmm123@hmm.com",
+      "userName": "흠냐미",
+      "phoneNumber": "010-1234-1234",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "과장",
+      "department": "법무"
+    },
+    {
+      "id": 40,
+      "email": "hmm@hmm.com",
+      "userName": "우지수",
+      "phoneNumber": "010-1234-1234",
+      "role": "DEFAULT",
+      "vacationCount": 15,
+      "position": "과장",
+      "department": "개발"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "pageSize": 5,
+    "pageNumber": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 6,
+  "totalElements": 30,
+  "size": 5,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "first": true,
+  "numberOfElements": 5,
+  "empty": false
+}

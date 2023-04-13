@@ -21,6 +21,13 @@ type UserInfo = {
   role: string
   userName: string
   vacationCount: number
+  overview: {
+    onDuty: number
+    application: number
+    approved: number
+    pending: number
+    rejection: number
+  }
 }
 
 const MyPage = (props: Props) => {
@@ -33,6 +40,13 @@ const MyPage = (props: Props) => {
     vacationCount: 12,
     position: '사원',
     department: '재무팀',
+    overview: {
+      onDuty: 3,
+      application: 15,
+      approved: 12,
+      pending: 3,
+      rejection: 0,
+    },
   })
   const [editInfoModalOpen, setEditInfoModalOpen] = useState(false)
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)

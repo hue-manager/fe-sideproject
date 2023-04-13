@@ -8,14 +8,18 @@ import { RootState } from '../../main'
 import Button from '../UI/Button'
 import { ax } from '../../api/axiosClient'
 import { getToken } from '../../utils/cookies'
+import { atom, useRecoilState } from 'recoil'
+import { eventsState } from '../../atoms/atom'
 
 interface IAnnualLeaveModal {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  setUserInfo: () => void
 }
 
-const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
+const AnnualLeaveModal = ({ setUserInfo, isOpen, setIsOpen }: IAnnualLeaveModal) => {
   // const accessToken = getToken()
+  const [data, setData] = useRecoilState(eventsState)
 
   const [currentValue, setCurrentValue] = useState('정규 스케쥴')
   const { startDate, endDate } = useSelector((state: RootState) => state.selectedAnnualDate)
@@ -44,9 +48,53 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
       //   startDate: startDate,
       //   endDate: endDate,
       // })
-      const response = {status : 200 , data: {
-        message: '연차 신청에 성공했습니다.'
-      }}
+      setData((prev) => [
+        ...prev,
+        {
+          id: 35,
+          category: 'VACATION',
+          user: {
+            createdAt: '2023-04-01T09:45:21.835961',
+            modifiedAt: '2023-04-04T08:48:40.991376',
+            id: 4,
+            email: 'jisooround123@jisooround.com',
+            userName: '송혜교',
+            password: '$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG',
+            phoneNumber: '010-5028-7344',
+            role: 'ROLE_USER',
+            vacationCount: 9,
+            position: '사원',
+            department: '개발',
+            enabled: true,
+            username: '송혜교',
+            accountNonLocked: true,
+            authorities: [
+              {
+                authority: 'USER',
+              },
+            ],
+            accountNonExpired: true,
+            credentialsNonExpired: true,
+          },
+          startDate: startDate,
+          endDate: endDate,
+          memo: currentValue,
+          status: 'WAITING',
+        },
+      ])
+      const response = {
+        status: 200,
+        data: {
+          message: '연차 신청에 성공했습니다.',
+        },
+      }
+      // @ts-ignore 신청 count 증가 하기
+      setUserInfo((prev) => {
+        const { application } = prev.overview
+        prev.overview.application = application + 1
+        return { ...prev }
+      })
+      setIsOpen(false)
 
       if (response.status === 200) {
         if (response.data.message) alert(response.data.message)

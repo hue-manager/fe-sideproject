@@ -8,6 +8,8 @@ import Select from '../UI/Select'
 import Button from '../UI/Button'
 import { ax } from '../../api/axiosClient' //'@src/api/axiosClient'
 import { getToken } from '../../utils/cookies'
+import { useRecoilState } from 'recoil'
+import { eventsState } from '../../atoms/atom'
 
 interface IDutyDateModal {
   isOpen: boolean
@@ -15,6 +17,7 @@ interface IDutyDateModal {
 }
 
 const DutyDateModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
+  const [data, setData] = useRecoilState(eventsState)
   const accessToken = getToken()
   const { selectedDutyDate } = useSelector((state: RootState) => state.selectedDutyDate)
   const handleModal2Close = () => {
@@ -30,14 +33,50 @@ const DutyDateModal = ({ isOpen, setIsOpen }: IDutyDateModal) => {
     } else if (!selectedDutyDate) {
       alert('신청 날짜를 선택해주세요.')
     } else {
-      const response = await ax.postApply(accessToken, {
-        category: 'WORK',
-        memo: currentValue,
-        startDate: selectedDutyDate,
-        endDate: selectedDutyDate,
-      })
+      // const response = await ax.postApply(accessToken, {
+      //   category: 'WORK',
+      //   memo: currentValue,
+      //   startDate: selectedDutyDate,
+      //   endDate: selectedDutyDate,
+      // })
 
-      if (response.status === 200) {
+      setData([
+        ...data,
+        {
+          id: 37,
+          category: 'WORK',
+          user: {
+            createdAt: '2023-04-01T09:45:21.835961',
+            modifiedAt: '2023-04-04T08:48:40.991376',
+            id: 4,
+            email: 'jisooround123@jisooround.com',
+            userName: '송혜교2',
+            password: '$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG',
+            phoneNumber: '010-5028-7344',
+            role: 'ROLE_USER',
+            vacationCount: 9,
+            position: '사원',
+            department: '개발',
+            enabled: true,
+            username: '송혜교',
+            accountNonLocked: true,
+            authorities: [
+              {
+                authority: 'USER',
+              },
+            ],
+            accountNonExpired: true,
+            credentialsNonExpired: true,
+          },
+          startDate: selectedDutyDate,
+          endDate: selectedDutyDate,
+          memo: currentValue,
+          status: 'PERMIT',
+        },
+      ])
+
+      // if (response.status === 200) {
+      if (true) {
         alert('당직신청이 완료되었습니다.')
         setIsOpen(false)
       } else {

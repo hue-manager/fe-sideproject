@@ -56,7 +56,8 @@ const EditInfoModal = ({
   const handleModalClose = () => {
     setIsOpen(false)
   }
-  const handleMockSubmit = (e: any) => {
+  // @ts-ignore
+  const handleMockSubmit: any = (e) => {
     e.preventDefault()
     setIsOpen(false)
   }

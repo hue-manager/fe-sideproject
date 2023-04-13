@@ -1,25 +1,29 @@
-import React, { MutableRefObject } from 'react'
+import React, { MutableRefObject, useState } from 'react'
 import styled from 'styled-components'
 import Inner from '@components/Inner'
 import { getToken, getUserId } from '../../utils/cookies'
 interface UserInfoSectionProps {
+  setUserInfo: any
   userInfo: any
   applySectionRef: MutableRefObject<HTMLDivElement | null>
   calendarSectionRef: MutableRefObject<HTMLDivElement | null>
 }
 
 const UserInfoSection = ({
+  setUserInfo,
   userInfo,
   applySectionRef,
   calendarSectionRef,
 }: UserInfoSectionProps) => {
   const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
   console.log('내 userInfo', userInfo)
-  const onDuty = 3 // 당직 패칭
-  const application = 15 // 신청
-  const approved = 12 // 승인 완료
-  const pending = 3 // 승인 대기
-  const rejection = 0 // 승인 거절
+  // const onDuty = 3 // 당직 패칭
+  // const application = 15 // 신청
+  // const [application, setApplcation] = useState(15)
+  // const approved = 12 // 승인 완료
+  // const pending = 3 // 승인 대기
+  // const rejection = 0 // 승인 거절
+  const { onDuty, application, approved, pending, rejection } = userInfo.overview
 
   const handleApplyClick = () => {
     applySectionRef.current?.scrollIntoView({ behavior: 'smooth' })

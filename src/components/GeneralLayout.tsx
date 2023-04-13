@@ -61,7 +61,7 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
   return (
     <GeneralLayoutStyle>
-      {false ? <Sidebar sidebarContent={SidebarContent} /> : null}
+      {true ? <Sidebar sidebarContent={SidebarContent} /> : null}
       <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
     </GeneralLayoutStyle>
   )
@@ -80,4 +80,5 @@ const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
   margin: 0 auto;
   padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
   overflow-x: hidden;
+  margin-left: 18rem;
 `

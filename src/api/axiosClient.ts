@@ -10,6 +10,15 @@ const HEADERS = {
   'Content-Type': 'application/json',
 }
 
+export interface ISignUp {
+  department: string
+  email: string
+  password: string
+  phoneNumber: string
+  position: string
+  userName: string
+}
+
 class Axios {
   axiosClient
   constructor() {
@@ -120,6 +129,7 @@ class Axios {
 
   // 일반 유저 로그인
   async login(email: string, password: string) {
+    return 
     try {
       const response = await this.axiosClient.post(`/login`, {
         email,
@@ -166,6 +176,63 @@ class Axios {
         setInfo(response.data.token, response.data.userId, 'admin', false)
         return response
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        return 'fail'
+      } else {
+        throw error
+      }
+    }
+  }
+
+  // 일반 유저 회원가입
+  async signUp(data: ISignUp) {
+    try {
+      const response = await this.axiosClient.post(`/signup`, {
+        department: data.department,
+        email: data.email,
+        password: data.password,
+        phoneNumber: data.phoneNumber,
+        position: data.position,
+        userName: data.userName,
+      })
+
+      if (response.data.message === 'Email is duplicated') {
+        return 'duplicated'
+      }
+      // 로그인 성공시에 유저 정보 저장
+      if (response.data.message === '회원가입 성공') {
+        console.log(response.data.message)
+        return response.data.message
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return 'fail'
+      } else {
+        throw error
+      }
+    }
+  }
+
+  // 모든 스케줄 가져오기
+  async getAllSchedule() {
+    try {
+      const response = await this.axiosClient.get(`/schedules/all`)
+      if (response.status === 200) return response.data.content
+    } catch (error) {
+      if (error instanceof Error) {
+        return 'fail'
+      } else {
+        throw error
+      }
+    }
+  }
+
+  // 유저 스케줄 불러오기
+  async getUserSchedule(userId: number) {
+    try {
+      const response = await this.axiosClient.get(`/schedules/userinfo/${userId}`)
+      if (response.status === 200) return response.data.content
     } catch (error) {
       if (error instanceof Error) {
         return 'fail'

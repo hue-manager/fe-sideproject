@@ -8,13 +8,16 @@ ReactModal.setAppElement('#root')
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 const queryClient = new QueryClient()
 import store from './store/store'
+import { RecoilRoot } from 'recoil'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    <ReactQueryDevtools initialIsOpen={false} />
+    <RecoilRoot>
+      <Provider store={store}>
+        <App />
+      </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </RecoilRoot>
   </QueryClientProvider>
 )
 

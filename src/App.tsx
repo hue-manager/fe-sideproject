@@ -7,7 +7,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <RouterProvider router={routers} />
-      <div className="big-screen-text">화면을 키워주세요!</div>
+      {/* <div className="big-screen-text">화면을 키워주세요!</div> */}
     </>
   )
 }

@@ -33,6 +33,8 @@ const MonthCalendar = ({ events, switchData, setSwitchData }: IMonthCalendarProp
     dispatch(setData(resData))
   }
 
+  console.log(events)
+
   return (
     <Wrap>
       <Head switchData={switchData}>

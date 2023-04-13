@@ -46,12 +46,12 @@ type T = {
 }
 
 const Main = () => {
-  const applySectionRef = useRef(null)
+  // const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
-  const accessToken = getToken()
-  const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
-    ax.getUserInfo(accessToken)
-  )
+  // const accessToken = getToken()
+  // const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
+  //   ax.getUserInfo(accessToken)
+  // )
 
   // const {
   //   data: scheduleList,
@@ -66,18 +66,18 @@ const Main = () => {
   //   },
   // })
 
-  if (fetchingUser) return <p>Lodaing...</p>
+  // if (fetchingUser) return <p>Lodaing...</p>
 
   console.log('scheduleList')
   return (
     <>
-      <UserInfoSection
-        userInfo={userInfo}
-        applySectionRef={applySectionRef}
-        calendarSectionRef={calendarSectionRef}
-      />
+      {/* <UserInfoSection
+        // userInfo={userInfo}
+        // applySectionRef={applySectionRef}
+        // calendarSectionRef={calendarSectionRef}
+      /> */}
       <CalendarSection calendarRef={calendarSectionRef} />
-      <ApplySection userInfo={userInfo} applyRef={applySectionRef} />
+      {/* <ApplySection userInfo={userInfo} applyRef={applySectionRef} /> */}
     </>
   )
 }

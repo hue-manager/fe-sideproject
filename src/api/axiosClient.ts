@@ -4,7 +4,7 @@ import axios from 'axios'
 import { IPostApply } from '../env'
 import { removeInfo, setInfo } from '../utils/cookies'
 
-const BASE_URL = 'http://0f27-58-227-41-28.ngrok-free.app'
+const BASE_URL = '0f27-58-227-41-28.ngrok-free.app'
 
 const HEADERS = {
   'Content-Type': 'application/json',

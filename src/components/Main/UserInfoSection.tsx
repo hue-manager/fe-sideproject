@@ -14,7 +14,7 @@ const UserInfoSection = ({
   calendarSectionRef,
 }: UserInfoSectionProps) => {
   const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
-
+  console.log('내 userInfo', userInfo)
   const onDuty = 3 // 당직 패칭
   const application = 15 // 신청
   const approved = 12 // 승인 완료

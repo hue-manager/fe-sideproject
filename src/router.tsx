@@ -43,7 +43,7 @@ const routerData: RouterElement[] = [
     path: PATH.MAIN,
     label: '메인페이지',
     element: <Main />,
-    withAuth: true,
+    withAuth: false,
     isAdmin: false,
   },
   {
@@ -51,7 +51,7 @@ const routerData: RouterElement[] = [
     path: PATH.MYPAGE,
     label: '마이페이지',
     element: <MyPage />,
-    withAuth: true,
+    withAuth: false,
     isAdmin: false,
   },
   {
@@ -89,7 +89,7 @@ export const routers: RemixRouter = createBrowserRouter(
             {router.element}
           </GeneralLayout>
         ),
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
       }
     } else if (router.isAdmin) {
       return {
@@ -103,20 +103,21 @@ export const routers: RemixRouter = createBrowserRouter(
             {router.element}
           </GeneralLayout>
         ),
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
       }
     } else {
       return {
         path: router.path,
         element: <GeneralLayout>{router.element}</GeneralLayout>,
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
       }
     }
   })
 )
-
+const withAuth = false
 // 라우터 객체에서 인증이 필요한 페이지만 필터링해 사이드바에 전달
 // id, path, label을 전달하여 Sidebar에서 사용
+
 export const SidebarContent: SidebarElement[] = routerData.reduce(
   (prev: SidebarElement[], router: RouterElement) => {
     if (router.withAuth) {

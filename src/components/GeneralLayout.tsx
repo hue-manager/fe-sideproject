@@ -36,9 +36,9 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (!isAdmin && userRole === 'admin') {
-    routeTo('/admin')
-  }
+  // if (!isAdmin && userRole === 'admin') {
+  //   routeTo('/admin')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
   // if (withAuth && token === undefined) {
@@ -46,22 +46,22 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (!withAuth && token === 'admin') {
-    routeTo('/admin')
-  }
+  // if (!withAuth && token === 'admin') {
+  //   routeTo('/admin')
+  // }
 
   // token 없을땐 로그인 화면으로 이동
-  if (token === '') {
-    routeTo('/')
-  }
+  // if (token === '') {
+  //   routeTo('/')
+  // }
 
   // token 이 있는데 홈으로 접속할 경우
-  if (token && window.location.pathname === '/') {
-    routeTo('/main')
-  }
+  // if (token && window.location.pathname === '/') {
+  //   routeTo('/main')
+  // }
   return (
     <GeneralLayoutStyle>
-      {acceptHome ? <Sidebar sidebarContent={SidebarContent} /> : null}
+      {false ? <Sidebar sidebarContent={SidebarContent} /> : null}
       <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
     </GeneralLayoutStyle>
   )

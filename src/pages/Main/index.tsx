@@ -7,6 +7,19 @@ import { ax } from '../../api/axiosClient'
 import { getToken, getUserId } from '../../utils/cookies'
 import axios from 'axios'
 
+const mockUser = {
+  user: {
+    id: 6,
+    email: 'manman@abc.com',
+    userName: '만만이',
+    phoneNumber: '010-3456-7857',
+    role: 'ROLE_USER',
+    vacationCount: 12,
+    position: '사원',
+    department: '재무팀',
+  },
+}
+
 interface Item {
   id: number
   category: string
@@ -45,13 +58,24 @@ type T = {
   totalPages: number
 }
 
+function myMockFt() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(mockUser)
+    }, 500) // 1초 후에 Promise가 완료됨
+  })
+}
+
 const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
   const accessToken = getToken()
-  const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
-    ax.getUserInfo(accessToken)
-  )
+  // const { data: userInfo, isLoading: fetchingUser } = useQuery(
+  //   ['userInfo'],
+  // () =>   ax.getUserInfo(accessToken)
+  //   () => mockUser
+  // )
+  const [userInfo, setUserInfo] = useState(mockUser.user)
 
   // const {
   //   data: scheduleList,
@@ -66,7 +90,7 @@ const Main = () => {
   //   },
   // })
 
-  if (fetchingUser) return <p>Lodaing...</p>
+  // if (fetchingUser) return <p>Lodaing...</p>
 
   console.log('scheduleList')
   return (

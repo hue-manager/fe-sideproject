@@ -15,7 +15,7 @@ interface IAnnualLeaveModal {
 }
 
 const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
-  const accessToken = getToken()
+  // const accessToken = getToken()
 
   const [currentValue, setCurrentValue] = useState('정규 스케쥴')
   const { startDate, endDate } = useSelector((state: RootState) => state.selectedAnnualDate)
@@ -38,12 +38,15 @@ const AnnualLeaveModal = ({ isOpen, setIsOpen }: IAnnualLeaveModal) => {
       //   return
       // }
 
-      const response = await ax.postApply(accessToken, {
-        category: 'VACATION',
-        memo: currentValue,
-        startDate: startDate,
-        endDate: endDate,
-      })
+      // const response = await ax.postApply(accessToken, {
+      //   category: 'VACATION',
+      //   memo: currentValue,
+      //   startDate: startDate,
+      //   endDate: endDate,
+      // })
+      const response = {status : 200 , data: {
+        message: '연차 신청에 성공했습니다.'
+      }}
 
       if (response.status === 200) {
         if (response.data.message) alert(response.data.message)

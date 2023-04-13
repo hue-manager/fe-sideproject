@@ -7,6 +7,8 @@ import { getAllSchedule } from '../../api/auth'
 import { CalendarCategory } from './DetailItem'
 import { getUserSchedule } from './../../api/auth'
 import { getUserId } from '../..//utils/cookies'
+import allSchedule from '../../mokeup/users-schedules/all.json'
+import userSchedule from '../../mokeup/users-schedules/userinfo.json'
 
 export interface IEventsData {
   title: number
@@ -26,22 +28,25 @@ const TotalCalendar = () => {
   const [events, setEvents] = useState<IEventsData[]>([])
 
   const id = getUserId()
+  const isLoading = false
+  const data = userSchedule.content
 
-  const { isLoading, data } = useQuery(
-    ['getSchedule', switchData],
-    () => {
-      if (switchData === 'my') return getUserSchedule(id)
-      else return getAllSchedule()
-    },
-    {
-      staleTime: 1000,
-    }
-  )
+  // const { isLoading, data } = useQuery(
+  //   ['getSchedule', switchData],
+  //   () => {
+  //     if (switchData === 'my') return getUserSchedule(id)
+  //     else return getAllSchedule()
+  //   },
+  //   {
+  //     staleTime: 1000,
+  //   }
+  // )
 
   useEffect(() => {
     setEvents([])
 
     if (!isLoading) {
+      // @ts-ignore
       for (const event of data) {
         const setData = {
           title: event.id,
@@ -55,6 +60,7 @@ const TotalCalendar = () => {
             position: event.user.position,
           },
         }
+        //@ts-ignore
         setEvents((prev: IEventsData[]) => [...prev, setData])
       }
     }

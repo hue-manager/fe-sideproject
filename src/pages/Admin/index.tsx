@@ -2,8 +2,11 @@ import Content from '@components/Content'
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button_primary from '@components/Button/Button_primary'
-import instance from '../../../src/api/apiController'
+import instance from '@/api/apiController'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { atom, useRecoilState } from 'recoil'
+import { scheduleState } from '@/atoms/atom'
+import { CSVLink } from 'react-csv'
 
 interface Props {}
 
@@ -33,65 +36,31 @@ async function fetchSchedules(page = 0) {
     return response.data
   })
 }
-
+console.log('instance', instance)
 const Admin = (props: Props) => {
   const theads = ['요청종류', '요청자', '소속/직급', '요청 사유', '요청 날짜', '상태', '관리']
 
-  const queryClient = useQueryClient()
-  const [activePage, setActivePage] = useState<number>(1)
+  // const queryClient = useQueryClient()
+  // const [activePage, setActivePage] = useState<number>(1)
 
-  const { data, status, isPreviousData } = useQuery({
-    queryKey: ['schedules', activePage],
-    queryFn: () => fetchSchedules(activePage),
-    keepPreviousData: true,
-    staleTime: 5000,
-  })
+  // const { data, status } = useQuery({
+  //   queryKey: ['schedules', activePage],
+  //   queryFn: () => fetchSchedules(activePage),
+  //   keepPreviousData: true,
+  //   staleTime: 5000,
+  // })
 
-  useEffect(() => {
-    if (!isPreviousData) {
-      queryClient.prefetchQuery({
-        queryKey: ['schedules', activePage],
-        queryFn: () => fetchSchedules(activePage - 1),
-      })
-    }
-  }, [data, isPreviousData, activePage, queryClient])
-
-  const totalPages = data?.totalPages
-
-  const mockData = [
-    {
-      species: '연차',
-      person: '공혜지',
-      level: '인사팀/사원',
-      reason: '병원 방문',
-      date: '2023.01.25',
-      state: '처리대기',
-    },
-    {
-      species: '당직',
-      person: '공혜지',
-      level: '개발팀/사원',
-      reason: '각종 경조사',
-      date: '2023.01.25',
-      state: '승인',
-    },
-    {
-      species: '연차',
-      person: '규규규',
-      level: '개발팀/사원',
-      reason: '개인 업무',
-      date: '2023.01.25',
-      state: '거절',
-    },
-  ]
-
+  const [mockData, setMockData] = useRecoilState(scheduleState)
+  const totalPages = 3
   return (
     <Content
       title={'승인요청'}
       intro={'연차, 당직 신청 내역을 확인하고 승인이나 거절할 수 있습니다.'}
     >
       <WrapperStyle>
-        <Button_primary text={'엑셀로 내보내기'} />
+        <CSVButton data={mockData} filename="승인요청 스케쥴.csv">
+          엑셀로 내보내기
+        </CSVButton>
         <TableStyle>
           <thead>
             <tr>
@@ -101,32 +70,17 @@ const Admin = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {status === 'loading' ? (
-              <tr>
-                <td>
-                  <div>Loading...</div>
-                </td>
+            {mockData.map((data, index): any => (
+              <tr key={index}>
+                <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
+                <td>{data.person}</td>
+                <td>{data.level}</td>
+                <td>{data.reason}</td>
+                <td>{data.date}</td>
+                <td>{data.state}</td>
+                <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
               </tr>
-            ) : status === 'error' ? (
-              <tr>
-                <td>
-                  <div>Error</div>
-                </td>
-              </tr>
-            ) : (
-              <tr>error</tr>
-              // data?.content.map((data, index) => (
-              //   <tr key={index}>
-              //     <td className={data.species === '당직' ? 'pink' : 'purple'}>{data.species}</td>
-              //     <td>{data.person}</td>
-              //     <td>{data.level}</td>
-              //     <td>{data.reason}</td>
-              //     <td>{data.date}</td>
-              //     <td>{data.state}</td>
-              //     <td>{data.state === '처리대기' ? '승인 | 거절' : data.state}</td>
-              //   </tr>
-              // ))
-            )}
+            ))}
           </tbody>
         </TableStyle>
       </WrapperStyle>
@@ -139,6 +93,23 @@ const WrapperStyle = styled.div`
   flex-direction: column;
   align-items: flex-end;
 `
+const CSVButton = styled(CSVLink)`
+  cursor: pointer;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: content-box;
+  &:hover {
+    filter: brightness(1.1);
+  }
+`
+
 
 const TableStyle = styled.table`
   border-collapse: separate;

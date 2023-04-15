@@ -28,6 +28,9 @@ const Home = (props: Props) => {
   const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     // 일반 유저 로그인
+    navigate('/admin')
+    return
+
     if (role) {
       const formData = new FormData(event?.currentTarget)
 
@@ -39,7 +42,7 @@ const Home = (props: Props) => {
 
       //로그인 성공시에 메인페이지로 이동
       // if (res) {
-      navigate('/main')
+      navigate('/admin')
       console.log('야호')
       // }
     } else {
@@ -107,7 +110,7 @@ const Home = (props: Props) => {
               </MessageStyle>
               <Button
                 onClick={() => {
-                  setExpiration()
+                  navigate('/admin')
                 }}
                 backgroundColor={'var(--color-primary)'}
                 size={'width'}

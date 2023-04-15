@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import Avatar, { genConfig } from 'react-nice-avatar'
 import instance from '../../../src/api/apiController'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { queryKeys } from '@src/react-query/constants'
 import Pagination from '../UI/Pagination'
+import { useRecoilState } from 'recoil'
+import { nonMemberState, usersState } from '@/atoms/atom'
 
 interface Props {}
 
@@ -35,24 +36,13 @@ const Non_Member = (props: Props) => {
   const theads = ['이름', '이메일', '소속/직급', '전화 번호', '가입 관리']
   const queryClient = useQueryClient()
   const [activePage, setActivePage] = useState<number>(1)
-
-  const { data, status, isPreviousData } = useQuery({
-    queryKey: ['non-members', activePage],
-    queryFn: () => fetchNonMember(activePage),
-    keepPreviousData: true,
-    staleTime: 5000,
-  })
-
-  useEffect(() => {
-    if (!isPreviousData) {
-      queryClient.prefetchQuery({
-        queryKey: ['non-members', activePage],
-        queryFn: () => fetchNonMember(activePage - 1),
-      })
-    }
-  }, [data, isPreviousData, activePage, queryClient])
-
-  const totalPages = data?.totalPages
+  const [data, setData] = useRecoilState(nonMemberState)
+  // const { data, status, isPreviousData } = useQuery({
+  //   queryKey: ['non-members', activePage],
+  //   queryFn: () => fetchNonMember(activePage),
+  //   keepPreviousData: true,
+  //   staleTime: 5000,
+  // })
 
   return (
     <Content title={'비회원관리'} intro={'가입 신청을 승인할 수 있습니다.'}>
@@ -67,42 +57,35 @@ const Non_Member = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {status === 'loading' ? (
-              <tr>
+            {data.map((data, index) => (
+              <tr key={index}>
                 <td>
-                  <div>Loading...</div>
+                  <Avatar
+                    style={{
+                      width: '55px',
+                      height: '55px',
+                      margin: '10px auto',
+                    }}
+                    {...genConfig(data.userName)}
+                  />
+                </td>
+                <td>{data.userName}</td>
+                <td>{data.email}</td>
+                <td>{`${data.department}/${data.position}`}</td>
+                <td>{data.phoneNumber}</td>
+                <td>
+                  <Button_white
+                    id={data.id}
+                    data={data}
+                    approved={data.approved}
+                    setData={setData}
+                  />
                 </td>
               </tr>
-            ) : status === 'error' ? (
-              <tr>
-                <td>
-                  <div>Error</div>
-                </td>
-              </tr>
-            ) : (
-              data.content.map((data, index) => (
-                <tr key={index}>
-                  <td>
-                    <Avatar
-                      style={{
-                        width: '55px',
-                        height: '55px',
-                        margin: '10px auto',
-                      }}
-                      {...genConfig(data.userName)}
-                    />
-                  </td>
-                  <td>{data.userName}</td>
-                  <td>{data.email}</td>
-                  <td>{`${data.department}/${data.position}`}</td>
-                  <td>{data.phoneNumber}</td>
-                  <td>{/* <Button_white text={'허가'} /> */}</td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </TableStyle>
-        <Pagination activePage={activePage} setActivePage={setActivePage} pages={totalPages!} />
+        {/* <Pagination activePage={activePage} setActivePage={setActivePage} pages={totalPages!} /> */}
       </WrapperStyle>
     </Content>
   )

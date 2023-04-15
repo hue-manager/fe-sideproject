@@ -9,6 +9,8 @@ import { useQuery } from '@tanstack/react-query'
 import _ from 'lodash'
 import { current } from '@reduxjs/toolkit'
 import userJson from '../../mokeup/admins/users.json'
+import { useRecoilState } from 'recoil'
+import { adminsSchedulesState, usersState } from '@/atoms/atom'
 
 interface Props {}
 
@@ -33,34 +35,6 @@ type T = {
   totalPages: number
 }
 
-// export const fetchMembers = (): Promise<T> => {
-//   return instance
-//     .get(`/users/`)
-//     .then((response) => {
-//       return response.data.users.content.reduce((acc: any, curr: any) => {
-//         const { role }: any = curr
-//         if (acc[role]) acc[role].push(curr)
-//         else acc[role] = [curr]
-//         delete acc.DEFAULT
-//         // console.log(acc.ROLE_ADMIN.concat(acc.ROLE_USER))
-//         return acc
-//       }, {})
-//     })
-//     .catch(() => {
-//       return userJson.content
-//     })
-// }
-
-// export const editRole = (data) => {
-//   return instance
-//     .post(`/users/${data.userId}/editrole`, {
-//       role: { data.role },
-//     })
-//     .then((response) => {
-//       return response
-//     })
-// }
-
 const Member = (props: Props) => {
   const theads = ['이름', '이메일', '소속/직급', '전화번호', '권한']
 
@@ -72,42 +46,8 @@ const Member = (props: Props) => {
   const handleSelect = (e: any) => {
     setSelected(e.target.value)
   }
-
-  // const { data, isLoading, error } = useQuery<T, Error>(['members'], fetchMembers)
-
-  // if (isLoading) return <h3>Loading...</h3>
-  // if (error) return <h3>Error {error.message}</h3>
-
-  // const createList = () => {
-  //   let membersList: Array<D> = []
-  //   if (data.ROLE_ADMIN && data.ROLE_USER) {
-  //     return (membersList = data.ROLE_ADMIN.concat(data.ROLE_USER))
-  //   } else if (data.ROLE_ADMIN) {
-  //     return (membersList = data?.ROLE_ADMIN)
-  //   } else if (data.ROLE_USER) {
-  //     return (membersList = data?.ROLE_USER)
-  //   }
-  //   return membersList
-  // }
-  // const membersList = createList()
-
-  // const memebersLength = membersList.length
-  // const limit = 5
-  // const totalPages = Math.ceil(memebersLength! / limit)
-  // let pageGroups = []
-
-  // for (let pageGroup = 1; pageGroup <= totalPages; pageGroup++) {
-  //   let tmp = []
-  //   let offset = (pageGroup - 1) * limit
-  //   let end = Math.min(offset + limit, memebersLength!)
-  //   for (let page = offset; page < end; page++) {
-  //     tmp.push(page)
-  //   }
-  //   pageGroups.push(tmp)
-  // }
-  // if (pageGroups.length <= 5) return
-  // let numbering = pageGroups[activePage - 1]
-  // let pageMembersList = numbering.map((number) => membersList[number])
+  // 리코일에 저장된 멤버 데이터 가져오기
+  const [pageMembersList, setPageMembersList] = useRecoilState(usersState)
 
   return (
     <Content title={'회원관리'} intro={'관리자 권한을 부여할 수 있습니다.'}>
@@ -121,7 +61,7 @@ const Member = (props: Props) => {
               ))}
             </tr>
           </thead>
-          {/* <tbody>
+          <tbody>
             {pageMembersList?.map((data, index) => (
               <tr key={index}>
                 <td>
@@ -150,7 +90,7 @@ const Member = (props: Props) => {
                 </td>
               </tr>
             ))}
-          </tbody> */}
+          </tbody>
         </TableStyle>
         {/* <Pagination activePage={activePage} setActivePage={setActivePage} pages={totalPages} /> */}
       </WrapperStyle>

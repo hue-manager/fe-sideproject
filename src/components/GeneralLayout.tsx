@@ -20,12 +20,15 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   const [acceptHome, setAcceptHome] = useState<boolean>(true)
 
   useEffect(() => {
-    const userRoleRes = getUserRole()
-    setuserRole(userRoleRes)
-    const tokenRes = getToken()
-    setToken(tokenRes)
-    const acceptHomeRes = getAcceptHome()
-    setAcceptHome(acceptHomeRes)
+    // const userRoleRes = getUserRole()
+    // setuserRole(userRoleRes)
+    // const tokenRes = getToken()
+    // setToken(tokenRes)
+    // const acceptHomeRes = getAcceptHome()
+    // setAcceptHome(acceptHomeRes)
+    if (pathname === '/' || pathname === '/signup') {
+      setAcceptHome(false)
+    } else setAcceptHome(true)
   }, [pathname])
 
   console.log(acceptHome)
@@ -61,7 +64,10 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
   return (
     <GeneralLayoutStyle>
-      {true ? <Sidebar sidebarContent={SidebarContent} /> : null}
+      {/* {false ? <Sidebar sidebarContent={SidebarContent} /> : null} */}
+      {pathname === '/' || pathname === '/signup' ? null : (
+        <Sidebar sidebarContent={SidebarContent} />
+      )}
       <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
     </GeneralLayoutStyle>
   )
@@ -80,5 +86,5 @@ const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
   margin: 0 auto;
   padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
   overflow-x: hidden;
-  margin-left: 18rem;
+  /* margin-left: 18rem; */
 `

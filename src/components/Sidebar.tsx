@@ -28,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
   // if (fetchingUser) return <p>Lodaing...</p>
 
   const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo.user
-  const config = genConfig('test@email.com')
+  const config = genConfig('manman@abc.com')
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달

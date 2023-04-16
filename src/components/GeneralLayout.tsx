@@ -17,21 +17,25 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   const { pathname } = useLocation()
   const [userRole, setuserRole] = useState<string>('')
   const [token, setToken] = useState<string>('')
-  const [acceptHome, setAcceptHome] = useState<boolean>(true)
+  const [acceptHome, setAcceptHome] = useState<boolean>(false)
+  const [showSidebar, setShowSidebar] = useState(false)
 
   useEffect(() => {
-    // const userRoleRes = getUserRole()
-    // setuserRole(userRoleRes)
-    // const tokenRes = getToken()
-    // setToken(tokenRes)
+    console.log('pathname', pathname)
+    const userRoleRes = getUserRole()
+    setuserRole(userRoleRes)
+    const tokenRes = getToken()
+    setToken(tokenRes)
+    if (pathname === '/') {
+      setShowSidebar(false)
+    } else {
+      setShowSidebar(true)
+    }
     // const acceptHomeRes = getAcceptHome()
     // setAcceptHome(acceptHomeRes)
-    if (pathname === '/' || pathname === '/signup') {
-      setAcceptHome(false)
-    } else setAcceptHome(true)
   }, [pathname])
 
-  console.log(acceptHome)
+  console.log('acceptHome', acceptHome)
 
   // userRole=user 일때 어드민 페이지에 접속할 경우
   // if (isAdmin && userRole === 'user') {
@@ -65,10 +69,14 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   return (
     <GeneralLayoutStyle>
       {/* {false ? <Sidebar sidebarContent={SidebarContent} /> : null} */}
-      {pathname === '/' || pathname === '/signup' ? null : (
+      {/* {pathname === '/' || pathname === '/signup' ? null : (
         <Sidebar sidebarContent={SidebarContent} />
       )}
-      <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
+      <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle> */}
+      {showSidebar && <Sidebar sidebarContent={SidebarContent} />}
+      <GeneralLayoutBodyStyle acceptHome={acceptHome} showSidebar={showSidebar}>
+        {children}
+      </GeneralLayoutBodyStyle>
     </GeneralLayoutStyle>
   )
 }
@@ -80,11 +88,11 @@ const GeneralLayoutStyle = styled.div`
   display: flex;
 `
 
-const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
+const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean; showSidebar: boolean }>`
   overflow-y: scroll;
   width: 100%;
   margin: 0 auto;
-  padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
+  margin-left: ${({ showSidebar }) => (showSidebar ? '18rem' : null)};
   overflow-x: hidden;
   /* margin-left: 18rem; */
 `

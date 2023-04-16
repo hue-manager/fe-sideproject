@@ -31,17 +31,21 @@
 
 <div>
 
+- 회원가입
+
+![회원가입](./src/assets/gif/회원가입.gif)
+
 - 로그인
 
-![로그인](./src/assets/gif/로그인_시연.gif)
+![로그인](./src/assets/gif/로그인.gif)
 
 - 로그아웃
 
-![로그아웃](./src/assets/gif/로그아웃_시연.gif)
+![로그아웃](./src/assets/gif/로그아웃.gif)
 
 - 개인정보수정
 
-![개인정보수정](./src/assets/gif/개인정보수정_시연.gif)
+![개인정보수정](./src/assets/gif/개인정보수정.gif)
 
 </div>
 </details>

@@ -6,6 +6,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { ax } from '../../api/axiosClient'
 import { getToken, getUserId } from '../../utils/cookies'
 import axios from 'axios'
+import { addNewUser, getAllSchedule, getSchedule, getUser } from '../../api/firebase'
 
 const mockUser = {
   user: {
@@ -62,42 +63,27 @@ const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
 
-  const [userInfo, setUserInfo] = useState({
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-    overview: {
-      onDuty: 3,
-      application: 15,
-      approved: 12,
-      pending: 3,
-      rejection: 0,
-    },
-  })
+  const userName = '만만이'
 
-  const { isLoading, error, data } = useQuery(['schedules'], () =>
-    axios.get('src/mokeup/users-schedules/all.json').then((res) => res.data)
+  const { data } = useQuery(['all'], getAllSchedule)
+  console.log('data', data)
+
+  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userName))
+  const { isLoading: isScheduleLoading, data: schedule = [] } = useQuery(['user-schedule'], () =>
+    getSchedule(userName)
   )
-
   if (isLoading) return <div>Loading...</div>
-
-  console.log('response.data', data)
+  if (isScheduleLoading) return <div>Loading...</div>
 
   return (
     <>
       <UserInfoSection
         userInfo={userInfo}
-        setUserInfo={setUserInfo}
         applySectionRef={applySectionRef}
         calendarSectionRef={calendarSectionRef}
       />
-      <CalendarSection calendarRef={calendarSectionRef} setUserInfo={setUserInfo} />
-      <ApplySection userInfo={userInfo} setUserInfo={setUserInfo} applyRef={applySectionRef} />
+      <CalendarSection calendarRef={calendarSectionRef} />
+      <ApplySection userInfo={userInfo} applyRef={applySectionRef} schedule={schedule} />
     </>
   )
 }

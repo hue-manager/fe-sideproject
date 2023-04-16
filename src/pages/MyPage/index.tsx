@@ -35,11 +35,11 @@ const MyPage = (props: Props) => {
     id: 6,
     email: 'manman@abc.com',
     userName: '만만이',
-    phoneNumber: '010-3456-7857',
+    phoneNumber: '010-1234-1234',
     role: 'ROLE_USER',
     vacationCount: 12,
     position: '사원',
-    department: '재무팀',
+    department: '회계',
     overview: {
       onDuty: 3,
       application: 15,

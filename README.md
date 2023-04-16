@@ -1,7 +1,9 @@
 # fe-sideproject
 연차/당직을 관리하는 mini-project
-### 관리자 페이지
+<details>
+<summary>### 관리자 페이지</summary>
 ***
+<div>
 -  관리자 로그인
 
 ![관리자 로그인](https://user-images.githubusercontent.com/109419531/232280397-d029ec32-cbfe-4245-9eda-5481a7d4b7e6.gif)
@@ -17,3 +19,5 @@
 - 회원관리 페이지 - 관리자 권한 부여
 
 ![회원관리-관리자 권한 부여](https://user-images.githubusercontent.com/109419531/232280409-2354a5af-0c16-4ec5-ad51-8a01cb47b4a1.gif)
+</div>
+</details>

@@ -58,28 +58,13 @@ type T = {
   totalPages: number
 }
 
-
 const Main = () => {
-  const applySectionRef = useRef(null)
+  // const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
-
-  const [userInfo, setUserInfo] = useState({
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-    overview: {
-      onDuty: 3,
-      application: 15,
-      approved: 12,
-      pending: 3,
-      rejection: 0,
-    },
-  })
+  // const accessToken = getToken()
+  // const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
+  //   ax.getUserInfo(accessToken)
+  // )
 
   // const {
   //   data: scheduleList,
@@ -94,16 +79,18 @@ const Main = () => {
   //   },
   // })
 
+  // if (fetchingUser) return <p>Lodaing...</p>
+
+  console.log('scheduleList')
   return (
     <>
-      <UserInfoSection
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-        applySectionRef={applySectionRef}
-        calendarSectionRef={calendarSectionRef}
-      />
-      <CalendarSection calendarRef={calendarSectionRef} setUserInfo={setUserInfo} />
-      <ApplySection userInfo={userInfo} setUserInfo={setUserInfo} applyRef={applySectionRef} />
+      {/* <UserInfoSection
+        // userInfo={userInfo}
+        // applySectionRef={applySectionRef}
+        // calendarSectionRef={calendarSectionRef}
+      /> */}
+      <CalendarSection calendarRef={calendarSectionRef} />
+      {/* <ApplySection userInfo={userInfo} applyRef={applySectionRef} /> */}
     </>
   )
 }

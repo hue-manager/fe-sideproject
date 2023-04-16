@@ -34,6 +34,8 @@ const MonthCalendar = ({ events, switchData, setSwitchData, setUserInfo }: IMont
     dispatch(setData(resData))
   }
 
+  console.log(events)
+
   return (
     <Wrap>
       <Head switchData={switchData}>

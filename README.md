@@ -49,3 +49,15 @@
 
 </div>
 </details>
+
+<details>
+  <summary><h3>메인 달력</h3>  <hr/></summary>
+
+<div>
+
+- 메인페이지 달력
+
+![메인페이지 달력](./src/assets/gif/메인페이지_달력_시연.gif)
+
+</div>
+</details>

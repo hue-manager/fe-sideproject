@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { setExpiration } from '../../utils/cookies'
-import { ax } from '../../api/axiosClient'
+import { login, loginAdmin } from '../../api/auth'
 
 interface Props {}
 
@@ -16,51 +16,89 @@ const errorMessage = [
 
 const Home = (props: Props) => {
   // 유저 선택 상태 (true일반유저/false관리자)
-  const [role, setRole] = useState(true)
+  // const [role, setRole] = useState(true)
 
-  // 에러 메세지
-  const [message, setMessage] = useState(0)
-  const [error, setError] = useState(false)
+  // // 에러 메세지
+  // const [message, setMessage] = useState(0)
+  // const [error, setError] = useState(false)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  // 로그인 api 호출 함수
-  const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    // 일반 유저 로그인
-    navigate('/admin')
-    return
+  // // 로그인 api 호출 함수
+  // const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+  //   // 일반 유저 로그인
+  //   if (role) {
+  //     const formData = new FormData(event?.currentTarget)
+  //     console.log(formData.get('email'))
+  //     console.log(formData.get('password'))
+  //     const res = await login(formData.get('email') as string, formData.get('password') as string)
+  //     console.log('login:', res)
 
-    if (role) {
-      const formData = new FormData(event?.currentTarget)
-
-      // const res = await ax.login(
-      //   formData.get('email') as string,
-      //   formData.get('password') as string
-      // )
-      // console.log('login:', res)
-
-      //로그인 성공시에 메인페이지로 이동
-      // if (res) {
-      navigate('/admin')
-      console.log('야호')
-      // }
-    } else {
-      // 관리자 로그인
-      // const formData = new FormData(event?.currentTarget)
-      // const res = await ax.loginAdmin(
-      //   formData.get('email') as string,
-      //   formData.get('password') as string
-      // )
-      // 비밀번호 불일치
-
-      //로그인 성공시에 메인페이지로 이동
-      // if (res) {
-      navigate('/main')
-      console.log('야호')
-      // }
-    }
-  }
+  //     // 비밀번호 불일치
+  //     if (res === 'wrong assword') {
+  //       setMessage(1)
+  //       setError(true)
+  //       setTimeout(() => {
+  //         setError(false)
+  //       }, 1000)
+  //       return
+  //     }
+  //     // 이메일, 비밀번호 불일치
+  //     if (res === 'fail') {
+  //       setMessage(2)
+  //       setError(true)
+  //       setTimeout(() => {
+  //         setError(false)
+  //       }, 1000)
+  //       return
+  //     }
+  //     // 계정 미승인
+  //     if (res === '계정 미승인') {
+  //       setMessage(3)
+  //       setError(true)
+  //       setTimeout(() => {
+  //         setError(false)
+  //       }, 1500)
+  //       return
+  //     }
+  //     //로그인 성공시에 메인페이지로 이동
+  //     if (res) {
+  //       navigate('/main')
+  //       console.log('야호')
+  //     }
+  //   } else {
+  //     // 관리자 로그인
+  //     const formData = new FormData(event?.currentTarget)
+  //     const res = await loginAdmin(
+  //       formData.get('email') as string,
+  //       formData.get('password') as string
+  //     )
+  //     // 비밀번호 불일치
+  //     if (res === 'wrong password') {
+  //       setMessage(1)
+  //       setError(true)
+  //       setTimeout(() => {
+  //         setError(false)
+  //       }, 1000)
+  //       return
+  //     }
+  //     // 이메일, 비밀번호 불일치
+  //     if (res === 'fail') {
+  //       setMessage(2)
+  //       setError(true)
+  //       setTimeout(() => {
+  //         setError(false)
+  //       }, 1000)
+  //       return
+  //     }
+  //     //로그인 성공시에 메인페이지로 이동
+  //     if (res) {
+  //       navigate('/main')
+  //       console.log('야호')
+  //     }
+  //   }
+  // }
 
   return (
     <ContainerStyle>
@@ -77,8 +115,8 @@ const Home = (props: Props) => {
               <img src="/logo_original.png" alt="logo" />
             </LogoStyle>
             {/* 로그인 유저 선택 */}
-            <SelectedStyle>
-              <p
+            {/* <SelectedStyle> */}
+            {/* <p
                 onClick={() => {
                   setRole(true)
                 }}
@@ -91,33 +129,33 @@ const Home = (props: Props) => {
                   setRole(false)
                 }}
                 className={!role ? 'active' : 'inactive'}
-              >
-                관리자
-              </p>
-            </SelectedStyle>
+              > */}
+            관리자
+            {/* </p> */}
+            {/* </SelectedStyle> */}
             {/* 입력 박스 */}
-            <InputWrapStyle onSubmit={loginSubmitHandler}>
-              <label>
-                이메일
-                <input type="text" name="email" />
-              </label>
-              <label>
-                비밀번호
-                <input type="password" name="password" />
-              </label>
-              <MessageStyle className={error ? 'active' : 'basic'}>
+            {/* <InputWrapStyle onSubmit={loginSubmitHandler}> */}
+            <label>
+              이메일
+              <input type="text" name="email" />
+            </label>
+            <label>
+              비밀번호
+              <input type="password" name="password" />
+            </label>
+            {/* <MessageStyle className={error ? 'active' : 'basic'}>
                 <p>{errorMessage[message]}</p>
-              </MessageStyle>
-              <Button
-                onClick={() => {
-                  navigate('/admin')
-                }}
-                backgroundColor={'var(--color-primary)'}
-                size={'width'}
-                label={'로그인'}
-                type={'submit'}
-              />
-              <Button
+              </MessageStyle> */}
+            <Button
+              onClick={() => {
+                setExpiration()
+              }}
+              backgroundColor={'var(--color-primary)'}
+              size={'width'}
+              label={'로그인'}
+              type={'submit'}
+            />
+            {/* <Button
                 show={role}
                 backgroundColor={'var(--color-black20)'}
                 size={'width'}
@@ -127,7 +165,7 @@ const Home = (props: Props) => {
                   navigate('/signup')
                 }}
               />
-            </InputWrapStyle>
+            </InputWrapStyle> */}
           </div>
         </RightStyle>
       </InnerStyle>

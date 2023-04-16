@@ -28,51 +28,37 @@ export interface IEventsData {
 const TotalCalendar = ({ setUserInfo }: any) => {
   const [switchData, setSwitchData] = useState<string>('my')
   const [events, setEvents] = useState<IEventsData[]>([])
-
-  const id = getUserId()
-  const isLoading = false
-  // 목업 데이터 이벤트
-  const [data, setData] = useRecoilState(eventsState)
-  // const data = userSchedule.content
-
-  // const { isLoading, data } = useQuery(
-  //   ['getSchedule', switchData],
-  //   () => {
-  //     if (switchData === 'my') return getUserSchedule(id)
-  //     else return getAllSchedule()
-  //   },
-  //   {
-  //     staleTime: 1000,
-  //   }
-  // )
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setEvents([])
 
-    if (!isLoading) {
-      // @ts-ignore
-      for (const event of data) {
-        const setData = {
-          title: event.id,
-          start: event.startDate,
-          end: event.endDate,
-          allDay: true,
-          data: {
-            category: CalendarCategory[`${event.category as keyof typeof CalendarCategory}`],
-            userName: event.user.userName || '',
-            department: event.user.department,
-            position: event.user.position,
-          },
+    fetch(`src/mokeup/users-schedules/${switchData === 'my' ? 'scheduleInfo' : 'all'}.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        for (const event of data.content) {
+          const setData = {
+            title: event.id,
+            start: event.startDate,
+            end: event.endDate,
+            allDay: true,
+            data: {
+              category: CalendarCategory[`${event.category as keyof typeof CalendarCategory}`],
+              userName: event.user.userName || '',
+              department: event.user.department,
+              position: event.user.position,
+            },
+          }
+          setEvents((prev: IEventsData[]) => [...prev, setData])
         }
-        //@ts-ignore
-        setEvents((prev: IEventsData[]) => [...prev, setData])
-      }
-    }
-  }, [id, data, switchData])
+
+        setLoading(false)
+      })
+  }, [switchData])
 
   return (
     <>
-      {events.length !== 0 && (
+      {loading ? null : (
         <Wrap>
           <MonthCalendar
             events={events}

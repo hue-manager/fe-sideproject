@@ -58,7 +58,6 @@ type T = {
   totalPages: number
 }
 
-
 const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
@@ -81,18 +80,13 @@ const Main = () => {
     },
   })
 
-  // const {
-  //   data: scheduleList,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetchingNextPage,
-  //   isFetching,
-  // } = useInfiniteQuery(['schedules'], () => ax.getUserSchedules(accessToken), {
-  //   getNextPageParam: (lastPage, allPages) => {
-  //     const nextPage = lastPage.page + 1
-  //     return nextPage < lastPage.totalPages ? nextPage : undefined
-  //   },
-  // })
+  const { isLoading, error, data } = useQuery(['schedules'], () =>
+    axios.get('src/mokeup/users-schedules/all.json').then((res) => res.data)
+  )
+
+  if (isLoading) return <div>Loading...</div>
+
+  console.log('response.data', data)
 
   return (
     <>

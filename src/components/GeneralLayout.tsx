@@ -5,6 +5,8 @@ import { SidebarContent } from '../router'
 import { getAcceptHome, getToken, getUserRole } from '../utils/cookies'
 import { useRouter } from '../hooks/useRouter'
 import { useLocation } from 'react-router-dom'
+import Lottie from 'lottie-react'
+import loading from '../assets/lottie/loading.json'
 
 interface GeneralLayoutProps {
   children: React.ReactNode
@@ -18,6 +20,7 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   const [userRole, setuserRole] = useState<string>('')
   const [token, setToken] = useState<string>('')
   const [acceptHome, setAcceptHome] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const userRoleRes = getUserRole()
@@ -26,24 +29,23 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
     setToken(tokenRes)
     const acceptHomeRes = getAcceptHome()
     setAcceptHome(acceptHomeRes)
+    setIsLoading(false)
   }, [pathname])
 
-  console.log(acceptHome)
-
   // userRole=user 일때 어드민 페이지에 접속할 경우
-  if (isAdmin && userRole === 'user') {
-    routeTo('/main')
-  }
+  // if (isAdmin && userRole === 'user') {
+  //   routeTo('/main')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (!isAdmin && userRole === 'admin') {
-    routeTo('/admin')
-  }
+  // if (!isAdmin && userRole === 'admin') {
+  //   routeTo('/admin')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (withAuth && token === undefined) {
-    routeTo('/')
-  }
+  // if (withAuth && token === undefined) {
+  //   routeTo('/')
+  // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
   if (!withAuth && token === 'admin') {
@@ -61,8 +63,14 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   }
   return (
     <GeneralLayoutStyle>
-      {acceptHome ? <Sidebar sidebarContent={SidebarContent} /> : null}
-      <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
+      {isLoading ? (
+        <Lottie animationData={loading} className="loading" />
+      ) : (
+        <>
+          {acceptHome ? <Sidebar sidebarContent={SidebarContent} /> : null}
+          <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
+        </>
+      )}
     </GeneralLayoutStyle>
   )
 }
@@ -72,6 +80,10 @@ export default GeneralLayout
 const GeneralLayoutStyle = styled.div`
   height: 100vh;
   display: flex;
+  .loading {
+    width: 20%;
+    margin: 0 auto;
+  }
 `
 
 const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`

@@ -1,0 +1,122 @@
+{
+  "content": [
+    {
+      "id": 2,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-01T10:37:34.038444",
+        "modifiedAt": "2023-04-02T21:19:37.235774",
+        "id": 5,
+        "email": "gram753@gmail.com",
+        "userName": "이승환",
+        "password": "$2a$10$67arl7T5C4lx/n1waS2sLuLGEGPFhFTrn9LwrSbCmEkOZu5/FcBXS",
+        "phoneNumber": "010-1111-2222",
+        "role": "ROLE_USER",
+        "vacationCount": 34,
+        "position": "팀장",
+        "department": "Back-End",
+        "enabled": true,
+        "username": "이승환",
+        "accountNonLocked": true,
+        "authorities": [
+          {
+            "authority": "USER"
+          }
+        ],
+        "accountNonExpired": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-01",
+      "endDate": "2023-04-05",
+      "memo": "이제 그만....",
+      "status": "PERMIT"
+    },
+    {
+      "id": 37,
+      "category": "WORK",
+      "user": {
+        "createdAt": "2023-04-01T09:45:21.835961",
+        "modifiedAt": "2023-04-04T08:48:40.991376",
+        "id": 4,
+        "email": "jisooround123@jisooround.com",
+        "userName": "송혜교",
+        "password": "$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG",
+        "phoneNumber": "010-5028-7344",
+        "role": "ROLE_USER",
+        "vacationCount": 9,
+        "position": "사원",
+        "department": "개발",
+        "enabled": true,
+        "username": "송혜교",
+        "accountNonLocked": true,
+        "authorities": [
+          {
+            "authority": "USER"
+          }
+        ],
+        "accountNonExpired": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-08",
+      "endDate": "2023-04-08",
+      "memo": "병원 방문",
+      "status": "PERMIT"
+    },
+    {
+      "id": 49,
+      "category": "VACATION",
+      "user": {
+        "createdAt": "2023-04-04T10:28:11.661819",
+        "modifiedAt": "2023-04-04T10:33:32.61518",
+        "id": 52,
+        "email": "haribo@gmail.com",
+        "userName": "야스오",
+        "password": "$2a$10$hdCC0Myb8lRB/ee2VDkjF.d6BYwb/rNg4ORArVg/ilu36XkHwDnvu",
+        "phoneNumber": "010-1234-4321",
+        "role": "ROLE_USER",
+        "vacationCount": 11,
+        "position": "대리",
+        "department": "개발팀",
+        "enabled": true,
+        "username": "야스오",
+        "accountNonLocked": true,
+        "authorities": [
+          {
+            "authority": "USER"
+          }
+        ],
+        "accountNonExpired": true,
+        "credentialsNonExpired": true
+      },
+      "startDate": "2023-04-05",
+      "endDate": "2023-04-08",
+      "memo": "춘곤증이너무심해짐",
+      "status": "PERMIT"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageSize": 20,
+    "pageNumber": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 3,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 3,
+  "empty": false
+}

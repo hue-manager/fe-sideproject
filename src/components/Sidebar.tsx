@@ -26,7 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
   if (fetchingUser) return <p>Lodaing...</p>
 
   const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
-  const config = genConfig(email)
+  // const config = genConfig(email)
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달
@@ -67,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
     <SidebarStyle>
       <Logo width="13rem" height="3rem" type="white" onClick={() => routeTo('/main')} />
       <ProfilStyle>
-        <Avatar
+        {/* <Avatar
           style={{
             width: '10rem',
             height: '10rem',
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
             margin: '0',
           }}
           {...config}
-        />
+        /> */}
         <p>{userName}</p>
       </ProfilStyle>
       {role === 'ROLE_ADMIN' ? (

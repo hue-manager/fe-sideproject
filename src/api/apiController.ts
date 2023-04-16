@@ -1,6 +1,6 @@
 import { getToken } from '../utils/cookies'
 import axios from 'axios'
-const { VITE_URL, VITE_TOKEN } = import.meta.env
+const { VITE_URL } = import.meta.env
 
 const instance = axios.create({
   baseURL: VITE_URL,

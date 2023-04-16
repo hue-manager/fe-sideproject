@@ -1,11 +1,13 @@
 # fe-sideproject
+
 연차/당직을 관리하는 mini-project
+
 <details>
   <summary><h3>관리자 페이지</h3>  <hr/></summary>
 
-
 <div>
--  관리자 로그인
+
+- 관리자 로그인
 
 ![관리자 로그인](https://user-images.githubusercontent.com/109419531/232280397-d029ec32-cbfe-4245-9eda-5481a7d4b7e6.gif)
 
@@ -20,5 +22,26 @@
 - 회원관리 페이지 - 관리자 권한 부여
 
 ![회원관리-관리자 권한 부여](https://user-images.githubusercontent.com/109419531/232280409-2354a5af-0c16-4ec5-ad51-8a01cb47b4a1.gif)
+
+</div>
+</details>
+
+<details>
+  <summary><h3>로그인, 회원가입, 개인정보수정</h3>  <hr/></summary>
+
+<div>
+
+- 로그인
+
+![로그인](./src/assets/gif/로그인_시연.gif)
+
+- 로그아웃
+
+![로그아웃](./src/assets/gif/로그아웃_시연.gif)
+
+- 개인정보수정
+
+![개인정보수정](./src/assets/gif/개인정보수정_시연.gif)
+
 </div>
 </details>

@@ -2,13 +2,14 @@ import { combineReducers } from 'redux'
 import calendarReducer from './slice/calendarSlice'
 import selectedAnnualDateSlice from './slice/selectedAnnualDateSlice'
 import selectedDutyDateSlice from './slice/selectedDutyDateSlice'
-import confirmModalSlice from './slice/confirmModalSlice'
+import userInfoSlice from './mock-slice/userInfoSlice'
 
 const rootReducer = combineReducers({
   calendar: calendarReducer,
   selectedDutyDate: selectedDutyDateSlice,
   selectedAnnualDate: selectedAnnualDateSlice,
-  isConfirmModal: confirmModalSlice,
+  // mockup
+  userInfo: userInfoSlice,
 })
 
 export type ReducerType = ReturnType<typeof rootReducer>

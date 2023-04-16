@@ -12,9 +12,10 @@ import { IEventsData } from './TotalCalendar'
 
 interface IDetailCalendarProps {
   events: IEventsData[]
+  setUserInfo: any
 }
 
-const DetailCalendar = ({ events }: IDetailCalendarProps) => {
+const DetailCalendar = ({ events, setUserInfo }: IDetailCalendarProps) => {
   const localizer = momentLocalizer(moment)
   const calendarDate = useSelector(selectCalendar)
 

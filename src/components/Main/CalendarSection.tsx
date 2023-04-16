@@ -10,7 +10,7 @@ import Inner from '../Inner'
 interface CalendarSectionProps {
   calendarRef: MutableRefObject<HTMLDivElement | null>
 }
-const CalendarSection = ({ calendarRef }: CalendarSectionProps) => {
+const CalendarSection = ({ calendarRef, setUserInfo }: any) => {
   const navigate = useNavigate()
 
   const logoutSubmitHandler = async (event: React.MouseEvent) => {
@@ -27,7 +27,7 @@ const CalendarSection = ({ calendarRef }: CalendarSectionProps) => {
         <SectionStyle>
           {/* Home */}
           {/* <button onClick={logoutSubmitHandler}>임시 로그아웃 버튼</button> */}
-          <TotalCalendar />
+          <TotalCalendar setUserInfo={setUserInfo} />
         </SectionStyle>
       </Inner>
     </ContainerStyle>

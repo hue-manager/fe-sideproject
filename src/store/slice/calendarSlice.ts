@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../main'
 
-export const calendarSlice = createSlice({
-  name: 'calendar',
-  initialState: {
-    date: {
-      title: '',
-      data: '',
-    },
+interface CalendarDate {
+  date: {
+    title: string
+    data: string
+  }
+}
+
+const initialState: CalendarDate = {
+  date: {
+    title: '',
+    data: '',
   },
+}
+
+const calendarSlice = createSlice({
+  name: 'calendar',
+  initialState,
   reducers: {
     setTitle: (state, action) => {
       state.date.title = action.payload

@@ -11,6 +11,7 @@ interface IEditInfo {
   email: string | undefined
   setCurrentEmail: any
   setCurrentName: any
+  setUserInfo: any
 }
 
 export type FormValue = {
@@ -24,7 +25,8 @@ const EditInfoModal = ({
   email,
   setCurrentEmail,
   setCurrentName,
-}: IEditInfo) => {
+  setUserInfo,
+}: any) => {
   const [error, setError] = useState(true)
   const {
     register,
@@ -35,17 +37,15 @@ const EditInfoModal = ({
 
   const onSubmit = async () => {
     const values = getValues()
-    const response = await editUserInfo(values)
-    if (response === 'ok') {
-      setIsOpen(false)
-      setCurrentEmail(values.email)
-      setCurrentName(values.userName)
-    } else {
-      setError(true)
-      setTimeout(() => {
-        setError(false)
-      }, 1000)
-    }
+    setIsOpen(false)
+    setCurrentEmail(values.email)
+    setCurrentName(values.userName)
+    // const response = await editUserInfo(values)
+    // if (response === 'ok') {
+    //   setIsOpen(false)
+    //   setCurrentEmail(values.email)
+    //   setCurrentName(values.userName)
+    // }
   }
 
   const handleModalClose = () => {

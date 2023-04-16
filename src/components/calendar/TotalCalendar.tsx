@@ -7,6 +7,10 @@ import { getAllSchedule } from '../../api/auth'
 import { CalendarCategory } from './DetailItem'
 import { getUserSchedule } from './../../api/auth'
 import { getUserId } from '../..//utils/cookies'
+import allSchedule from '../../mokeup/users-schedules/all.json'
+import userSchedule from '../../mokeup/users-schedules/userinfo.json'
+import { useRecoilState } from 'recoil'
+import { eventsState } from '../../atoms/atom'
 
 export interface IEventsData {
   title: number
@@ -21,7 +25,7 @@ export interface IEventsData {
   }
 }
 
-const TotalCalendar = () => {
+const TotalCalendar = ({ setUserInfo }: any) => {
   const [switchData, setSwitchData] = useState<string>('my')
   const [events, setEvents] = useState<IEventsData[]>([])
   const [loading, setLoading] = useState(true)
@@ -56,9 +60,13 @@ const TotalCalendar = () => {
     <>
       {loading ? null : (
         <Wrap>
-          <MonthCalendar events={events} switchData={switchData} setSwitchData={setSwitchData} />
-
-          <DetailCalendar events={events} />
+          <MonthCalendar
+            events={events}
+            switchData={switchData}
+            setSwitchData={setSwitchData}
+            setUserInfo={setUserInfo}
+          />
+          <DetailCalendar events={events} setUserInfo={setUserInfo} />
         </Wrap>
       )}
     </>

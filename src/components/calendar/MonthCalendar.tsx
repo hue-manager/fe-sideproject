@@ -12,9 +12,10 @@ interface IMonthCalendarProps {
   events: IEventsData[]
   switchData: string
   setSwitchData: React.Dispatch<React.SetStateAction<string>>
+  setUserInfo: any
 }
 
-const MonthCalendar = ({ events, switchData, setSwitchData }: IMonthCalendarProps) => {
+const MonthCalendar = ({ events, switchData, setSwitchData, setUserInfo }: IMonthCalendarProps) => {
   const localizer = momentLocalizer(moment)
   const dispatch = useDispatch()
 

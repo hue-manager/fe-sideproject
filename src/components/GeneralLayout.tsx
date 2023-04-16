@@ -80,6 +80,7 @@ const GeneralLayoutBodyStyle = styled.div`
   width: 100%;
   margin: 0 auto;
   overflow-x: hidden;
+  /* margin-left: 18rem; */
 `
 /* padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)}; */
 

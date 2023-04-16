@@ -7,6 +7,19 @@ import { ax } from '../../api/axiosClient'
 import { getToken, getUserId } from '../../utils/cookies'
 import axios from 'axios'
 
+const mockUser = {
+  user: {
+    id: 6,
+    email: 'manman@abc.com',
+    userName: '만만이',
+    phoneNumber: '010-3456-7857',
+    role: 'ROLE_USER',
+    vacationCount: 12,
+    position: '사원',
+    department: '재무팀',
+  },
+}
+
 interface Item {
   id: number
   category: string

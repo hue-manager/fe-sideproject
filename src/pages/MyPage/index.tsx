@@ -8,7 +8,7 @@ import { getUserInfo } from '../../api/mypage'
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal'
 import EditInfoModal from '../../components/Mypage/EditInfoModal'
-import WithdrawalModal from '../../components/Mypage/EditInfoModal'
+import WithdrawalModal from '../../components/Mypage/WithdrawalModal'
 
 interface Props {}
 
@@ -21,23 +21,46 @@ type UserInfo = {
   role: string
   userName: string
   vacationCount: number
+  overview: {
+    onDuty: number
+    application: number
+    approved: number
+    pending: number
+    rejection: number
+  }
 }
 
 const MyPage = (props: Props) => {
-  const [userInfo, setuserInfo] = useState<UserInfo | null>()
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    id: 6,
+    email: 'manman@abc.com',
+    userName: '만만이',
+    phoneNumber: '010-1234-1234',
+    role: 'ROLE_USER',
+    vacationCount: 12,
+    position: '사원',
+    department: '회계',
+    overview: {
+      onDuty: 3,
+      application: 15,
+      approved: 12,
+      pending: 3,
+      rejection: 0,
+    },
+  })
   const [editInfoModalOpen, setEditInfoModalOpen] = useState(false)
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
-  const [currentEmail, setCurrentEmail] = useState<string>('')
-  const [currentName, setCurrentName] = useState<string>('')
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getUserInfo()
-      setuserInfo(response.user)
-      setCurrentEmail(response.user.email)
-      setCurrentName(response.user.userName)
-    }
-    fetchData()
-  }, [])
+  const [currentEmail, setCurrentEmail] = useState<string>(userInfo.email)
+  const [currentName, setCurrentName] = useState<string>(userInfo?.userName)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await getUserInfo()
+  //     setuserInfo(response.user)
+  //     setCurrentEmail(response.user.email)
+  //     setCurrentName(response.user.userName)
+  //   }
+  //   fetchData()
+  // }, [])
   const config = genConfig(currentEmail)
   const handleEditInfoModalOpen = () => {
     setEditInfoModalOpen(true)
@@ -94,6 +117,7 @@ const MyPage = (props: Props) => {
           </Profile>
         </Content>
         <EditInfoModal
+          setUserInfo={setUserInfo}
           isOpen={editInfoModalOpen}
           setIsOpen={setEditInfoModalOpen}
           email={userInfo?.email}
@@ -101,6 +125,7 @@ const MyPage = (props: Props) => {
           setCurrentName={setCurrentName}
         />
         <WithdrawalModal
+          setUserInfo={setUserInfo}
           isOpen={withdrawalModalOpen}
           setIsOpen={setWithdrawalModalOpen}
           email={userInfo?.email}

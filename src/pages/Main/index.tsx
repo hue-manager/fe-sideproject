@@ -1,25 +1,9 @@
 import UserInfoSection from '@components/Main/UserInfoSection'
 import CalendarSection from '@components/Main/CalendarSection'
 import ApplySection from '@components/Main/ApplySection'
-import { useEffect, useRef, useState } from 'react'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { ax } from '../../api/axiosClient'
-import { getToken, getUserId } from '../../utils/cookies'
-import axios from 'axios'
-import { addNewUser, getAllSchedule, getSchedule, getUser } from '../../api/firebase'
-
-const mockUser = {
-  user: {
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-  },
-}
+import { useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getSchedule, getUser } from '../../api/firebase'
 
 interface Item {
   id: number
@@ -64,9 +48,6 @@ const Main = () => {
   const calendarSectionRef = useRef(null)
 
   const userName = '만만이'
-
-  const { data } = useQuery(['all'], getAllSchedule)
-  console.log('data', data)
 
   const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userName))
   const { isLoading: isScheduleLoading, data: schedule = [] } = useQuery(['user-schedule'], () =>

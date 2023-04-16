@@ -3,18 +3,19 @@ import { initializeApp } from 'firebase/app'
 import { orderByChild, getDatabase, ref, set, get, remove } from 'firebase/database'
 import { v4 as uuid } from 'uuid'
 const {
-  REACT_APP_FIREBASE_API_KEY,
-  REACT_APP_FIREBASE_AUTH_DOMAIN,
-  REACT_APP_FIREBASE_DB_URL,
-  REACT_APP_FIREBASE_PROJECT_ID,
+  VITE_REACT_APP_FIREBASE_API_KEY,
+  VITE_REACT_APP_FIREBASE_AUTH_DOMAIN,
+  VITE_REACT_APP_FIREBASE_DB_URL,
+  VITE_REACT_APP_FIREBASE_PROJECT_ID,
 } = import.meta.env
+console.log('REACT_APP_FIREBASE_API_KEY', VITE_REACT_APP_FIREBASE_API_KEY)
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAwK_6Qb6rT35bp3qqPjp0ykhmL7cCRYJA',
-  authDomain: 'hue-manager-7c31d.firebaseapp.com',
-  databaseURL: 'https://hue-manager-7c31d-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'hue-manager-7c31d',
+  apiKey: VITE_REACT_APP_FIREBASE_API_KEY,
+  authDomain: VITE_REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: VITE_REACT_APP_FIREBASE_DB_URL,
+  projectId: VITE_REACT_APP_FIREBASE_PROJECT_ID,
 }
 
 // Initialize Firebase

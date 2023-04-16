@@ -2,7 +2,8 @@
 연차/당직을 관리하는 mini-project
 <details>
   <summary><h3>관리자 페이지</h3></summary>
-***
+  <hr/>
+
 <div>
 -  관리자 로그인
 

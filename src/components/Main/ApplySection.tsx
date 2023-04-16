@@ -49,15 +49,17 @@ interface IScheduleData {
 const ApplySection = ({ userInfo, applyRef, schedule }: ApplySectionProps) => {
   const [isAnnualLeaveOpen, setIsAnnualLeaveOpen] = useState(false)
   const [isDutyModalOpen, setIsDutyModalOpen] = useState(false)
-  const [currentValue, setCurrentValue] = useState('전체')
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(0)
   const itemsPerPage = 5
   const pageCount = Math.ceil(schedule.length / itemsPerPage)
   const offset = currentPage * itemsPerPage
   const filter = schedule.sort((a, b) => {
     return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   })
-  const currentItems = schedule.slice(offset, offset + itemsPerPage)
+  const currentItems = schedule.slice(
+    offset,
+    offset + Math.min(itemsPerPage, schedule.length - offset)
+  )
 
   const dispatch = useDispatch()
 
@@ -76,7 +78,8 @@ const ApplySection = ({ userInfo, applyRef, schedule }: ApplySectionProps) => {
     setCurrentPage(event.selected)
   }
 
-  const selectOptions = ['전체', '연차', '당직']
+  console.log('schedule', schedule)
+  console.log('currentItems', currentItems)
 
   const excelData = schedule.map(({ status, memo, startDate, endDate, category, userInfo }) => [
     category,

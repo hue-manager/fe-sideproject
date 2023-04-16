@@ -26,6 +26,7 @@ const ApplicationCard = ({ item }: IApplicationCard) => {
     endDate,
     status,
   } = item
+
   return (
     <ApplicationCardStyle category={category}>
       <div>{category}</div>

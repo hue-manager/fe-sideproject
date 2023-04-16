@@ -3,7 +3,7 @@ import CalendarSection from '@components/Main/CalendarSection'
 import ApplySection from '@components/Main/ApplySection'
 import { useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getSchedule, getUser } from '../../api/firebase'
+import { getAllSchedule, getSchedule, getUser } from '../../api/firebase'
 
 interface Item {
   id: number

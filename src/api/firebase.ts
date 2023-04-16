@@ -8,7 +8,6 @@ const {
   VITE_REACT_APP_FIREBASE_DB_URL,
   VITE_REACT_APP_FIREBASE_PROJECT_ID,
 } = import.meta.env
-console.log('REACT_APP_FIREBASE_API_KEY', VITE_REACT_APP_FIREBASE_API_KEY)
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -41,7 +40,7 @@ interface IUserInfo {
   id: number
 }
 
-interface IScheduleData {
+export interface IScheduleData {
   category: string
   startDate: string
   endDate: string
@@ -65,7 +64,7 @@ export async function addNewUser() {
   const userInfo = {
     id: 6,
     email: 'manman@abc.com',
-    userName: '만만이',
+    userName: '노홍철',
     phoneNumber: '010-3456-7857',
     role: 'ROLE_USER',
     vacationCount: 15,

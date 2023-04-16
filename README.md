@@ -1,7 +1,7 @@
 # fe-sideproject
 연차/당직을 관리하는 mini-project
 <details>
-<summary>### 관리자 페이지</summary>
+  <summary><h3>관리자 페이지</h3></summary>
 ***
 <div>
 -  관리자 로그인

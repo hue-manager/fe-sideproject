@@ -1,24 +1,9 @@
 import UserInfoSection from '@components/Main/UserInfoSection'
 import CalendarSection from '@components/Main/CalendarSection'
 import ApplySection from '@components/Main/ApplySection'
-import { useEffect, useRef, useState } from 'react'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { ax } from '../../api/axiosClient'
-import { getToken, getUserId } from '../../utils/cookies'
-import axios from 'axios'
-
-const mockUser = {
-  user: {
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-  },
-}
+import { useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getAllSchedule, getSchedule, getUser } from '../../api/firebase'
 
 interface Item {
   id: number
@@ -58,52 +43,28 @@ type T = {
   totalPages: number
 }
 
-
 const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
 
-  const [userInfo, setUserInfo] = useState({
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-    overview: {
-      onDuty: 3,
-      application: 15,
-      approved: 12,
-      pending: 3,
-      rejection: 0,
-    },
-  })
+  const userName = '만만이'
 
-  // const {
-  //   data: scheduleList,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetchingNextPage,
-  //   isFetching,
-  // } = useInfiniteQuery(['schedules'], () => ax.getUserSchedules(accessToken), {
-  //   getNextPageParam: (lastPage, allPages) => {
-  //     const nextPage = lastPage.page + 1
-  //     return nextPage < lastPage.totalPages ? nextPage : undefined
-  //   },
-  // })
+  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userName))
+  const { isLoading: isScheduleLoading, data: schedule = [] } = useQuery(['user-schedule'], () =>
+    getSchedule(userName)
+  )
+  if (isLoading) return <div>Loading...</div>
+  if (isScheduleLoading) return <div>Loading...</div>
 
   return (
     <>
       <UserInfoSection
         userInfo={userInfo}
-        setUserInfo={setUserInfo}
         applySectionRef={applySectionRef}
         calendarSectionRef={calendarSectionRef}
       />
-      <CalendarSection calendarRef={calendarSectionRef} setUserInfo={setUserInfo} />
-      <ApplySection userInfo={userInfo} setUserInfo={setUserInfo} applyRef={applySectionRef} />
+      <CalendarSection calendarRef={calendarSectionRef} />
+      <ApplySection userInfo={userInfo} applyRef={applySectionRef} schedule={schedule} />
     </>
   )
 }

@@ -13,7 +13,13 @@ import userInfo from '../mokeup/userInfo/userId.json'
 import { useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
-  sidebarContent: SidebarElement[]
+  sidebarContent: {
+    id: number
+    label: string
+    path: string
+    isAdmin?: boolean
+  }[]
+
   // userProfile?: any
 }
 
@@ -27,8 +33,19 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
   // const userInfo =
   // if (fetchingUser) return <p>Lodaing...</p>
 
-  const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo.user
-  const config = genConfig('test@email.com')
+  // const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo.user
+  // const config = genConfig('manman@abc.com')
+  const { id, email, userName, phoneNumber, role, department, position, vacationCount } = {
+    id: 41,
+    email: 'hmm123@hmm.com',
+    userName: '흠냐미',
+    phoneNumber: '010-1234-1234',
+    role: 'DEFAULT',
+    vacationCount: 15,
+    position: '과장',
+    department: '법무',
+  }
+  const config = genConfig(email)
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달
@@ -102,8 +119,8 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
               </li>
             )
           })} */}
-          <li onClick={() => navigate('/main')}>{icons[0]} 메인페이지</li>
-          <li onClick={() => navigate('/mypage')}>{icons[1]} 마이페이지</li>
+          <li onClick={() => navigate('/admin')}>{icons[0]} 메인페이지</li>
+          <li onClick={() => navigate('/admin/user')}>{icons[1]} 계정관리페이지</li>
         </ListStyle>
       )}
       <TimerStyle />

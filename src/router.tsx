@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { Router as RemixRouter } from '@remix-run/router/dist/router'
 import App from './App'
-import PATH from './constants/pathConst'
 import Admin from './pages/Admin'
 import Home from '@pages/Home'
 import Main from './pages/Main'
@@ -11,6 +10,14 @@ import SignUp from './pages/SignUp'
 import User from './pages/User'
 import GeneralLayout from './components/GeneralLayout'
 import { SidebarElement } from './env'
+const PATH = {
+  HOME: '/',
+  MAIN: '/main',
+  SIGNUP: '/signup',
+  MYPAGE: '/mypage',
+  ADMIN: '/admin',
+  USER: '/admin/user',
+}
 
 interface RouterElement {
   id: number // 페이지 아이디 (반복문용 고유값)

@@ -5,6 +5,8 @@ import { SidebarContent } from '../router'
 import { getAcceptHome, getToken, getUserRole } from '../utils/cookies'
 import { useRouter } from '../hooks/useRouter'
 import { useLocation } from 'react-router-dom'
+import Lottie from 'lottie-react'
+import loading from '../assets/lottie/loading.json'
 
 interface GeneralLayoutProps {
   children: React.ReactNode
@@ -13,22 +15,20 @@ interface GeneralLayoutProps {
 }
 
 const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
-  const { routeTo } = useRouter()
-  const { pathname } = useLocation()
-  const [userRole, setuserRole] = useState<string>('')
-  const [token, setToken] = useState<string>('')
-  const [acceptHome, setAcceptHome] = useState<boolean>(true)
+  // const { routeTo } = useRouter()
+  // const { pathname } = useLocation()
+  // const [userRole, setuserRole] = useState<string>('')
+  // const [token, setToken] = useState<string>('')
+  // const [acceptHome, setAcceptHome] = useState<boolean>(true)
 
-  useEffect(() => {
-    const userRoleRes = getUserRole()
-    setuserRole(userRoleRes)
-    const tokenRes = getToken()
-    setToken(tokenRes)
-    const acceptHomeRes = getAcceptHome()
-    setAcceptHome(acceptHomeRes)
-  }, [pathname])
-
-  console.log(acceptHome)
+  // useEffect(() => {
+  //   const userRoleRes = getUserRole()
+  //   setuserRole(userRoleRes)
+  //   const tokenRes = getToken()
+  //   setToken(tokenRes)
+  //   const acceptHomeRes = getAcceptHome()
+  //   setAcceptHome(acceptHomeRes)
+  // }, [pathname])
 
   // userRole=user 일때 어드민 페이지에 접속할 경우
   // if (isAdmin && userRole === 'user') {
@@ -61,8 +61,11 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
   return (
     <GeneralLayoutStyle>
-      {true ? <Sidebar sidebarContent={SidebarContent} /> : null}
-      <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
+      {/* {acceptHome ? */}
+      {/* <Sidebar sidebarContent={SidebarContent} /> */}
+      {/* : null} */}
+      <GeneralLayoutBodyStyle>{children}</GeneralLayoutBodyStyle>
+      {/* <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle> */}
     </GeneralLayoutStyle>
   )
 }
@@ -72,13 +75,25 @@ export default GeneralLayout
 const GeneralLayoutStyle = styled.div`
   height: 100vh;
   display: flex;
+  .loading {
+    width: 20%;
+    margin: 0 auto;
+  }
 `
 
-const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
+const GeneralLayoutBodyStyle = styled.div`
   overflow-y: scroll;
   width: 100%;
   margin: 0 auto;
-  padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
   overflow-x: hidden;
-  margin-left: 18rem;
+  /* margin-left: 18rem; */
 `
+/* padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)}; */
+
+// const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
+//   overflow-y: scroll;
+//   width: 100%;
+//   margin: 0 auto;
+//   padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
+//   overflow-x: hidden;
+// `

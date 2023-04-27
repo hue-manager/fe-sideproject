@@ -56,6 +56,9 @@ const Main = () => {
   if (isLoading) return <div>Loading...</div>
   if (isScheduleLoading) return <div>Loading...</div>
 
+  // if (fetchingUser) return <p>Lodaing...</p>
+
+  console.log('scheduleList')
   return (
     <>
       <UserInfoSection

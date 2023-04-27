@@ -15,22 +15,20 @@ interface GeneralLayoutProps {
 }
 
 const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
-  const { routeTo } = useRouter()
-  const { pathname } = useLocation()
-  const [userRole, setuserRole] = useState<string>('')
-  const [token, setToken] = useState<string>('')
-  const [acceptHome, setAcceptHome] = useState<boolean>(true)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  // const { routeTo } = useRouter()
+  // const { pathname } = useLocation()
+  // const [userRole, setuserRole] = useState<string>('')
+  // const [token, setToken] = useState<string>('')
+  // const [acceptHome, setAcceptHome] = useState<boolean>(true)
 
-  useEffect(() => {
-    const userRoleRes = getUserRole()
-    setuserRole(userRoleRes)
-    const tokenRes = getToken()
-    setToken(tokenRes)
-    const acceptHomeRes = getAcceptHome()
-    setAcceptHome(acceptHomeRes)
-    setIsLoading(false)
-  }, [pathname])
+  // useEffect(() => {
+  //   const userRoleRes = getUserRole()
+  //   setuserRole(userRoleRes)
+  //   const tokenRes = getToken()
+  //   setToken(tokenRes)
+  //   const acceptHomeRes = getAcceptHome()
+  //   setAcceptHome(acceptHomeRes)
+  // }, [pathname])
 
   // userRole=user 일때 어드민 페이지에 접속할 경우
   // if (isAdmin && userRole === 'user') {
@@ -48,29 +46,26 @@ const GeneralLayout = ({ children, isAdmin, withAuth }: GeneralLayoutProps) => {
   // }
 
   // userRole=admin 일때 일반 유저 페이지에 접속할 경우
-  if (!withAuth && token === 'admin') {
-    routeTo('/admin')
-  }
+  // if (!withAuth && token === 'admin') {
+  //   routeTo('/admin')
+  // }
 
   // token 없을땐 로그인 화면으로 이동
-  if (token === '') {
-    routeTo('/')
-  }
+  // if (token === '') {
+  //   routeTo('/')
+  // }
 
   // token 이 있는데 홈으로 접속할 경우
-  if (token && window.location.pathname === '/') {
-    routeTo('/main')
-  }
+  // if (token && window.location.pathname === '/') {
+  //   routeTo('/main')
+  // }
   return (
     <GeneralLayoutStyle>
-      {isLoading ? (
-        <Lottie animationData={loading} className="loading" />
-      ) : (
-        <>
-          {acceptHome ? <Sidebar sidebarContent={SidebarContent} /> : null}
-          <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle>
-        </>
-      )}
+      {/* {acceptHome ? */}
+      {/* <Sidebar sidebarContent={SidebarContent} /> */}
+      {/* : null} */}
+      <GeneralLayoutBodyStyle>{children}</GeneralLayoutBodyStyle>
+      {/* <GeneralLayoutBodyStyle acceptHome={acceptHome}>{children}</GeneralLayoutBodyStyle> */}
     </GeneralLayoutStyle>
   )
 }
@@ -86,10 +81,19 @@ const GeneralLayoutStyle = styled.div`
   }
 `
 
-const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
+const GeneralLayoutBodyStyle = styled.div`
   overflow-y: scroll;
   width: 100%;
   margin: 0 auto;
-  padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
   overflow-x: hidden;
+  /* margin-left: 18rem; */
 `
+/* padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)}; */
+
+// const GeneralLayoutBodyStyle = styled.div<{ acceptHome: boolean }>`
+//   overflow-y: scroll;
+//   width: 100%;
+//   margin: 0 auto;
+//   padding-left: ${({ acceptHome }) => (acceptHome ? '18rem' : null)};
+//   overflow-x: hidden;
+// `

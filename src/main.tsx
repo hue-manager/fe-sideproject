@@ -8,13 +8,31 @@ ReactModal.setAppElement('#root')
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 const queryClient = new QueryClient()
 import store from './store/store'
+import { RecoilRoot } from 'recoil'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    <ReactQueryDevtools initialIsOpen={false} />
+    <RecoilRoot>
+      <Provider store={store}>
+        <App />
+        <ToastContainer
+          position="top-right"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
+        {/* <ToastContainer /> */}
+      </Provider>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    </RecoilRoot>
   </QueryClientProvider>
 )
 

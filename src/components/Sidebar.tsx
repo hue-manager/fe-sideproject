@@ -9,9 +9,17 @@ import Timer from './Timer'
 import { useQuery } from '@tanstack/react-query'
 import { ax } from '../api/axiosClient'
 import Avatar, { genConfig } from 'react-nice-avatar'
+import userInfo from '../mokeup/userInfo/userId.json'
+import { useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
-  sidebarContent: SidebarElement[]
+  sidebarContent: {
+    id: number
+    label: string
+    path: string
+    isAdmin?: boolean
+  }[]
+
   // userProfile?: any
 }
 
@@ -19,14 +27,25 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
   const accessToken = getToken()
   const { currentPath, routeTo } = useRouter()
 
-  const { data: userInfo, isLoading: fetchingUser } = useQuery(['SidebarUserInfo'], () =>
-    ax.getUserInfo(accessToken)
-  )
+  // const { data: userInfo, isLoading: fetchingUser } = useQuery(['SidebarUserInfo'], () =>
+  //   ax.getUserInfo(accessToken)
+  // )
+  // const userInfo =
+  // if (fetchingUser) return <p>Lodaing...</p>
 
-  if (fetchingUser) return <p>Lodaing...</p>
-
-  const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo
-  // const config = genConfig(email)
+  // const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo.user
+  // const config = genConfig('manman@abc.com')
+  const { id, email, userName, phoneNumber, role, department, position, vacationCount } = {
+    id: 41,
+    email: 'hmm123@hmm.com',
+    userName: '흠냐미',
+    phoneNumber: '010-1234-1234',
+    role: 'DEFAULT',
+    vacationCount: 15,
+    position: '과장',
+    department: '법무',
+  }
+  const config = genConfig(email)
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달
@@ -40,6 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
         fill="white"
       />
     </svg>,
+
     <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M12.0514 8.7931C11.2907 8.7931 10.547 8.53525 9.91455 8.05215C9.28205 7.56905 8.78908 6.8824 8.49797 6.07904C8.20687 5.27568 8.1307 4.39168 8.2791 3.53883C8.42751 2.68598 8.79382 1.90259 9.33172 1.28772C9.86961 0.672853 10.5549 0.254122 11.301 0.0844805C12.0471 -0.0851614 12.8204 0.00190496 13.5232 0.33467C14.226 0.667434 14.8267 1.23095 15.2493 1.95396C15.672 2.67697 15.8975 3.527 15.8975 4.39655C15.8975 5.56259 15.4923 6.68087 14.771 7.50538C14.0497 8.3299 13.0714 8.7931 12.0514 8.7931ZM12.0514 1.75862C11.5949 1.75862 11.1488 1.91333 10.7693 2.20319C10.3898 2.49305 10.094 2.90504 9.91933 3.38706C9.74467 3.86908 9.69897 4.39948 9.78801 4.91119C9.87705 5.4229 10.0968 5.89293 10.4196 6.26185C10.7423 6.63077 11.1535 6.88201 11.6012 6.9838C12.0488 7.08558 12.5128 7.03334 12.9345 6.83368C13.3562 6.63402 13.7166 6.29591 13.9701 5.86211C14.2237 5.4283 14.3591 4.91829 14.3591 4.39655C14.3591 3.69693 14.1159 3.02596 13.6832 2.53125C13.2504 2.03655 12.6634 1.75862 12.0514 1.75862Z"
@@ -62,12 +82,12 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
 
   const userPages = sidebarContent.filter((content) => !content.isAdmin)
   const adminPages = sidebarContent.filter((content) => content.isAdmin)
-
+  const navigate = useNavigate()
   return (
     <SidebarStyle>
       <Logo width="13rem" height="3rem" type="white" onClick={() => routeTo('/main')} />
       <ProfilStyle>
-        {/* <Avatar
+        <Avatar
           style={{
             width: '10rem',
             height: '10rem',
@@ -75,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
             margin: '0',
           }}
           {...config}
-        /> */}
+        />
         <p>{userName}</p>
       </ProfilStyle>
       {role === 'ROLE_ADMIN' ? (
@@ -91,14 +111,16 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
         </ListStyle>
       ) : (
         <ListStyle>
-          {userPages.map((element, index) => {
+          {/* {userPages.map((element, index) => {
             return (
               <li key={element.path} onClick={() => sidebarMenuClickHandler(element.path)}>
                 {icons[index]}
                 {element.label}
               </li>
             )
-          })}
+          })} */}
+          <li onClick={() => navigate('/admin')}>{icons[0]} 메인페이지</li>
+          <li onClick={() => navigate('/admin/user')}>{icons[1]} 계정관리페이지</li>
         </ListStyle>
       )}
       <TimerStyle />

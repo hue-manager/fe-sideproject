@@ -7,6 +7,19 @@ import { ax } from '../../api/axiosClient'
 import { getToken, getUserId } from '../../utils/cookies'
 import axios from 'axios'
 
+const mockUser = {
+  user: {
+    id: 6,
+    email: 'manman@abc.com',
+    userName: '만만이',
+    phoneNumber: '010-3456-7857',
+    role: 'ROLE_USER',
+    vacationCount: 12,
+    position: '사원',
+    department: '재무팀',
+  },
+}
+
 interface Item {
   id: number
   category: string
@@ -46,12 +59,12 @@ type T = {
 }
 
 const Main = () => {
-  const applySectionRef = useRef(null)
+  // const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
-  const accessToken = getToken()
-  const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
-    ax.getUserInfo(accessToken)
-  )
+  // const accessToken = getToken()
+  // const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
+  //   ax.getUserInfo(accessToken)
+  // )
 
   // const {
   //   data: scheduleList,
@@ -66,18 +79,18 @@ const Main = () => {
   //   },
   // })
 
-  if (fetchingUser) return <p>Lodaing...</p>
+  // if (fetchingUser) return <p>Lodaing...</p>
 
   console.log('scheduleList')
   return (
     <>
-      <UserInfoSection
-        userInfo={userInfo}
-        applySectionRef={applySectionRef}
-        calendarSectionRef={calendarSectionRef}
-      />
+      {/* <UserInfoSection
+        // userInfo={userInfo}
+        // applySectionRef={applySectionRef}
+        // calendarSectionRef={calendarSectionRef}
+      /> */}
       <CalendarSection calendarRef={calendarSectionRef} />
-      <ApplySection userInfo={userInfo} applyRef={applySectionRef} />
+      {/* <ApplySection userInfo={userInfo} applyRef={applySectionRef} /> */}
     </>
   )
 }

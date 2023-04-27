@@ -42,19 +42,23 @@ const SignUp = () => {
     setValue('position', positionValue)
   }, [departmentValue, positionValue])
 
-  const onSubmit = async () => {
-    const values = getValues()
-    const { passwordConfirm, ...rest } = values
-    const res = await signUp(rest)
-    if (res === '회원가입 성공') {
-      navigate('/')
-    }
-    if (res === 'duplicated') {
-      setDuplicated(true)
-      setTimeout(() => {
-        setDuplicated(false)
-      }, 1500)
-    }
+  // const onSubmit = async () => {
+  //   const values = getValues()
+  //   const { passwordConfirm, ...rest } = values
+  //   const res = await signUp(rest)
+  //   if (res === '회원가입 성공') {
+  //     navigate('/')
+  //   }
+  //   if (res === 'duplicated') {
+  //     setDuplicated(true)
+  //     setTimeout(() => {
+  //       setDuplicated(false)
+  //     }, 1500)
+  //   }
+  // }
+
+  const onSubmit = () => {
+    navigate('/')
   }
 
   return (

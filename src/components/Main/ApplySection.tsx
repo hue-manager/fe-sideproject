@@ -10,12 +10,14 @@ import { setSelectedDutyDate } from '../../store/slice/selectedDutyDateSlice'
 import { setEndDate, setStartDate } from '../../store/slice/selectedAnnualDateSlice'
 import AnnualLeaveModal from './AnnualLeaveModal'
 import Select from '../UI/Select'
+import { CSVLink } from 'react-csv'
 
 interface ApplySectionProps {
   userInfo: any
   applyRef: MutableRefObject<HTMLDivElement | null>
+  setUserInfo: any
 }
-const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
+const ApplySection = ({ setUserInfo, userInfo, applyRef }: ApplySectionProps) => {
   const [isAnnualLeaveOpen, setIsAnnualLeaveOpen] = useState(false)
   const [isDutyModalOpen, setIsDutyModalOpen] = useState(false)
   const [currentValue, setCurrentValue] = useState('전체')
@@ -35,11 +37,14 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
 
   const selectOptions = ['전체', '연차', '당직']
 
-  // console.log('scheduleList', scheduleList)
-
-  // const { pages } = scheduleList
-  // console.log('pages', pages)
-  // const { content, number, totalElements, totalPages } = pages[0]
+  const data = [
+    ['전체', '신청자', '소속/직급', '신청사유', '시작날짜', '종료날짜', '상태'],
+    ['연차', '공혜지', '인사팀/사원', '병원방문', '2023-01-25', '2023-01-31', '처리대기'],
+    ['연차', '공혜지', '인사팀/사원', '병원방문', '2023-01-25', '2023-01-31', '처리대기'],
+    ['연차', '공혜지', '인사팀/사원', '병원방문', '2023-01-25', '2023-01-31', '처리대기'],
+    ['연차', '공혜지', '인사팀/사원', '병원방문', '2023-01-25', '2023-01-31', '처리대기'],
+    ['연차', '공혜지', '인사팀/사원', '병원방문', '2023-01-25', '2023-01-31', '처리대기'],
+  ]
 
   return (
     <ContainerStyle ref={applyRef}>
@@ -71,14 +76,18 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
                 당직신청
               </Button>
 
-              <AnnualLeaveModal isOpen={isAnnualLeaveOpen} setIsOpen={setIsAnnualLeaveOpen} />
+              <AnnualLeaveModal
+                isOpen={isAnnualLeaveOpen}
+                setIsOpen={setIsAnnualLeaveOpen}
+                setUserInfo={setUserInfo}
+              />
               <DutyDateModal isOpen={isDutyModalOpen} setIsOpen={setIsDutyModalOpen} />
             </ButtonGroupStyle>
           </FirstBoxStyle>
           <SecondBoxStyle>
             <HeaderStyle>
               <h2>나의 신청 현황</h2>
-              <Button
+              {/* <Button
                 width="7rem"
                 height="2rem"
                 borderRadius="9999px"
@@ -86,7 +95,10 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
                 color="var(--color-white)"
               >
                 엑셀로 내보내기
-              </Button>
+              </Button> */}
+              <CSVButton data={data} filename={'my-application.csv'}>
+                엑셀로 내보내기
+              </CSVButton>
             </HeaderStyle>
             <InfoStyle>
               <header>
@@ -140,6 +152,17 @@ const FirstBoxStyle = styled.div`
   }
 `
 
+const CSVButton = styled(CSVLink)`
+  cursor: pointer;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 const ButtonGroupStyle = styled.div`
   display: flex;
   gap: 2rem;

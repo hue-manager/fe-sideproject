@@ -7,7 +7,7 @@ interface Item {
   id: number
   category: string
   memo: string
-  user: any
+  userInfo: any
   startDate: string
   endDate: string
   status: string
@@ -16,26 +16,28 @@ interface Item {
 interface IApplicationCard {
   item: Item
 }
-const ApplicationCard = () => {
-  // const {
-  //   id,
-  //   category,
-  //   memo,
-  //   user: { createdAt, credentialsNonExpired, enabled, userName, position, department },
-  //   startDate,
-  //   endDate,
-  //   status,
-  // } = item
-  const category = 'VACATION'
+const ApplicationCard = ({ item }: IApplicationCard) => {
+  const {
+    id,
+    category,
+    memo,
+    userInfo: { userName, position, department },
+    startDate,
+    endDate,
+    status,
+  } = item
+
   return (
     <ApplicationCardStyle category={category}>
-      <div>연차</div>
-      <div>공혜지</div>
-      <div>인사팀/사원</div>
-      <div>병원 방문</div>
-      <div>2023-01-25</div>
-      <div>2023-01-31</div>
-      <div>처리대기</div>
+      <div>{category}</div>
+      <div>{userName}</div>
+      <div>
+        {department}/{position}
+      </div>
+      <div>{memo}</div>
+      <div>{startDate}</div>
+      <div>{endDate}</div>
+      <div>{status}</div>
     </ApplicationCardStyle>
   )
 }
@@ -63,7 +65,7 @@ const ApplicationCardStyle = styled.li<{ category: string }>`
     color: var(--color-black);
     :first-child {
       color: ${({ category }) =>
-        category === 'VACATION' ? 'var(--color-primary)' : 'var(--color-pink)'};
+        category === '연차' ? 'var(--color-primary)' : 'var(--color-pink)'};
       font-weight: 600;
     }
   }

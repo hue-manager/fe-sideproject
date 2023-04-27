@@ -6,7 +6,9 @@ date.setMinutes(date.getMinutes() + 15)
 
 // 토큰 저장
 export const setToken = (token: string) => {
-  return cookies.set('token', token, {
+  const newToken =
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5ZWppQGFiYy5jb20iLCJpYXQiOjE2ODEyOTc5NTcsImV4cCI6MTY4MTMwNTE1N30.H0DJp8O6S31DQfiXb8bj62YF6hKBHfoXw2-mAM1RJrc'
+  return cookies.set('token', newToken, {
     path: '/',
     maxAge: 9000,
   })

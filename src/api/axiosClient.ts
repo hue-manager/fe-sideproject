@@ -1,3 +1,4 @@
+import { getUserSchedule } from './auth'
 import { getToken } from './../utils/cookies'
 import { getUserId } from '../utils/cookies'
 import axios from 'axios'
@@ -129,6 +130,7 @@ class Axios {
 
   // 일반 유저 로그인
   async login(email: string, password: string) {
+    return
     try {
       const response = await this.axiosClient.post(`/login`, {
         email,
@@ -239,6 +241,11 @@ class Axios {
         throw error
       }
     }
+  }
+
+  /**나의 스케쥴 가져오기 */
+  async getFUserSchedule() {
+    axios.get('/src/mokeup/users-schedules/all.json')
   }
 }
 

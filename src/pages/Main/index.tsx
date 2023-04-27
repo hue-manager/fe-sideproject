@@ -1,11 +1,9 @@
 import UserInfoSection from '@components/Main/UserInfoSection'
 import CalendarSection from '@components/Main/CalendarSection'
 import ApplySection from '@components/Main/ApplySection'
-import { useEffect, useRef, useState } from 'react'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { ax } from '../../api/axiosClient'
-import { getToken, getUserId } from '../../utils/cookies'
-import axios from 'axios'
+import { useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getAllSchedule, getSchedule, getUser } from '../../api/firebase'
 
 interface Item {
   id: number
@@ -48,25 +46,17 @@ type T = {
 const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
-  const accessToken = getToken()
-  const { data: userInfo, isLoading: fetchingUser } = useQuery(['userInfo'], () =>
-    ax.getUserInfo(accessToken)
+
+  const userName = '만만이'
+
+  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userName))
+  const { isLoading: isScheduleLoading, data: schedule = [] } = useQuery(['user-schedule'], () =>
+    getSchedule(userName)
   )
+  if (isLoading) return <div>Loading...</div>
+  if (isScheduleLoading) return <div>Loading...</div>
 
-  // const {
-  //   data: scheduleList,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetchingNextPage,
-  //   isFetching,
-  // } = useInfiniteQuery(['schedules'], () => ax.getUserSchedules(accessToken), {
-  //   getNextPageParam: (lastPage, allPages) => {
-  //     const nextPage = lastPage.page + 1
-  //     return nextPage < lastPage.totalPages ? nextPage : undefined
-  //   },
-  // })
-
-  if (fetchingUser) return <p>Lodaing...</p>
+  // if (fetchingUser) return <p>Lodaing...</p>
 
   console.log('scheduleList')
   return (
@@ -77,7 +67,7 @@ const Main = () => {
         calendarSectionRef={calendarSectionRef}
       />
       <CalendarSection calendarRef={calendarSectionRef} />
-      <ApplySection userInfo={userInfo} applyRef={applySectionRef} />
+      <ApplySection userInfo={userInfo} applyRef={applySectionRef} schedule={schedule} />
     </>
   )
 }

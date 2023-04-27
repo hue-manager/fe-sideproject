@@ -73,7 +73,7 @@ const CalendarStyle = styled(Calendar)`
         height: 1.5rem;
         position: absolute;
         left: 70px;
-        background: url('/public/calendar_arrow_left.svg') no-repeat center;
+        background: url('/calendar_arrow_left.svg') no-repeat center;
         font-size: 0;
       }
       button:nth-child(3) {
@@ -81,7 +81,7 @@ const CalendarStyle = styled(Calendar)`
         height: 1.5rem;
         position: absolute;
         right: 70px;
-        background: url('/public/calendar_arrow_right.svg') no-repeat center;
+        background: url('/calendar_arrow_right.svg') no-repeat center;
         font-size: 0;
       }
     }
@@ -175,7 +175,7 @@ const CalendarStyle = styled(Calendar)`
 //         height: 1.5rem;
 //         position: absolute;
 //         left: 70px;
-//         background: url('/public/calendar_arrow_left.svg') no-repeat center;
+//         background: url('/calendar_arrow_left.svg') no-repeat center;
 //         font-size: 0;
 //       }
 //       button:nth-child(3) {
@@ -183,7 +183,7 @@ const CalendarStyle = styled(Calendar)`
 //         height: 1.5rem;
 //         position: absolute;
 //         right: 70px;
-//         background: url('/public/calendar_arrow_right.svg') no-repeat center;
+//         background: url('/calendar_arrow_right.svg') no-repeat center;
 //         font-size: 0;
 //       }
 //     }

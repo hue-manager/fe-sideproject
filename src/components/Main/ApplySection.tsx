@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Inner from '@components/Inner'
 import Button from '@components/UI/Button'
 import ApplicationCard from './ApplicationCard'
-import Pagination from '../UI/Pagination'
 import { MutableRefObject, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import DutyDateModal from './DutyDateModal'
@@ -10,15 +9,57 @@ import { setSelectedDutyDate } from '../../store/slice/selectedDutyDateSlice'
 import { setEndDate, setStartDate } from '../../store/slice/selectedAnnualDateSlice'
 import AnnualLeaveModal from './AnnualLeaveModal'
 import Select from '../UI/Select'
+import { CSVLink } from 'react-csv'
+import Paginate from '../UI/Paginate'
 
 interface ApplySectionProps {
   userInfo: any
   applyRef: MutableRefObject<HTMLDivElement | null>
+  schedule: IScheduleData[]
 }
-const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
+interface IOverview {
+  application: number
+  approved: number
+  onDuty: number
+  pending: number
+  rejection: number
+}
+interface IUserInfo {
+  department: string
+  email: string
+  overview: IOverview
+  phoneNumber: string
+  position: string
+  role: string
+  userName: string
+  vacationCount: number
+  id: number
+}
+
+interface IScheduleData {
+  category: string
+  startDate: string
+  endDate: string
+  memo: string
+  id: string
+  status: string
+  userInfo: IUserInfo
+}
+
+const ApplySection = ({ userInfo, applyRef, schedule }: ApplySectionProps) => {
   const [isAnnualLeaveOpen, setIsAnnualLeaveOpen] = useState(false)
   const [isDutyModalOpen, setIsDutyModalOpen] = useState(false)
-  const [currentValue, setCurrentValue] = useState('전체')
+  const [currentPage, setCurrentPage] = useState<number>(0)
+  const itemsPerPage = 5
+  const pageCount = Math.ceil(schedule.length / itemsPerPage)
+  const offset = currentPage * itemsPerPage
+  const filter = schedule.sort((a, b) => {
+    return new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  })
+  const currentItems = schedule.slice(
+    offset,
+    offset + Math.min(itemsPerPage, schedule.length - offset)
+  )
 
   const dispatch = useDispatch()
 
@@ -33,13 +74,25 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
     setIsDutyModalOpen(true)
   }
 
-  const selectOptions = ['전체', '연차', '당직']
+  const changePageHandler = (event: { selected: number }) => {
+    setCurrentPage(event.selected)
+  }
 
-  // console.log('scheduleList', scheduleList)
+  console.log('schedule', schedule)
+  console.log('currentItems', currentItems)
 
-  // const { pages } = scheduleList
-  // console.log('pages', pages)
-  // const { content, number, totalElements, totalPages } = pages[0]
+  const excelData = schedule.map(({ status, memo, startDate, endDate, category, userInfo }) => [
+    category,
+    userInfo.userName,
+    `${userInfo.department}/${userInfo.position}`,
+    memo,
+    startDate,
+    endDate,
+    status,
+  ])
+
+  const headers = ['전체', '신청자', '소속/직급', '신청사유', '시작날짜', '종료날짜', '상태']
+  const csvData = [headers, ...excelData]
 
   return (
     <ContainerStyle ref={applyRef}>
@@ -71,41 +124,28 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
                 당직신청
               </Button>
 
-              <AnnualLeaveModal isOpen={isAnnualLeaveOpen} setIsOpen={setIsAnnualLeaveOpen} />
-              <DutyDateModal isOpen={isDutyModalOpen} setIsOpen={setIsDutyModalOpen} />
+              <AnnualLeaveModal
+                isOpen={isAnnualLeaveOpen}
+                setIsOpen={setIsAnnualLeaveOpen}
+                userInfo={userInfo}
+              />
+              <DutyDateModal
+                isOpen={isDutyModalOpen}
+                setIsOpen={setIsDutyModalOpen}
+                userInfo={userInfo}
+              />
             </ButtonGroupStyle>
           </FirstBoxStyle>
           <SecondBoxStyle>
             <HeaderStyle>
               <h2>나의 신청 현황</h2>
-              <Button
-                width="7rem"
-                height="2rem"
-                borderRadius="9999px"
-                bgColor="var(--color-primary)"
-                color="var(--color-white)"
-              >
+              <CSVButton data={csvData} filename={'my-application.csv'}>
                 엑셀로 내보내기
-              </Button>
+              </CSVButton>
             </HeaderStyle>
             <InfoStyle>
               <header>
-                <div>
-                  <Select
-                    options={selectOptions}
-                    currentValue={currentValue}
-                    setCurrentValue={setCurrentValue}
-                    width="60%"
-                    height="3rem"
-                    borderRadius=".5rem"
-                    fontSize="14px"
-                    arrowImg="/images/selectBtn3.png"
-                    borderColor="inherit"
-                    bgColor="var(--color-primary)"
-                    color="var(--color-white)"
-                    type="bgPrimary"
-                  />
-                </div>
+                <div>전체</div>
                 <div>신청자</div>
                 <div>소속/직급</div>
                 <div>신청 사유</div>
@@ -114,12 +154,11 @@ const ApplySection = ({ userInfo, applyRef }: ApplySectionProps) => {
                 <div>상태</div>
               </header>
               <ul>
-                {[1, 2, 3, 4, 5].map((item: any, index: number) => (
-                  <ApplicationCard key={index} />
-                ))}
+                {schedule &&
+                  currentItems.map((item: any) => <ApplicationCard key={item.id} item={item} />)}
               </ul>
             </InfoStyle>
-            {/* <Pagination activePage={number} pages={totalPages} setActivePage={fetchNextPage} /> */}
+            <Paginate totalElements={pageCount} changePageHandler={changePageHandler} />
           </SecondBoxStyle>
         </SectionStyle>
       </Inner>
@@ -140,6 +179,17 @@ const FirstBoxStyle = styled.div`
   }
 `
 
+const CSVButton = styled(CSVLink)`
+  cursor: pointer;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 const ButtonGroupStyle = styled.div`
   display: flex;
   gap: 2rem;
@@ -174,23 +224,11 @@ const InfoStyle = styled.div`
     border-radius: 9999px;
     padding: 0 3rem;
     background-color: var(--color-primary);
-    & > div:first-child {
-      width: 14.2%;
-      height: 100%;
-      gap: 1.5rem;
-      font-weight: 600;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      div:first-child {
-        /* width: 50%; */
-      }
-    }
-    div:not(:first-child) {
+    div {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 16.6%;
+      width: 14.2%; //16.6%;
       height: 100%;
       gap: 1.5rem;
       color: var(--color-white);

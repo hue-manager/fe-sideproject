@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { setExpiration } from '../../utils/cookies'
-import { login, loginAdmin } from '@src/api/auth'
+import { login, loginAdmin } from '../../api/auth'
 
 interface Props {}
 

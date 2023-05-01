@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { Router as RemixRouter } from '@remix-run/router/dist/router'
-import App from './App'
 import PATH from './constants/pathConst'
 import Admin from './pages/Admin'
 import Home from '@pages/Home'
@@ -43,7 +42,7 @@ const routerData: RouterElement[] = [
     path: PATH.MAIN,
     label: '메인페이지',
     element: <Main />,
-    withAuth: false,
+    withAuth: true,
     isAdmin: false,
   },
   {
@@ -51,7 +50,7 @@ const routerData: RouterElement[] = [
     path: PATH.MYPAGE,
     label: '마이페이지',
     element: <MyPage />,
-    withAuth: false,
+    withAuth: true,
     isAdmin: false,
   },
   {
@@ -59,7 +58,7 @@ const routerData: RouterElement[] = [
     path: PATH.ADMIN,
     label: '메인페이지',
     element: <Admin />,
-    withAuth: false,
+    withAuth: true,
     isAdmin: true,
   },
   {
@@ -67,7 +66,7 @@ const routerData: RouterElement[] = [
     path: PATH.USER,
     label: '계정관리페이지',
     element: <User />,
-    withAuth: false,
+    withAuth: true,
     isAdmin: true,
   },
 ]
@@ -89,7 +88,7 @@ export const routers: RemixRouter = createBrowserRouter(
             {router.element}
           </GeneralLayout>
         ),
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
       }
     } else if (router.isAdmin) {
       return {
@@ -103,24 +102,25 @@ export const routers: RemixRouter = createBrowserRouter(
             {router.element}
           </GeneralLayout>
         ),
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
       }
     } else {
       return {
         path: router.path,
         element: <GeneralLayout>{router.element}</GeneralLayout>,
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
       }
     }
   })
 )
-const withAuth = false
 // 라우터 객체에서 인증이 필요한 페이지만 필터링해 사이드바에 전달
 // id, path, label을 전달하여 Sidebar에서 사용
 
 export const SidebarContent: SidebarElement[] = routerData.reduce(
   (prev: SidebarElement[], router: RouterElement) => {
-    if (router.withAuth) {
+    if (router.withAuth && !router.isAdmin) {
+      console.log('here')
+
       return [
         ...prev,
         {

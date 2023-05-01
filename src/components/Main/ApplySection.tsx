@@ -78,9 +78,6 @@ const ApplySection = ({ userInfo, applyRef, schedule }: ApplySectionProps) => {
     setCurrentPage(event.selected)
   }
 
-  console.log('schedule', schedule)
-  console.log('currentItems', currentItems)
-
   const excelData = schedule.map(({ status, memo, startDate, endDate, category, userInfo }) => [
     category,
     userInfo.userName,
@@ -93,6 +90,8 @@ const ApplySection = ({ userInfo, applyRef, schedule }: ApplySectionProps) => {
 
   const headers = ['전체', '신청자', '소속/직급', '신청사유', '시작날짜', '종료날짜', '상태']
   const csvData = [headers, ...excelData]
+
+  console.log('userInfo!!!!', userInfo)
 
   return (
     <ContainerStyle ref={applyRef}>

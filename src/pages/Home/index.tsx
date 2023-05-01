@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { setExpiration } from '../../utils/cookies'
-import { ax } from '../../api/axiosClient'
+import { useAuth } from '../../hooks/useAuth'
+import { getUser } from '../../api/firebase'
+import { clearUser } from '../../store/slice/authSlice'
+import { useDispatch } from 'react-redux'
 
 interface Props {}
 
@@ -16,6 +19,8 @@ const errorMessage = [
 
 const Home = (props: Props) => {
   // 유저 선택 상태 (true일반유저/false관리자)
+  const { user, login, logout } = useAuth()
+
   const [role, setRole] = useState(true)
 
   // 에러 메세지
@@ -23,39 +28,45 @@ const Home = (props: Props) => {
   const [error, setError] = useState(false)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   // 로그인 api 호출 함수
   const loginSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // 일반 유저 로그인
-    if (role) {
-      const formData = new FormData(event?.currentTarget)
+    const formData = new FormData(event?.currentTarget)
 
-      // const res = await ax.login(
-      //   formData.get('email') as string,
-      //   formData.get('password') as string
-      // )
-      // console.log('login:', res)
+    if (user !== null) {
+      user?.role === 'ROLE_USER' ? navigate('/main') : navigate('/admin')
+    }
 
-      //로그인 성공시에 메인페이지로 이동
-      // if (res) {
-      navigate('/main')
-      console.log('야호')
-      // }
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const authInfo = await login(email, password)
+
+    if (authInfo) {
+      const userInfo = await getUser(authInfo.uid)
+      if (role) {
+        // 일반 유저 로그인
+        if (userInfo?.role === 'ROLE_USER') {
+          navigate('/main')
+        } else {
+          dispatch(clearUser)
+          alert('관리자 로그인 탭에서 로그인 해주세요!')
+          setRole(false)
+          return
+        }
+      } else {
+        // 관리자 로그인
+        if (userInfo?.role === 'ROLE_ADMIN') {
+          navigate('/admin')
+        } else {
+          dispatch(clearUser)
+          alert('일반 로그인 탭에서 로그인 해주세요!')
+          setRole(true)
+        }
+      }
     } else {
-      // 관리자 로그인
-      // const formData = new FormData(event?.currentTarget)
-      // const res = await ax.loginAdmin(
-      //   formData.get('email') as string,
-      //   formData.get('password') as string
-      // )
-      // 비밀번호 불일치
-
-      //로그인 성공시에 메인페이지로 이동
-      // if (res) {
-      navigate('/main')
-      console.log('야호')
-      // }
+      alert('해당 유저가 존재하지 않습니다. 회원가입 후 시도해주세요')
     }
   }
 

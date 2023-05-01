@@ -4,6 +4,7 @@ import ApplySection from '@components/Main/ApplySection'
 import { useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getAllSchedule, getSchedule, getUser } from '../../api/firebase'
+import { useAuth } from '../../hooks/useAuth'
 
 interface Item {
   id: number
@@ -47,14 +48,16 @@ const Main = () => {
   const applySectionRef = useRef(null)
   const calendarSectionRef = useRef(null)
 
-  const userName = '만만이'
+  const userId = localStorage.getItem('userId')
 
-  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userName))
+  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userId || ''))
   const { isLoading: isScheduleLoading, data: schedule = [] } = useQuery(['user-schedule'], () =>
-    getSchedule(userName)
+    getSchedule(userId || '')
   )
   if (isLoading) return <div>Loading...</div>
   if (isScheduleLoading) return <div>Loading...</div>
+  console.log('schedule', schedule)
+  console.log('userInfo', userInfo)
 
   return (
     <>

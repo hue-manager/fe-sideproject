@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal'
 import EditInfoModal from '../../components/Mypage/EditInfoModal'
 import WithdrawalModal from '../../components/Mypage/WithdrawalModal'
+import { useQuery } from '@tanstack/react-query'
+import { getUser } from '../../api/firebase'
 
 interface Props {}
 
@@ -31,43 +33,22 @@ type UserInfo = {
 }
 
 const MyPage = (props: Props) => {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '만만이',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 12,
-    position: '사원',
-    department: '재무팀',
-    overview: {
-      onDuty: 3,
-      application: 15,
-      approved: 12,
-      pending: 3,
-      rejection: 0,
-    },
-  })
+  const userId = localStorage.getItem('userId')
+
+  const { isLoading, data: userInfo } = useQuery(['user'], () => getUser(userId || ''))
+
+  if (isLoading) <div>Loading...</div>
+
   const [editInfoModalOpen, setEditInfoModalOpen] = useState(false)
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false)
-  const [currentEmail, setCurrentEmail] = useState<string>(userInfo.email)
-  const [currentName, setCurrentName] = useState<string>(userInfo?.userName)
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await getUserInfo()
-  //     setuserInfo(response.user)
-  //     setCurrentEmail(response.user.email)
-  //     setCurrentName(response.user.userName)
-  //   }
-  //   fetchData()
-  // }, [])
-  const config = genConfig(currentEmail)
+
   const handleEditInfoModalOpen = () => {
     setEditInfoModalOpen(true)
   }
   const handleWithdrawalModalOpen = () => {
     setWithdrawalModalOpen(true)
   }
+  const config = userInfo && genConfig(userInfo.email)
   return (
     <Page>
       <Container>
@@ -85,11 +66,11 @@ const MyPage = (props: Props) => {
             <Info>
               <div>
                 <p className="title">이름</p>
-                <p>{currentName}</p>
+                <p>{userInfo?.userName}</p>
               </div>
               <div>
                 <p className="title">이메일</p>
-                <p>{currentEmail}</p>
+                <p>{userInfo?.email}</p>
               </div>
               <div>
                 <p className="title">소속</p>
@@ -117,20 +98,14 @@ const MyPage = (props: Props) => {
           </Profile>
         </Content>
         <EditInfoModal
-          setUserInfo={setUserInfo}
           isOpen={editInfoModalOpen}
           setIsOpen={setEditInfoModalOpen}
           email={userInfo?.email}
-          setCurrentEmail={setCurrentEmail}
-          setCurrentName={setCurrentName}
         />
         <WithdrawalModal
-          setUserInfo={setUserInfo}
           isOpen={withdrawalModalOpen}
           setIsOpen={setWithdrawalModalOpen}
           email={userInfo?.email}
-          setCurrentEmail={setCurrentEmail}
-          setCurrentName={setCurrentName}
         />
       </Container>
       <Lottie animationData={mypage} className="lottie" />

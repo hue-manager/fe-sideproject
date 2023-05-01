@@ -4,14 +4,12 @@ import styled from 'styled-components'
 import { editUserInfo } from '../../api/mypage'
 import { useState } from 'react'
 import { Button } from '../Button/Button'
+import { addUpdateUserInfo } from '../../api/firebase'
 
 interface IEditInfo {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   email: string | undefined
-  setCurrentEmail: any
-  setCurrentName: any
-  setUserInfo: any
 }
 
 export type FormValue = {
@@ -19,15 +17,9 @@ export type FormValue = {
   userName: string
 }
 
-const EditInfoModal = ({
-  isOpen,
-  setIsOpen,
-  email,
-  setCurrentEmail,
-  setCurrentName,
-  setUserInfo,
-}: any) => {
+const EditInfoModal = ({ isOpen, setIsOpen, email }: IEditInfo) => {
   const [error, setError] = useState(true)
+  const userId = localStorage.getItem('userId')
   const {
     register,
     formState: { errors },
@@ -37,15 +29,13 @@ const EditInfoModal = ({
 
   const onSubmit = async () => {
     const values = getValues()
-    setIsOpen(false)
-    setCurrentEmail(values.email)
-    setCurrentName(values.userName)
-    // const response = await editUserInfo(values)
-    // if (response === 'ok') {
-    //   setIsOpen(false)
-    //   setCurrentEmail(values.email)
-    //   setCurrentName(values.userName)
-    // }
+    const { email, userName } = values
+    if (userId) {
+      const response = await addUpdateUserInfo(userId, email, userName)
+      if (response === null) alert('정보 수정에 실패하셨습니다.')
+      alert('회원 정보가 수정되었습니다.')
+      setIsOpen(false)
+    }
   }
 
   const handleModalClose = () => {

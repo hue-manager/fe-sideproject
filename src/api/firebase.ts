@@ -82,6 +82,11 @@ export async function addUpdateUserInfo(userId: string, email: string, userName:
   return null
 }
 
+/**유저 정보 수정 post*/
+export async function updateUserInfo(userId: string, userInfo: IUserInfo) {
+  return set(ref(database, `user/${userId}`), userInfo)
+}
+
 /**유저의 스케쥴 get */
 export async function getSchedule(userId: string) {
   return get(ref(database, `schedule/${userId}`)) //

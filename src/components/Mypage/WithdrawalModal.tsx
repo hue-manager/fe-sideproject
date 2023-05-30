@@ -4,14 +4,12 @@ import styled from 'styled-components'
 import { editUserInfo } from '../../api/mypage'
 import { useState } from 'react'
 import { Button } from '../Button/Button'
+import { deleteAccount } from '../../api/firebase'
 
 interface IEditInfo {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   email: string | undefined
-  setCurrentEmail: any
-  setCurrentName: any
-  setUserInfo: any
 }
 
 export type FormValue = {
@@ -19,14 +17,10 @@ export type FormValue = {
   userName: string
 }
 
-const EditInfoModal = ({
-  isOpen,
-  setIsOpen,
-  email,
-  setCurrentEmail,
-  setCurrentName,
-}: IEditInfo) => {
+const EditInfoModal = ({ isOpen, setIsOpen, email }: IEditInfo) => {
   const [error, setError] = useState(true)
+  const userId = localStorage.getItem('userId')
+
   const {
     register,
     formState: { errors },
@@ -35,30 +29,19 @@ const EditInfoModal = ({
   } = useForm<FormValue>()
 
   const onSubmit = async () => {
-    console.log('onsubmit!')
     const values = getValues()
-    // const response = await editUserInfo(values)
+    const { email, userName } = values
     setIsOpen(false)
-    // setCurrentEmail(values.email)
-    // setCurrentName(values.userName)
-    // if (response === 'ok') {
-    //   setIsOpen(false)
-    //   setCurrentEmail(values.email)
-    //   setCurrentName(values.userName)
-    // } else {
-    //   setError(true)
-    //   setTimeout(() => {
-    //     setError(false)
-    //   }, 1000)
-    // }
+    if (userId) {
+      const response = await deleteAccount(userId, email, userName)
+      if (response) {
+        alert('회원 탈퇴에 성공하셨습니다.')
+        setIsOpen(false)
+      } else alert('회원 탈퇴에 실패하셨습니다.')
+    }
   }
 
   const handleModalClose = () => {
-    setIsOpen(false)
-  }
-  // @ts-ignore
-  const handleMockSubmit: any = (e) => {
-    e.preventDefault()
     setIsOpen(false)
   }
   return (
@@ -79,9 +62,8 @@ const EditInfoModal = ({
         <Button
           backgroundColor={'var(--color-primary)'}
           size={'width'}
-          label={'회원정보 수정하기'}
+          label={'회원 탈퇴하기'}
           type={'submit'}
-          onClick={handleMockSubmit}
         />
       </InputWrapStyle>
     </ModalStyle>

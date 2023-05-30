@@ -10,7 +10,7 @@ import { ax } from '../../api/axiosClient' //'@src/api/axiosClient'
 import { getToken } from '../../utils/cookies'
 import { useRecoilState } from 'recoil'
 import { eventsState } from '../../atoms/atom'
-import { addNewSchedule, addUpdateUserInfo } from '../../api/firebase'
+import { addNewSchedule, addUpdateUserInfo, updateUserInfo } from '../../api/firebase'
 
 interface IDutyDateModal {
   isOpen: boolean
@@ -21,6 +21,8 @@ interface IDutyDateModal {
 const DutyDateModal = ({ isOpen, setIsOpen, userInfo }: IDutyDateModal) => {
   const [data, setData] = useRecoilState(eventsState)
   let category = '당직'
+  const userId = localStorage.getItem('userId')
+
   const accessToken = getToken()
   const { selectedDutyDate } = useSelector((state: RootState) => state.selectedDutyDate)
   const handleModal2Close = () => {
@@ -48,7 +50,7 @@ const DutyDateModal = ({ isOpen, setIsOpen, userInfo }: IDutyDateModal) => {
         .catch((error) => {
           alert('당직 신청에 실패하셨습니다')
         })
-      addUpdateUserInfo(userInfo.userName, userInfo)
+      userId && updateUserInfo(userId, userInfo)
 
       // setData([
       //   ...data,

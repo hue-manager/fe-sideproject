@@ -10,7 +10,7 @@ import { ax } from '../../api/axiosClient'
 import { getToken } from '../../utils/cookies'
 import { atom, useRecoilState } from 'recoil'
 import { eventsState } from '../../atoms/atom'
-import { addNewSchedule, addUpdateUserInfo } from '../../api/firebase'
+import { addNewSchedule, addUpdateUserInfo, updateUserInfo } from '../../api/firebase'
 
 interface IAnnualLeaveModal {
   isOpen: boolean
@@ -19,8 +19,8 @@ interface IAnnualLeaveModal {
 }
 
 const AnnualLeaveModal = ({ userInfo, isOpen, setIsOpen }: IAnnualLeaveModal) => {
-  // const accessToken = getToken()
   const [data, setData] = useRecoilState(eventsState)
+  const userId = localStorage.getItem('userId')
   let category = '연차'
 
   const [currentValue, setCurrentValue] = useState('정규 스케쥴')
@@ -33,44 +33,10 @@ const AnnualLeaveModal = ({ userInfo, isOpen, setIsOpen }: IAnnualLeaveModal) =>
     } else if (!startDate || !endDate) {
       alert('신청 날짜를 선택해주세요.')
     } else {
-      // setData((prev) => [
-      //   ...prev,
-      //   {
-      //     id: 35,
-      //     category: 'VACATION',
-      //     user: {
-      //       createdAt: '2023-04-01T09:45:21.835961',
-      //       modifiedAt: '2023-04-04T08:48:40.991376',
-      //       id: 4,
-      //       email: 'jisooround123@jisooround.com',
-      //       userName: '송혜교',
-      //       password: '$2a$10$POOOM6xY/sOz9eBOesejIORODNkEiVZjv7CtkcF8G2zrGidEvtQcG',
-      //       phoneNumber: '010-5028-7344',
-      //       role: 'ROLE_USER',
-      //       vacationCount: 9,
-      //       position: '사원',
-      //       department: '개발',
-      //       enabled: true,
-      //       username: '송혜교',
-      //       accountNonLocked: true,
-      //       authorities: [
-      //         {
-      //           authority: 'USER',
-      //         },
-      //       ],
-      //       accountNonExpired: true,
-      //       credentialsNonExpired: true,
-      //     },
-      //     startDate: startDate,
-      //     endDate: endDate,
-      //     memo: currentValue,
-      //     status: 'WAITING',
-      //   },
-      // ])
       userInfo.overview.application++
       let memo = currentValue
       addNewSchedule(userInfo, startDate, endDate, category, memo)
-      addUpdateUserInfo(userInfo.userName, userInfo)
+      userId && updateUserInfo(userId, userInfo)
       alert('연차 신청에 성공했습니다.')
       setIsOpen(false)
 

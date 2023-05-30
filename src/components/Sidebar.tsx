@@ -11,24 +11,25 @@ import { ax } from '../api/axiosClient'
 import Avatar, { genConfig } from 'react-nice-avatar'
 import userInfo from '../mokeup/userInfo/userId.json'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import { IUserInfo } from '../api/firebase'
+import { clearUser } from '../store/slice/authSlice'
+import { useDispatch } from 'react-redux'
 
 interface SidebarProps {
   sidebarContent: SidebarElement[]
+  userProfile: IUserInfo
   // userProfile?: any
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
-  const accessToken = getToken()
+const Sidebar: React.FC<SidebarProps> = ({ sidebarContent, userProfile }) => {
+  const { user, logout } = useAuth()
+  // const accessToken = getToken()
   const { currentPath, routeTo } = useRouter()
+  const dispatch = useDispatch()
 
-  // const { data: userInfo, isLoading: fetchingUser } = useQuery(['SidebarUserInfo'], () =>
-  //   ax.getUserInfo(accessToken)
-  // )
-  // const userInfo =
-  // if (fetchingUser) return <p>Lodaing...</p>
-
-  const { email, userName, phoneNumber, role, department, position, vacationCount } = userInfo.user
-  const config = genConfig('test@email.com')
+  const { email, userName, role } = userProfile
+  const config = userProfile && genConfig(email)
   const sidebarMenuClickHandler = (path: string) => {
     // 사이드바 메뉴 클릭시 이벤트 처리
     // path argument를 받아서 routeTo 함수에 전달
@@ -65,7 +66,12 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
 
   const userPages = sidebarContent.filter((content) => !content.isAdmin)
   const adminPages = sidebarContent.filter((content) => content.isAdmin)
+
   const navigate = useNavigate()
+  const handleLogoutClick = () => {
+    logout
+    dispatch(clearUser)
+  }
   return (
     <SidebarStyle>
       <Logo width="13rem" height="3rem" type="white" onClick={() => routeTo('/main')} />
@@ -94,22 +100,23 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarContent }) => {
         </ListStyle>
       ) : (
         <ListStyle>
-          {/* {userPages.map((element, index) => {
+          {userPages.map((element, index) => {
             return (
               <li key={element.path} onClick={() => sidebarMenuClickHandler(element.path)}>
                 {icons[index]}
                 {element.label}
               </li>
             )
-          })} */}
-          <li onClick={() => navigate('/main')}>{icons[0]} 메인페이지</li>
-          <li onClick={() => navigate('/mypage')}>{icons[1]} 마이페이지</li>
+          })}
+          {/* <li onClick={() => navigate('/main')}>{icons[0]} 메인페이지</li> */}
+          {/* <li onClick={() => navigate('/mypage')}>{icons[1]} 마이페이지</li> */}
         </ListStyle>
       )}
-      <TimerStyle />
+      {/* <TimerStyle /> */}
       <LogoutStyle
         onClick={() => {
-          removeInfo()
+          logout()
+          dispatch(clearUser)
           sidebarMenuClickHandler('/')
         }}
       >

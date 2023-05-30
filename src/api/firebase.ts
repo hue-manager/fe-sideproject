@@ -1,7 +1,18 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { orderByChild, getDatabase, ref, set, get, remove } from 'firebase/database'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  getAuth,
+  Auth,
+  UserCredential,
+  deleteUser,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth'
 import { v4 as uuid } from 'uuid'
+
 const {
   VITE_REACT_APP_FIREBASE_API_KEY,
   VITE_REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -20,6 +31,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
+const auth = getAuth()
 
 interface IOverview {
   application: number
@@ -28,7 +40,7 @@ interface IOverview {
   pending: number
   rejection: number
 }
-interface IUserInfo {
+export interface IUserInfo {
   department: string
   email: string
   overview: IOverview
@@ -37,7 +49,7 @@ interface IUserInfo {
   role: string
   userName: string
   vacationCount: number
-  id: number
+  id: any
 }
 
 export interface IScheduleData {
@@ -51,44 +63,33 @@ export interface IScheduleData {
 }
 
 /**유저 정보 get */
-export async function getUser(userName: string) {
-  return get(ref(database, `user/${userName}`)) //
+export async function getUser(userId: string) {
+  return get(ref(database, `user/${userId}`)) //
     .then((snapshot) => {
       const items = snapshot.val()
       return items ? { ...items } : null
     })
 }
 
-/**유저 post*/
-export async function addNewUser() {
-  const userInfo = {
-    id: 6,
-    email: 'manman@abc.com',
-    userName: '노홍철',
-    phoneNumber: '010-3456-7857',
-    role: 'ROLE_USER',
-    vacationCount: 15,
-    position: '사원',
-    department: '재무팀',
-    overview: {
-      onDuty: 0,
-      application: 0,
-      approved: 0,
-      pending: 0,
-      rejection: 0,
-    },
+/**유저 정보 수정 post*/
+export async function addUpdateUserInfo(userId: string, email: string, userName: string) {
+  const userInfo = await getUser(userId)
+  if (userInfo) {
+    userInfo.email = email
+    userInfo.userName = userName
+    return set(ref(database, `user/${userId}`), userInfo)
   }
-  return set(ref(database, `user/${userInfo.userName}`), userInfo)
+  return null
 }
 
 /**유저 정보 수정 post*/
-export async function addUpdateUserInfo(userName: string, userInfo: IUserInfo) {
-  return set(ref(database, `user/${userName}`), userInfo)
+export async function updateUserInfo(userId: string, userInfo: IUserInfo) {
+  return set(ref(database, `user/${userId}`), userInfo)
 }
 
 /**유저의 스케쥴 get */
-export async function getSchedule(userName: string) {
-  return get(ref(database, `schedule/${userName}`)) //
+export async function getSchedule(userId: string) {
+  return get(ref(database, `schedule/${userId}`)) //
     .then((snapshot) => {
       const items = snapshot.val() || {}
       return Object.values(items) as IScheduleData[]
@@ -105,7 +106,7 @@ export async function addNewSchedule(
 ) {
   const id = uuid()
   const status = '처리대기'
-  return set(ref(database, `schedule/${userInfo.userName}/${id}`), {
+  return set(ref(database, `schedule/${userInfo.id}/${id}`), {
     userInfo,
     id,
     startDate,
@@ -116,11 +117,121 @@ export async function addNewSchedule(
   })
 }
 
-/**스케쥴 전부 get */
+/**모든 유저 스케쥴 전부 get */
 export async function getAllSchedule() {
   return get(ref(database, `schedule`)) //
     .then((snapshot) => {
       const items = snapshot.val() || {}
       return Object.values(items)
     })
+}
+
+interface IAuthInfo {
+  uid: string
+  email: string
+  authToken: string
+}
+
+/**회원가입 */
+export async function join(
+  email: string,
+  password: string,
+  userName: string,
+  phoneNumber: string,
+  department: string,
+  position: string
+): Promise<void> {
+  try {
+    const auth: Auth = getAuth()
+    const userCredential: UserCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
+    const { user } = userCredential
+    const { uid } = user
+    const authToken: string = await user.getIdToken()
+    const authInfo: IAuthInfo = { uid, email, authToken }
+    const role = 'ROLE_USER'
+    const overview = {
+      onDuty: 0,
+      application: 0,
+      approved: 0,
+      pending: 0,
+      rejection: 0,
+    }
+    const vacationCount = 15
+    const userInfo: IUserInfo = {
+      id: uid,
+      email,
+      userName,
+      department,
+      position,
+      phoneNumber,
+      role,
+      overview,
+      vacationCount,
+    }
+    return set(ref(database, `user/${userInfo.id}`), userInfo)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+/**로그인 */
+export async function login(email: string, password: string): Promise<IAuthInfo | null> {
+  try {
+    const auth: Auth = getAuth()
+    const { user } = await signInWithEmailAndPassword(auth, email, password)
+    const { uid } = user
+    const authToken: string = await user.getIdToken()
+    const authInfo: IAuthInfo = { uid, email, authToken }
+    localStorage.setItem('userId', uid)
+    return authInfo
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export async function onUserStateChange(callback: (user: IUserInfo | null) => void): Promise<void> {
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userInfo = await getUser(user.uid)
+      if (userInfo) {
+        callback(userInfo)
+      } else {
+        console.log('User info not found')
+      }
+    } else {
+      callback(null)
+      await logout() // 로그아웃 처리
+    }
+  })
+}
+
+/** 로그아웃 */
+export async function logout(): Promise<void> {
+  try {
+    const auth: Auth = getAuth()
+    await signOut(auth)
+    localStorage.removeItem('userId')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+/**회원 탈퇴 */
+export async function deleteAccount(userId: string, email: string, userName: string) {
+  try {
+    const user = getAuth().currentUser
+    if (user) {
+      await deleteUser(user)
+    }
+    await remove(ref(getDatabase(), `user/${userId}`))
+    return true
+  } catch (error) {
+    console.error(error)
+    return false
+  }
 }

@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import Select from '@components/UI/Select'
 import { useEffect, useState } from 'react'
 import { signUp } from '../../api/auth'
+import { join } from '../../api/firebase'
 
 type FormValue = {
   email: string
@@ -45,16 +46,10 @@ const SignUp = () => {
   const onSubmit = async () => {
     const values = getValues()
     const { passwordConfirm, ...rest } = values
-    const res = await signUp(rest)
-    if (res === '회원가입 성공') {
-      navigate('/')
-    }
-    if (res === 'duplicated') {
-      setDuplicated(true)
-      setTimeout(() => {
-        setDuplicated(false)
-      }, 1500)
-    }
+    console.log('rest', rest)
+    const { email, password, userName, phoneNumber, department, position } = rest
+    await join(email, password, userName, phoneNumber, department, position)
+    navigate('/')
   }
 
   return (
